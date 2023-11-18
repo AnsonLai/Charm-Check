@@ -578,7 +578,8 @@
     processForm();
 
     document.getElementById('loader').classList.remove("d-none");
-    document.getElementById('sendButton').disabled = true;
+    // document.getElementById('sendButton').disabled = true;
+    document.getElementById('sendButton').text = "Try Again";
     // Send the POST request
     fetch(apiUrl, {
       method: "POST",
