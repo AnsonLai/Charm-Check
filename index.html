@@ -578,8 +578,8 @@
     processForm();
 
     document.getElementById('loader').classList.remove("d-none");
-    // document.getElementById('sendButton').disabled = true;
-    document.getElementById('sendButton').text = "Try Again";
+    document.getElementById('sendButton').disabled = true;
+
     // Send the POST request
     fetch(apiUrl, {
       method: "POST",
@@ -623,6 +623,8 @@
     document.getElementById('padding-container').classList.remove("d-md-block");
     // document.getElementById('padding-container').style.paddingTop = '1rem';
     // document.getElementById('padding-container').style.paddingBottom = '1rem';
+    document.getElementById('sendButton').disabled = false;
+    document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
   }
 </script>
 <script>
