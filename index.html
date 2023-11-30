@@ -512,12 +512,15 @@
   ];
 
   var MAX_PHOTOS = 9;
-  function addToMessageContent(dict) {
+  function addToMessageContent(dict, contentType) {
+    var foundIndex = messages[0]['content'].findIndex(item => item.contentType === contentType);
 
-    if (messages[0]['content'].length < MAX_PHOTOS) {
-      messages[0]['content'].unshift(dict);
+    if (foundIndex !== -1) {
+      // Update existing entry
+      messages[0]['content'][foundIndex] = dict;
     } else {
-      // alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      // Add new entry if not found
+      messages[0]['content'].push(dict);
     }
   }
 
@@ -541,36 +544,51 @@
     // Add to message content
     addToMessageContent({
       type: "text",
+      contentType: "profileHeader",
       text: `The user's dating profile currently looks like this:`
-    });
+    }, "profileHeader");
+
     addToMessageContent({
       type: "text",
+      contentType: "aboutMe",
       text: `About me: ${aboutMeDescription}`
-    });
+    }, "aboutMe");
+
     addToMessageContent({
       type: "text",
+      contentType: "age",
       text: `Age: ${ageDescription}`
-    });
+    }, "age");
+
     addToMessageContent({
       type: "text",
+      contentType: "interests",
       text: `Interests: ${interestsDescription}`
-    });
+    }, "interests");
+
     addToMessageContent({
       type: "text",
+      contentType: "relationshipType",
       text: `Looking for: ${relationshipTypeDescription}`
-    });
+    }, "relationshipType");
+
     addToMessageContent({
       type: "text",
+      contentType: "jobTitle",
       text: `Profession/Education: ${jobTitleDescription}`
-    });
+    }, "jobTitle");
+
     addToMessageContent({
       type: "text",
+      contentType: "importantDetails",
       text: `Some important details highlighted are: ${importantDetailsDescription}`
-    });
+    }, "importantDetails");
+
     addToMessageContent({
       type: "text",
-      text: `Some apps allow you to put in prompts and answer them.  Here are some prompts and answers: ${promptsAndAnswersDescription}`
-    });
+      contentType: "promptsAndAnswers",
+      text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
+    }, "promptsAndAnswers");
   }
 
   function sendToAPI() {
@@ -586,7 +604,7 @@
     const payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
-      max_tokens: 900
+      max_tokens: 1100
     };
 
     // Process form to add more messages to the messages array
@@ -772,7 +790,11 @@
   }
 
   function processImage(file) {
-    if (messages[0]['content'].length >= MAX_PHOTOS) {
+    // Count only 'image_url' type elements in the 'content' array
+    var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
+
+    // Check if the number of image_url elements exceeds MAX_PHOTOS
+    if (imageCount >= MAX_PHOTOS) {
       alert(`You cannot add more than ${MAX_PHOTOS} images.`);
       return; // Stop processing the new image
     }
@@ -781,7 +803,7 @@
       let img = new Image();
       img.onload = function () {
         // Check again in case images were added since the process started
-        if (messages[0]['content'].length >= MAX_PHOTOS) {
+        if (imageCount >= MAX_PHOTOS) {
           return; // Stop the image processing if the limit is reached
         }
         let squareSize = Math.max(img.width, img.height);
@@ -802,12 +824,14 @@
         displayImage(dataURL);
 
         // Add new content to the global messages array
+        // TODO: Cannot add contentType to images; leave it alone
+        var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
         addToMessageContent({
           type: "image_url",
           image_url: {
             url: `data:image/jpeg;base64,${window.currentBase64Image}`
           }
-        });
+        }, `photo${imageCount}`);
       };
       img.src = base64;
     });
