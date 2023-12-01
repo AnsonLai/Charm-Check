@@ -449,12 +449,12 @@
       </div>
 
       <div class="row g-0">
-        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative">
+        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
           <div id="chatDisplay" class="pt-3 pb-3 px-5">
             <div class="row py-2">
               <div class="col-11">
                 <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
-                  style="background-color: #e6e6e6;">
+                  style="background-color: #f9f9f9;">
                   👋 Hi! I'm the CharmCheck chatbot. Let's chat about your report.
                 </div>
               </div>
@@ -476,6 +476,19 @@
               </div>
             </div> -->
           </div>
+          <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
+            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+            animation: .75s linear 0.25s infinite spinner-grow;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+            animation: .75s linear 0.5s infinite spinner-grow;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
           <div class="container px-5">
             <div class="input-group mb-3">
               <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea" rows='1'
@@ -496,192 +509,6 @@
           </div> -->
         </div>
       </div>
-
-      <script>
-        // Chatbot scripts
-
-        var conversation = [{
-            "role": "assistant",
-            "content": [{
-              "type": "text",
-              "contentType": "initialResponse",
-              "text": "👋 Hi! I'm the CharmCheck chatbot. Let's chat about your report."
-            }]
-          }
-        ];
-
-        function sendToConversationAPI() {
-          // The URL of the API endpoint
-          const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_conversation/";
-
-          // Prepare the HTTP headers
-          const headers = {
-            "Content-Type": "application/json",
-          };
-
-          // Prepare the payload with the global messages array
-          const payload = {
-            model: "gpt-4-vision-preview",
-            messages: messages,
-            conversation: conversation,
-            max_tokens: 1100
-          };
-
-          // Send the POST request
-          fetch(apiUrl, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(payload)
-          })
-            .then(response => response.json())
-            .then(data => handleConversationAPIResponse(data)) // Pass the data to the new function
-            .catch(error => {
-              // console.error('Error:', error);
-              // alert('We have tight content guidelines.  Please remove inappropriate photos, then try again.');
-              // document.getElementById('loader').classList.add("d-none");
-              // document.getElementById('sendButton').disabled = false;
-              // document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
-            });
-        }
-
-        function handleConversationAPIResponse(data) {
-          var converter = new showdown.Converter();
-          converter.setOption('disableForced4SpacesIndentedSublists', true);
-          converter.setOption('smartIndentationFix', true);
-
-          var text = data["response"]["choices"][0]['message']['content'];
-
-          conversation.push({
-            "role": "assistant",
-            "content": [{
-              "type": "text",
-              "contentType": "responseOutput",
-              "text": text
-            }]
-          });
-          var html = converter.makeHtml(text);
-
-          addToConversation('assistant', html)
-        }
-
-        $('#buttonSend').click(function () {
-          $('#nameHero').hide();
-          // TODO: Prune messages if too long
-          conversation.push({
-            "role": "user",
-            "content": [{
-              "type": "text",
-              "contentType": "userInput",
-              "text": $('#floatingTextarea').val()
-            }]
-          });
-          console.log(messages);
-          sendToConversationAPI();
-          addToConversation('user', $('#floatingTextarea').val())
-          $("#loader").show();
-          $('#floatingTextarea').val('');
-          $('#floatingTextarea').attr('rows', '1');
-          window.scrollTo(0, document.body.scrollHeight);
-        });
-
-        // addToConveration
-        function addToConversation(role, message) {
-          var converter = new showdown.Converter();
-          converter.setOption('disableForced4SpacesIndentedSublists', true);
-          converter.setOption('smartIndentationFix', true);
-          var html = converter.makeHtml(message);
-          if (role == "user") {
-            var newDiv = $(`
-              <div class="user-convo row py-2">
-                <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                  <div class="d-flex align-items-center ms-3">
-                  </div>
-                </div>
-                <div class="col-11">
-                  <div class="h-100 w-100 d-flex flex-column text-end p-3 rounded shadow-sm me-3"
-                    style="background-color: #ffcccc;">
-                    ${html}
-                  </div>
-                </div>
-              </div>
-            `)
-          } else if (role == "assistant") {
-            var newDiv = $(`
-              <div class="assistant-convo row py-2">
-                <div class="col-11">
-                  <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
-                    style="background-color: #e6e6e6;">
-                    ${html}
-                  </div>
-                </div>
-                <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                  <div class="d-flex align-items-center me-3">
-                  </div>
-                </div>
-              </div>
-            `)
-          };
-
-          $("#chatDisplay").append(newDiv)
-
-        };
-
-        // Handle alt+enter
-        const textarea = document.getElementById("floatingTextarea");
-        const buttonSend = document.getElementById("buttonSend");
-
-        textarea.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-            e.preventDefault(); // Prevent the default behavior (line break)
-            buttonSend.click(); // Trigger the button click
-          }
-        });
-
-        // Auto expand textarea: https://gist.github.com/i-havr/6b8e6f39da421360c6c054c9d2765d61, https://codepen.io/vsync/details/bGgQzL
-        function getScrollHeight(elm) {
-          var savedValue = elm.value
-          elm.value = ''
-          elm._baseScrollHeight = elm.scrollHeight
-          elm.value = savedValue
-        }
-
-        function onExpandableTextareaInput({ target: elm }) {
-          // make sure the input event originated from a textarea and it's desired to be auto-expandable
-          if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
-
-          var minRows = elm.getAttribute('data-min-rows') | 0, rows;
-          !elm._baseScrollHeight && getScrollHeight(elm)
-
-          elm.rows = minRows
-          rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 24)
-          elm.rows = minRows + rows
-        }
-
-        // global delegated event listener
-        document.addEventListener('input', onExpandableTextareaInput);
-      </script>
-
-      <div class="row g-0">
-        <div id="checkoutrow" class="col mb-5 bg-white text-dark rounded shadow position-relative"
-          style="position: relative; background-color: white; color: black; border-radius: 7px; box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);">
-          <!-- Display a payment form -->
-          <form id="payment-form"
-            style="width: 30vw; min-width: 500px; box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1), 0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07); border-radius: 7px; padding: 40px;">
-            <div id="payment-element" style="margin-bottom: 24px;">
-              <!--Stripe.js injects the Payment Element-->
-            </div>
-            <button id="submit"
-              style="background: #5469d4; color: #ffffff; border-radius: 4px; border: 0; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07); width: 100%;">
-              <div class="spinner hidden" id="spinner"></div>
-              <span id="button-text">Pay now</span>
-            </button>
-            <div id="payment-message" class="hidden"
-              style="color: rgb(105, 115, 134); font-size: 16px; line-height: 20px; padding-top: 12px; text-align: center;">
-            </div>
-          </form>
-        </div>
-      </div>
-
 
     </div>
   </main>
@@ -890,20 +717,51 @@
 
     var text = data["response"]["choices"][0]['message']['content'];
 
-    conversation.unshift({
-      "role": "assistant",
-      "content": [{
-        "type": "text",
-        "contentType": "report",
-        "text": text
-      }]
-    });
+    // Add to conversation if it doesn't exist yet, otherwise, swap in place
+    let report_found = false;
+
+    for (let i = 0; i < conversation.length; i++) {
+      const contentArray = conversation[i]['content'];
+      for (let j = 0; j < contentArray.length; j++) {
+        const contentItem = contentArray[j];
+        if (contentItem['contentType'] === 'report') {
+          // Found an existing report, update its text
+          contentItem['text'] = text;
+          report_found = true;
+          // Add to conversation that a new report was requested
+          conversation.push({
+            "role": "user",
+            "content": [{
+              "type": "text",
+              "contentType": "userInput",
+              "text": "Thanks for changing your report with my new information!"
+            }]
+          });
+          break; // Exit the loop as we've found and updated the report
+        }
+      }
+      if (report_found) break; // Exit the outer loop as well
+    }
+
+    if (!report_found) {
+      // No existing report found, add a new one
+      conversation.unshift({
+        "role": "assistant",
+        "content": [{
+          "type": "text",
+          "contentType": "report",
+          "text": text
+        }]
+      });
+    }
+
     var html = converter.makeHtml(text);
     if (unhelpfulResponses.includes(text)) {
       throw new Error('GPT cannot assist.');
     }
     document.getElementById('apiResponse').innerHTML = html;
     document.getElementById('analysis-container').classList.remove("d-none");
+    document.getElementById('chat-container').classList.remove("d-none");
     document.getElementById('loader').classList.add("d-none");
     document.getElementById('analysis-container').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('padding-container').classList.add("d-none");
@@ -1101,129 +959,175 @@
   }
 </script>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script>
-  // Handle Stripe.js payments
+  // Chatbot scripts
 
-  // This is your test publishable API key.
-  const stripe = Stripe("pk_test_51OILtSIELqMaA55Awpv2MhzqJQYuWRXAjrmz15I9agpkCjA2fxmaQYFDwjRoeJ2YwFcewY9O20v6ClcgBlvmyXv200OkYqqN7X");
+  var conversation = [{
+    "role": "assistant",
+    "content": [{
+      "type": "text",
+      "contentType": "initialResponse",
+      "text": "👋 Hi! I'm the CharmCheck chatbot. Let's chat about your report."
+    }]
+  }
+  ];
 
-  // The items the customer wants to buy
-  const items = [{ id: "xl-tshirt", amount: 1000 }];
+  function sendToConversationAPI() {
+    // The URL of the API endpoint
+    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_conversation/";
 
-  let elements;
+    // Prepare the HTTP headers
+    const headers = {
+      "Content-Type": "application/json",
+    };
 
-  initialize();
-  checkStatus();
+    // Prepare the payload with the global messages array
+    const payload = {
+      model: "gpt-4-vision-preview",
+      messages: messages,
+      conversation: conversation,
+      max_tokens: 1100
+    };
 
-  document
-    .querySelector("#payment-form")
-    .addEventListener("submit", handleSubmit);
+    // Disable chat
+    document.getElementById('chat-loader').style.visibility = 'visible';
+    document.getElementById('buttonSend').disabled = true;
 
-  // Fetches a payment intent and captures the client secret
-  async function initialize() {
-    const response = await fetch("/create-payment-intent", {
+    // Send the POST request
+    fetch(apiUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
+      headers: headers,
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        handleConversationAPIResponse(data)
+        // Allow chat again areas
+        document.getElementById('chat-loader').style.visibility = 'hidden';
+        document.getElementById('buttonSend').disabled = false;
+      }) // Pass the data to the new function
+      .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error with your chat.  Please hit submit to try again.');
+      });
+  }
+
+  function handleConversationAPIResponse(data) {
+    var converter = new showdown.Converter();
+    converter.setOption('disableForced4SpacesIndentedSublists', true);
+    converter.setOption('smartIndentationFix', true);
+
+    var text = data["response"]["choices"][0]['message']['content'];
+
+    conversation.push({
+      "role": "assistant",
+      "content": [{
+        "type": "text",
+        "contentType": "responseOutput",
+        "text": text
+      }]
     });
-    const { clientSecret } = await response.json();
+    var html = converter.makeHtml(text);
 
-    const appearance = {
-      theme: 'stripe',
-    };
-    elements = stripe.elements({ appearance, clientSecret });
-
-    const paymentElementOptions = {
-      layout: "tabs",
-    };
-
-    const paymentElement = elements.create("payment", paymentElementOptions);
-    paymentElement.mount("#payment-element");
+    addToConversation('assistant', html)
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:4242/checkout.html",
-        receipt_email: emailAddress,
-      },
+  $('#buttonSend').click(function () {
+    $('#nameHero').hide();
+    // TODO: Prune messages if too long
+    conversation.push({
+      "role": "user",
+      "content": [{
+        "type": "text",
+        "contentType": "userInput",
+        "text": $('#floatingTextarea').val()
+      }]
     });
+    sendToConversationAPI();
+    addToConversation('user', $('#floatingTextarea').val())
+    $("#loader").show();
+    $('#floatingTextarea').val('');
+    $('#floatingTextarea').attr('rows', '1');
+    window.scrollTo(0, document.body.scrollHeight);
+  });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      showMessage(error.message);
-    } else {
-      showMessage("An unexpected error occurred.");
+  // addToConveration
+  function addToConversation(role, message) {
+    var converter = new showdown.Converter();
+    converter.setOption('disableForced4SpacesIndentedSublists', true);
+    converter.setOption('smartIndentationFix', true);
+    var html = converter.makeHtml(message);
+    if (role == "user") {
+      var newDiv = $(`
+        <div class="user-convo row py-2">
+          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
+            <div class="d-flex align-items-center ms-3">
+            </div>
+          </div>
+          <div class="col-11">
+            <div class="h-100 w-100 d-flex flex-column text-end p-3 rounded shadow-sm me-3"
+              style="background-color: #ffcccc;">
+              ${html}
+            </div>
+          </div>
+        </div>
+      `)
+    } else if (role == "assistant") {
+      var newDiv = $(`
+        <div class="assistant-convo row py-2">
+          <div class="col-11">
+            <div class="h-100 p-3 rounded shadow-sm ms-3"
+              style="background-color: #f9f9f9;">
+              ${html}
+            </div>
+          </div>
+          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
+            <div class="d-flex align-items-center me-3">
+            </div>
+          </div>
+        </div>
+      `)
+    };
+
+    $("#chatDisplay").append(newDiv)
+
+  };
+
+  // Handle alt+enter
+  const textarea = document.getElementById("floatingTextarea");
+  const buttonSend = document.getElementById("buttonSend");
+
+  textarea.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault(); // Prevent the default behavior (line break)
+      buttonSend.click(); // Trigger the button click
     }
+  });
 
-    setLoading(false);
+  // Auto expand textarea: https://gist.github.com/i-havr/6b8e6f39da421360c6c054c9d2765d61, https://codepen.io/vsync/details/bGgQzL
+  function getScrollHeight(elm) {
+    var savedValue = elm.value
+    elm.value = ''
+    elm._baseScrollHeight = elm.scrollHeight
+    elm.value = savedValue
   }
 
-  // Fetches the payment intent status after payment submission
-  async function checkStatus() {
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+  function onExpandableTextareaInput({ target: elm }) {
+    // make sure the input event originated from a textarea and it's desired to be auto-expandable
+    if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
 
-    if (!clientSecret) {
-      return;
-    }
+    var minRows = elm.getAttribute('data-min-rows') | 0, rows;
+    !elm._baseScrollHeight && getScrollHeight(elm)
 
-    const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-    switch (paymentIntent.status) {
-      case "succeeded":
-        showMessage("Payment succeeded!");
-        break;
-      case "processing":
-        showMessage("Your payment is processing.");
-        break;
-      case "requires_payment_method":
-        showMessage("Your payment was not successful, please try again.");
-        break;
-      default:
-        showMessage("Something went wrong.");
-        break;
-    }
+    elm.rows = minRows
+    rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 24)
+    elm.rows = minRows + rows
   }
 
-  // ------- UI helpers -------
-
-  function showMessage(messageText) {
-    const messageContainer = document.querySelector("#payment-message");
-
-    messageContainer.classList.remove("hidden");
-    messageContainer.textContent = messageText;
-
-    setTimeout(function () {
-      messageContainer.classList.add("hidden");
-      messageContainer.textContent = "";
-    }, 4000);
-  }
-
-  // Show a spinner on payment submission
-  function setLoading(isLoading) {
-    if (isLoading) {
-      // Disable the button and show a spinner
-      document.querySelector("#submit").disabled = true;
-      document.querySelector("#spinner").classList.remove("hidden");
-      document.querySelector("#button-text").classList.add("hidden");
-    } else {
-      document.querySelector("#submit").disabled = false;
-      document.querySelector("#spinner").classList.add("hidden");
-      document.querySelector("#button-text").classList.remove("hidden");
-    }
-  }
+  // global delegated event listener
+  document.addEventListener('input', onExpandableTextareaInput);
 </script>
+
+
 
 </html>
