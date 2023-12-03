@@ -450,7 +450,7 @@
       </div>
 
       <div class="row g-0">
-        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative">
+        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
           <div id="chatDisplay" class="pt-3 pb-3 px-5">
             <div class="row py-2">
               <div class="col-11 ps-0">
@@ -566,8 +566,7 @@
       <script>
         // Handle Stripe.js payments
 
-        // This is your test publishable API key.
-        const stripe = Stripe("pk_test_51OILtSIELqMaA55Awpv2MhzqJQYuWRXAjrmz15I9agpkCjA2fxmaQYFDwjRoeJ2YwFcewY9O20v6ClcgBlvmyXv200OkYqqN7X");
+        const stripe = Stripe("pk_live_51OILtSIELqMaA55AoAxgHHwft4t0Fxl7hbiP3A3hlV5e9H2wId7G88A69bfixupL2Xa2K9739DdcHa5DY3liVcC10078uHrsW5");
 
         let elements;
 
