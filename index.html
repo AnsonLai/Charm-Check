@@ -751,16 +751,30 @@
     </div>
   </main>
 
-  <div class="card" id="floatingTinderPopup"
-    style="position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 1000;">
+  <div class="card" id="tinderFloatingPopup"
+    style="position: fixed; top: 20px; right: 20px; width: 320px; z-index: 1000;">
     <button class="close-btn" id="closePopupButton"
       style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;">&times;</button>
     <div class="card-body">
-      <h5 class="card-title">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span> profile!</h5>
-      <div class="input-group mb-3">
+      <h5 class="card-title text-center">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span> profile!
+      </h5>
+      <div class="input-group mb-2">
         <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
           placeholder="https://tinder.com/@username" maxlength="180">
         <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
+      </div>
+      <div id="tinder-loader" class="container text-center mb-2 d-none" style="">
+        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+        animation: .75s linear 0.25s infinite spinner-grow;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+        animation: .75s linear 0.5s infinite spinner-grow;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
     </div>
   </div>
@@ -770,6 +784,12 @@
     document.getElementById('fetchProfileButton').addEventListener('click', function () {
       var tinderURL = document.getElementById('tinderURL').value;
       fetchTinderProfile(tinderURL); // Replace with the desired username
+      // Hide the input and button
+      document.getElementById('tinderURL').classList.add('d-none');
+      document.getElementById('fetchProfileButton').classList.add('d-none');
+
+      // Show the loader
+      document.getElementById('tinder-loader').classList.remove('d-none');
     });
 
     function fetchTinderProfile(username) {
@@ -778,10 +798,23 @@
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          document.getElementById('tinderFloatingPopup').classList.add('d-none');
           if (data.images && data.images.length > 0) {
-            data.images.forEach(base64Image => {
-              displayImage(`data:image/jpeg;base64,${base64Image}`);
+            data.images.forEach(currentBase64Image => {
+              // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
+              displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
+              var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
+              // Check if the number of image_url elements exceeds MAX_PHOTOS
+              if (imageCount >= MAX_PHOTOS) {
+                alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+                return; // Stop processing the new image
+              }
+              addToMessageContent({
+                type: "image_url",
+                image_url: {
+                  url: `data:image/jpeg;base64,${currentBase64Image}`
+                }
+              }, `photo${imageCount}`);
             });
           } else {
             alert('No images found for this profile.');
@@ -807,7 +840,7 @@
     }
 
     document.getElementById('closePopupButton').addEventListener('click', function () {
-      document.getElementById('floatingPopup').style.display = 'none';
+      document.getElementById('tinderFloatingPopup').style.display = 'none';
     });
   </script>
 
@@ -1194,6 +1227,7 @@
     document.getElementById('photoCollector').classList.remove("offset-md-3");
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('tinderFloatingPopup').classList.add('d-none');
   }
 
   function processImage(file) {
