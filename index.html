@@ -464,18 +464,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="row py-2">
-              <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                <div class="d-flex align-items-center ms-3">
-                </div>
-              </div>
-              <div class="col-11 ps-0">
-                <div class="h-100 w-100 d-flex flex-column text-end p-3 rounded shadow-sm me-3"
-                  style="background-color: #ffcccc;">
-                  Thanks, I want a great opening line for my matches!
-                </div>
-              </div>
-            </div> -->
           </div>
           <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
             <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
@@ -763,6 +751,65 @@
     </div>
   </main>
 
+  <div class="card" id="floatingTinderPopup"
+    style="position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 1000;">
+    <button class="close-btn" id="closePopupButton"
+      style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;">&times;</button>
+    <div class="card-body">
+      <h5 class="card-title">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span> profile!</h5>
+      <div class="input-group mb-3">
+        <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
+          placeholder="https://tinder.com/@username" maxlength="180">
+        <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle Tinder Imports
+    document.getElementById('fetchProfileButton').addEventListener('click', function () {
+      var tinderURL = document.getElementById('tinderURL').value;
+      fetchTinderProfile(tinderURL); // Replace with the desired username
+    });
+
+    function fetchTinderProfile(username) {
+      const apiUrl = `http://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data.images && data.images.length > 0) {
+            data.images.forEach(base64Image => {
+              displayImage(`data:image/jpeg;base64,${base64Image}`);
+            });
+          } else {
+            alert('No images found for this profile.');
+          }
+
+          // Update form elements
+          if (data.age) {
+            document.getElementById('ageDescription').value = data.age;
+          }
+
+          // Update job title or school
+          let jobOrSchool = data.job_title ? data.job_title : '';
+          jobOrSchool += data.company_name ? ` at ${data.company_name}` : '';
+          jobOrSchool += (!data.job_title && data.school) ? data.school : '';
+          document.getElementById('jobTitleDescription').value = jobOrSchool;
+
+          // Add other elements as needed, similar to the above
+        })
+        .catch(error => {
+          console.error('Error fetching profile:', error);
+          alert('Failed to fetch profile.');
+        });
+    }
+
+    document.getElementById('closePopupButton').addEventListener('click', function () {
+      document.getElementById('floatingPopup').style.display = 'none';
+    });
+  </script>
 
   <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
     <div class="footer-copyright text-center py-3">
