@@ -793,7 +793,7 @@
     });
 
     function fetchTinderProfile(username) {
-      const apiUrl = `http://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
+      const apiUrl = `https://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
 
       fetch(apiUrl)
         .then(response => response.json())
