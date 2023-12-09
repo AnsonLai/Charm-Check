@@ -583,34 +583,152 @@
 </body>
 
 <script>
-  // Scripts to transition user through stages
+  // Scripts to handle and convert image inputs
+  function displayImage(base64Image) {
+    // Create a div element as a container
+    var divContainer = document.createElement('div');
+    divContainer.style.position = 'relative';
+    divContainer.style.display = 'inline-block'; // Allows the X button to be positioned correctly
 
-  // Transition element changes, add this to tag 'style="opacity: 0; visibility: hidden; transition: visibility 0s linear 0.5s, opacity 0.5s linear;"'
-  function showElement(element) {
-    // Remove 'd-none' class if it exists
-    element.classList.remove('d-none');
-    // Set the initial state
-    element.style.opacity = '0';
-    element.style.visibility = 'hidden';
-    element.style.transition = 'visibility 0s linear 0.5s, opacity 0.5s linear';
-    // Start the transition
-    setTimeout(() => {
-      element.style.visibility = 'visible';
-      element.style.opacity = '1';
-    }, 10); // Start the opacity transition after a short delay
+    // Create an image element
+    var imgElement = document.createElement('img');
+    imgElement.src = base64Image;
+    imgElement.style.maxWidth = '150px';
+    imgElement.style.maxHeight = '150px';
+    imgElement.style.marginTop = '5px';
+    imgElement.style.marginRight = '5px';
+    imgElement.style.marginLeft = '5px';
+
+    // Create an "X" button
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '0';
+    closeButton.style.right = '0';
+    closeButton.style.background = 'red';
+    closeButton.style.color = 'white';
+    closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '3px'; // Rounded corners
+    closeButton.style.width = '15px'; // Smaller width
+    closeButton.style.height = '15px'; // Smaller height
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.display = 'flex'; // Use flexbox for centering
+    closeButton.style.justifyContent = 'center'; // Center horizontally
+    closeButton.style.alignItems = 'center'; // Center vertically
+    closeButton.style.fontSize = '0.8rem';
+
+    // Attach event listener to the "X" button
+    closeButton.addEventListener('click', function () {
+      // Retrieve the base64 string from the image element
+      var base64String = imgElement.src;
+
+      // Function to extract the actual base64 encoded part of the string
+      function extractBase64Data(str) {
+        var base64StartIndex = str.indexOf('base64,') + 7;
+        return str.substring(base64StartIndex);
+      }
+
+      // Remove the image container from the DOM
+      divContainer.remove();
+    });
+
+    // Append the image and the "X" button to the div
+    divContainer.appendChild(imgElement);
+    divContainer.appendChild(closeButton);
+
+    // Append the div to the image container
+    document.getElementById('image-container').appendChild(divContainer);
+
+    // Additional UI adjustment
+    document.getElementById('image-container').style.marginTop = '5rem';
+    document.getElementById('photoCollector').classList.remove("offset-md-3");
+    document.getElementById('formCollection').classList.remove("d-none");
+    document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('tinderFloatingPopup').classList.add('d-none');
   }
 
-  function hideElement(element) {
-    // Set the transition properties
-    element.style.transition = 'visibility 0s linear 0.5s, opacity 0.5s linear';
-    // Start the transition
-    element.style.opacity = '0';
-    // After the transition is finished, hide the element
-    setTimeout(() => {
-      element.style.visibility = 'hidden';
-      // Optionally, add 'd-none' class back if you want to remove the element from the document flow
-      element.classList.add('d-none');
-    }, 500); // Match the delay to the duration of the opacity transition
+  function processImage(file) {
+    // Count only 'image_url' type elements in the 'content' array
+    var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
+
+    // Check if the number of image_url elements exceeds MAX_PHOTOS
+    if (imageCount >= MAX_PHOTOS) {
+      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      return; // Stop processing the new image
+    }
+
+    convertToBase64(file, function (base64) {
+      let img = new Image();
+      img.onload = function () {
+        // Check again in case images were added since the process started
+        if (imageCount >= MAX_PHOTOS) {
+          return; // Stop the image processing if the limit is reached
+        }
+        let squareSize = Math.max(img.width, img.height);
+        let canvas = document.createElement('canvas');
+        canvas.width = canvas.height = squareSize;
+        let ctx = canvas.getContext('2d');
+        // ctx.fillStyle = 'white';
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, (squareSize - img.width) / 2, (squareSize - img.height) / 2);
+        let resizeCanvas = document.createElement('canvas');
+        resizeCanvas.width = resizeCanvas.height = 512;
+        let resizeCtx = resizeCanvas.getContext('2d');
+        resizeCtx.drawImage(canvas, 0, 0, 512, 512);
+        let dataURL = resizeCanvas.toDataURL('image/png');
+        window.currentBase64Image = dataURL.split(',')[1]; // Remove the Data URL prefix for pure Base64
+        displayImage(dataURL);
+
+      };
+      img.src = base64;
+    });
+  }
+
+  // UI Helpers
+  function setupSortable() {
+    Sortable.create(document.getElementById('image-container'), {
+      animation: 150,
+    });
+  }
+
+  function setup() {
+    setupSortable();
+
+    let dropArea = document.getElementById('drop-area');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    dropArea.addEventListener('drop', handleDrop, false);
+    document.getElementById('fileElem').addEventListener('change', handleBrowse, false);
+  }
+
+  function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function handleDrop(e) {
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    handleFiles(files);
+  }
+
+  function handleBrowse(e) {
+    handleFiles(e.target.files);
+  }
+
+  function handleFiles(files) {
+    ([...files]).forEach(processImage);
+  }
+
+  function convertToBase64(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      callback(event.target.result);
+    };
+    reader.readAsDataURL(file);
   }
 </script>
 
@@ -641,13 +759,7 @@
 
   function processForm() {
     // Clear message stack
-    messages = [
-      {
-        "role": "user",
-        "content": [
-        ]
-      }
-    ];
+    messages[0]['content'] = []
 
     // Handle images first
     document.querySelectorAll('#image-container > div').forEach((div, index) => {
@@ -729,8 +841,9 @@
   }
 
   function sendToAPI() {
+    console.log(messages);
     // The URL of the API endpoint
-    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
+    // const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
 
     // Prepare the HTTP headers
     const headers = {
@@ -838,157 +951,6 @@
     // document.getElementById('padding-container').style.paddingBottom = '1rem';
     document.getElementById('sendButton').disabled = false;
     document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
-  }
-</script>
-
-<script>
-  // Scripts to handle and convert image inputs
-  function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  function handleDrop(e) {
-    let dt = e.dataTransfer;
-    let files = dt.files;
-    handleFiles(files);
-  }
-
-  function handleBrowse(e) {
-    handleFiles(e.target.files);
-  }
-
-  function handleFiles(files) {
-    ([...files]).forEach(processImage);
-  }
-
-  function setupSortable() {
-    Sortable.create(document.getElementById('image-container'), {
-      animation: 150,
-    });
-  }
-
-  setupSortable();
-
-  function convertToBase64(file, callback) {
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      callback(event.target.result);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function displayImage(base64Image) {
-    // Create a div element as a container
-    var divContainer = document.createElement('div');
-    divContainer.style.position = 'relative';
-    divContainer.style.display = 'inline-block'; // Allows the X button to be positioned correctly
-
-    // Create an image element
-    var imgElement = document.createElement('img');
-    imgElement.src = base64Image;
-    imgElement.style.maxWidth = '150px';
-    imgElement.style.maxHeight = '150px';
-    imgElement.style.marginTop = '5px';
-    imgElement.style.marginRight = '5px';
-    imgElement.style.marginLeft = '5px';
-
-    // Create an "X" button
-    var closeButton = document.createElement('button');
-    closeButton.innerHTML = 'X';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '0';
-    closeButton.style.right = '0';
-    closeButton.style.background = 'red';
-    closeButton.style.color = 'white';
-    closeButton.style.border = 'none';
-    closeButton.style.borderRadius = '3px'; // Rounded corners
-    closeButton.style.width = '15px'; // Smaller width
-    closeButton.style.height = '15px'; // Smaller height
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.display = 'flex'; // Use flexbox for centering
-    closeButton.style.justifyContent = 'center'; // Center horizontally
-    closeButton.style.alignItems = 'center'; // Center vertically
-    closeButton.style.fontSize = '0.8rem';
-
-    // Attach event listener to the "X" button
-    closeButton.addEventListener('click', function () {
-      // Retrieve the base64 string from the image element
-      var base64String = imgElement.src;
-
-      // Function to extract the actual base64 encoded part of the string
-      function extractBase64Data(str) {
-        var base64StartIndex = str.indexOf('base64,') + 7;
-        return str.substring(base64StartIndex);
-      }
-
-      // Remove the image container from the DOM
-      divContainer.remove();
-    });
-
-    // Append the image and the "X" button to the div
-    divContainer.appendChild(imgElement);
-    divContainer.appendChild(closeButton);
-
-    // Append the div to the image container
-    document.getElementById('image-container').appendChild(divContainer);
-
-    // Additional UI adjustment
-    document.getElementById('image-container').style.marginTop = '5rem';
-    document.getElementById('photoCollector').classList.remove("offset-md-3");
-    document.getElementById('formCollection').classList.remove("d-none");
-    document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('tinderFloatingPopup').classList.add('d-none');
-  }
-
-  function processImage(file) {
-    // Count only 'image_url' type elements in the 'content' array
-    var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
-
-    // Check if the number of image_url elements exceeds MAX_PHOTOS
-    if (imageCount >= MAX_PHOTOS) {
-      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
-      return; // Stop processing the new image
-    }
-
-    convertToBase64(file, function (base64) {
-      let img = new Image();
-      img.onload = function () {
-        // Check again in case images were added since the process started
-        if (imageCount >= MAX_PHOTOS) {
-          return; // Stop the image processing if the limit is reached
-        }
-        let squareSize = Math.max(img.width, img.height);
-        let canvas = document.createElement('canvas');
-        canvas.width = canvas.height = squareSize;
-        let ctx = canvas.getContext('2d');
-        // ctx.fillStyle = 'white';
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, (squareSize - img.width) / 2, (squareSize - img.height) / 2);
-        let resizeCanvas = document.createElement('canvas');
-        resizeCanvas.width = resizeCanvas.height = 512;
-        let resizeCtx = resizeCanvas.getContext('2d');
-        resizeCtx.drawImage(canvas, 0, 0, 512, 512);
-        let dataURL = resizeCanvas.toDataURL('image/png');
-        document.getElementById('base64').innerText = dataURL;
-        // Save the Base64 string to a global variable for use in the API call
-        window.currentBase64Image = dataURL.split(',')[1]; // Remove the Data URL prefix for pure Base64
-        displayImage(dataURL);
-
-      };
-      img.src = base64;
-    });
-  }
-
-  function setup() {
-    let dropArea = document.getElementById('drop-area');
-
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      dropArea.addEventListener(eventName, preventDefaults, false);
-    });
-
-    dropArea.addEventListener('drop', handleDrop, false);
-    document.getElementById('fileElem').addEventListener('change', handleBrowse, false);
   }
 </script>
 
@@ -1425,4 +1387,5 @@
     document.getElementById('tinderFloatingPopup').style.display = 'none';
   });
 </script>
+
 </html>
