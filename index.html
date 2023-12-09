@@ -583,7 +583,8 @@
 </body>
 
 <script>
-  // Global messages array
+  // Global variables
+  const MAX_PHOTOS = 9;
   var messages = [
     {
       "role": "user",
@@ -591,8 +592,14 @@
       ]
     }
   ];
-
-  const MAX_PHOTOS = 9;
+  var conversation = [{
+    "role": "assistant",
+    "content": [{
+      "type": "text",
+      "contentType": "initialResponse",
+      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your report."
+    }]
+  }];
 </script>
 
 <script>
@@ -632,16 +639,6 @@
 
     // Attach event listener to the "X" button
     closeButton.addEventListener('click', function () {
-      // Retrieve the base64 string from the image element
-      var base64String = imgElement.src;
-
-      // Function to extract the actual base64 encoded part of the string
-      function extractBase64Data(str) {
-        var base64StartIndex = str.indexOf('base64,') + 7;
-        return str.substring(base64StartIndex);
-      }
-
-      // Remove the image container from the DOM
       divContainer.remove();
     });
 
@@ -658,6 +655,14 @@
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('tinderFloatingPopup').classList.add('d-none');
+  }
+
+  function convertToBase64(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      callback(event.target.result);
+    };
+    reader.readAsDataURL(file);
   }
 
   function processImage(file) {
@@ -677,8 +682,6 @@
         let canvas = document.createElement('canvas');
         canvas.width = canvas.height = squareSize;
         let ctx = canvas.getContext('2d');
-        // ctx.fillStyle = 'white';
-        // ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, (squareSize - img.width) / 2, (squareSize - img.height) / 2);
         let resizeCanvas = document.createElement('canvas');
         resizeCanvas.width = resizeCanvas.height = 512;
@@ -731,26 +734,15 @@
   function handleFiles(files) {
     ([...files]).forEach(processImage);
   }
-
-  function convertToBase64(file, callback) {
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      callback(event.target.result);
-    };
-    reader.readAsDataURL(file);
-  }
 </script>
 
 <script>
   // Scripts to handle API call
   function addToMessageContent(dict, contentType) {
     var foundIndex = messages[0]['content'].findIndex(item => item.contentType === contentType);
-
     if (foundIndex !== -1) {
-      // Update existing entry
       messages[0]['content'][foundIndex] = dict;
     } else {
-      // Add new entry if not found
       messages[0]['content'].push(dict);
     }
   }
@@ -781,12 +773,12 @@
     var promptsAndAnswersDescription = document.getElementById('promptsAndAnswersDescription').value;
 
     // Default values if fields are empty
-    aboutMeDescription = aboutMeDescription || "No details provided.";
-    interestsDescription = interestsDescription || "Not specified.";
-    relationshipTypeDescription = relationshipTypeDescription || "Not specified.";
-    jobTitleDescription = jobTitleDescription || "Not specified.";
-    importantDetailsDescription = importantDetailsDescription || "None provided.";
-    promptsAndAnswersDescription = promptsAndAnswersDescription || "No prompts answered.";
+    aboutMeDescription = aboutMeDescription || "[No details provided.]";
+    interestsDescription = interestsDescription || "[Not specified.]";
+    relationshipTypeDescription = relationshipTypeDescription || "[Not specified.]";
+    jobTitleDescription = jobTitleDescription || "[Not specified.]";
+    importantDetailsDescription = importantDetailsDescription || "[None provided.]";
+    promptsAndAnswersDescription = promptsAndAnswersDescription || "[No prompts answered.]";
 
     // Add to message content
     addToMessageContent({
@@ -888,9 +880,8 @@
 
     var text = data["response"]["choices"][0]['message']['content'];
 
-    // Add to conversation if it doesn't exist yet, otherwise, swap in place
+    // Add to conversation if the report doesn't exist yet, otherwise, swap in place so only one report is in the conversation
     let report_found = false;
-
     for (let i = 0; i < conversation.length; i++) {
       const contentArray = conversation[i]['content'];
       for (let j = 0; j < contentArray.length; j++) {
@@ -913,7 +904,6 @@
       }
       if (report_found) break; // Exit the outer loop as well
     }
-
     if (!report_found) {
       // No existing report found, add a new one
       conversation.unshift({
@@ -937,8 +927,6 @@
     document.getElementById('analysis-container').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('padding-container').classList.add("d-none");
     document.getElementById('padding-container').classList.remove("d-md-block");
-    // document.getElementById('padding-container').style.paddingTop = '1rem';
-    // document.getElementById('padding-container').style.paddingBottom = '1rem';
     document.getElementById('sendButton').disabled = false;
     document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
   }
@@ -946,27 +934,12 @@
 
 <script>
   // Chatbot scripts
-
-  var conversation = [{
-    "role": "assistant",
-    "content": [{
-      "type": "text",
-      "contentType": "initialResponse",
-      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your report."
-    }]
-  }
-  ];
-
   function sendToConversationAPI() {
-    // The URL of the API endpoint
     const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_conversation/";
-
-    // Prepare the HTTP headers
     const headers = {
       "Content-Type": "application/json",
     };
 
-    // Prepare the payload with the global messages array
     var payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
@@ -1025,25 +998,6 @@
     addToConversation('assistant', html)
   }
 
-  $('#buttonSend').click(function () {
-    $('#nameHero').hide();
-    // TODO: Prune messages if too long
-    conversation.push({
-      "role": "user",
-      "content": [{
-        "type": "text",
-        "contentType": "userInput",
-        "text": $('#floatingTextarea').val()
-      }]
-    });
-    sendToConversationAPI();
-    addToConversation('user', $('#floatingTextarea').val())
-    $("#loader").show();
-    $('#floatingTextarea').val('');
-    $('#floatingTextarea').attr('rows', '1');
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
   // addToConveration
   function addToConversation(role, message) {
     var converter = new showdown.Converter();
@@ -1084,8 +1038,27 @@
     };
 
     $("#chatDisplay").append(newDiv)
-
   };
+
+  // UI Helpers
+  $('#buttonSend').click(function () {
+    $('#nameHero').hide();
+    // TODO: Prune messages if too long
+    conversation.push({
+      "role": "user",
+      "content": [{
+        "type": "text",
+        "contentType": "userInput",
+        "text": $('#floatingTextarea').val()
+      }]
+    });
+    sendToConversationAPI();
+    addToConversation('user', $('#floatingTextarea').val())
+    $("#loader").show();
+    $('#floatingTextarea').val('');
+    $('#floatingTextarea').attr('rows', '1');
+    window.scrollTo(0, document.body.scrollHeight);
+  });
 
   // Handle alt+enter
   const textarea = document.getElementById("floatingTextarea");
@@ -1107,7 +1080,6 @@
   }
 
   function onExpandableTextareaInput({ target: elm }) {
-    // make sure the input event originated from a textarea and it's desired to be auto-expandable
     if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
 
     var minRows = elm.getAttribute('data-min-rows') | 0, rows;
@@ -1117,8 +1089,6 @@
     rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 24)
     elm.rows = minRows + rows
   }
-
-  // global delegated event listener
   document.addEventListener('input', onExpandableTextareaInput);
 </script>
 
@@ -1157,7 +1127,6 @@
       .catch(error => {
         console.error('Error:', error);
       });
-
   }
 
   async function handleSubmit(e) {
@@ -1314,19 +1283,8 @@
 
 <script>
   // Handle Tinder Imports
-  document.getElementById('fetchProfileButton').addEventListener('click', function () {
-    var tinderURL = document.getElementById('tinderURL').value;
-    fetchTinderProfile(tinderURL); // Replace with the desired username
-    // Hide the input and button
-    document.getElementById('tinderURL').classList.add('d-none');
-    document.getElementById('fetchProfileButton').classList.add('d-none');
-
-    // Show the loader
-    document.getElementById('tinder-loader').classList.remove('d-none');
-  });
-
   function fetchTinderProfile(username) {
-    const apiUrl = `https://Charm Check-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
+    const apiUrl = `https://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
 
     fetch(apiUrl)
       .then(response => response.json())
@@ -1337,7 +1295,6 @@
             // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
             displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
             var imageCount = messages[0]['content'].filter(item => item.type === 'image_url').length;
-            // Check if the number of image_url elements exceeds MAX_PHOTOS
             if (imageCount >= MAX_PHOTOS) {
               alert(`You cannot add more than ${MAX_PHOTOS} images.`);
               return; // Stop processing the new image
@@ -1357,14 +1314,10 @@
         if (data.age) {
           document.getElementById('ageDescription').value = data.age;
         }
-
-        // Update job title or school
         let jobOrSchool = data.job_title ? data.job_title : '';
         jobOrSchool += data.company_name ? ` at ${data.company_name}` : '';
         jobOrSchool += (!data.job_title && data.school) ? data.school : '';
         document.getElementById('jobTitleDescription').value = jobOrSchool;
-
-        // Add other elements as needed, similar to the above
       })
       .catch(error => {
         console.error('Error fetching profile:', error);
@@ -1372,6 +1325,18 @@
         document.getElementById('tinderFloatingPopup').classList.add('d-none');
       });
   }
+
+  // UI Helpers
+  document.getElementById('fetchProfileButton').addEventListener('click', function () {
+    var tinderURL = document.getElementById('tinderURL').value;
+    fetchTinderProfile(tinderURL); // Replace with the desired username
+    // Hide the input and button
+    document.getElementById('tinderURL').classList.add('d-none');
+    document.getElementById('fetchProfileButton').classList.add('d-none');
+
+    // Show the loader
+    document.getElementById('tinder-loader').classList.remove('d-none');
+  });
 
   document.getElementById('closePopupButton').addEventListener('click', function () {
     document.getElementById('tinderFloatingPopup').style.display = 'none';
