@@ -583,6 +583,19 @@
 </body>
 
 <script>
+  // Global messages array
+  var messages = [
+    {
+      "role": "user",
+      "content": [
+      ]
+    }
+  ];
+
+  const MAX_PHOTOS = 9;
+</script>
+
+<script>
   // Scripts to handle and convert image inputs
   function displayImage(base64Image) {
     // Create a div element as a container
@@ -660,10 +673,6 @@
     convertToBase64(file, function (base64) {
       let img = new Image();
       img.onload = function () {
-        // Check again in case images were added since the process started
-        if (imageCount >= MAX_PHOTOS) {
-          return; // Stop the image processing if the limit is reached
-        }
         let squareSize = Math.max(img.width, img.height);
         let canvas = document.createElement('canvas');
         canvas.width = canvas.height = squareSize;
@@ -734,17 +743,6 @@
 
 <script>
   // Scripts to handle API call
-
-  // Global messages array
-  var messages = [
-    {
-      "role": "user",
-      "content": [
-      ]
-    }
-  ];
-
-  var MAX_PHOTOS = 9;
   function addToMessageContent(dict, contentType) {
     var foundIndex = messages[0]['content'].findIndex(item => item.contentType === contentType);
 
@@ -764,14 +762,14 @@
     // Handle images first
     document.querySelectorAll('#image-container > div').forEach((div, index) => {
       var base64Image = div.querySelector('img').src;
-      // TODO: Can add an image counter here and break loop
-
-      addToMessageContent({
-        type: "image_url",
-        image_url: {
-          url: base64Image
-        }
-      }, `photo${index + 1}`);
+      if (index < MAX_PHOTOS) {
+        addToMessageContent({
+          type: "image_url",
+          image_url: {
+            url: base64Image
+          }
+        }, `photo${index + 1}`);
+      }
     });
 
     var aboutMeDescription = document.getElementById('aboutMeDescription').value;
@@ -841,29 +839,21 @@
   }
 
   function sendToAPI() {
-    console.log(messages);
-    // The URL of the API endpoint
     const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
-
-    // Prepare the HTTP headers
     const headers = {
       "Content-Type": "application/json",
     };
 
-    // Prepare the payload with the global messages array
+    processForm();
     const payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
       max_tokens: 1100
     };
 
-    // Process form to add more messages to the messages array
-    processForm();
-
     document.getElementById('loader').classList.remove("d-none");
     document.getElementById('sendButton').disabled = true;
 
-    // Send the POST request
     fetch(apiUrl, {
       method: "POST",
       headers: headers,
