@@ -1337,16 +1337,35 @@
   }
 
   // UI Helpers
-  document.getElementById('fetchProfileButton').addEventListener('click', function () {
-    var tinderURL = document.getElementById('tinderURL').value;
-    fetchTinderProfile(tinderURL); // Replace with the desired username
+  // Get the elements
+  var tinderURLInput = document.getElementById('tinderURL');
+  var fetchProfileButton = document.getElementById('fetchProfileButton');
+
+  // Event listener for the button click
+  fetchProfileButton.addEventListener('click', function () {
+    handleFetchProfile();
+  });
+
+  // Event listener for the input field to detect the Enter key press
+  tinderURLInput.addEventListener('keypress', function (event) {
+    if (event.keyCode === 13 || event.which === 13) { // 13 is the keycode for Enter
+      event.preventDefault(); // Prevent the default action of the Enter key in a form
+      handleFetchProfile();
+    }
+  });
+
+  // Function to handle fetching the profile
+  function handleFetchProfile() {
+    var tinderURL = tinderURLInput.value;
+    fetchTinderProfile(tinderURL); // Replace with the desired function call
+
     // Hide the input and button
-    document.getElementById('tinderURL').classList.add('d-none');
-    document.getElementById('fetchProfileButton').classList.add('d-none');
+    tinderURLInput.classList.add('d-none');
+    fetchProfileButton.classList.add('d-none');
 
     // Show the loader
     document.getElementById('tinder-loader').classList.remove('d-none');
-  });
+  }
 
   document.getElementById('closePopupButton').addEventListener('click', function () {
     document.getElementById('tinderFloatingPopup').style.display = 'none';
