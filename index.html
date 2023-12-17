@@ -647,6 +647,7 @@
 
     // Attach event listener to the "X" button
     closeButton.addEventListener('click', function () {
+      event.stopPropagation();
       divContainer.remove();
     });
 
