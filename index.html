@@ -647,7 +647,9 @@
 
     // Attach event listener to the "X" button
     closeButton.addEventListener('click', function () {
-      event.stopPropagation();
+      divContainer.remove();
+    });
+    closeButton.addEventListener('touchstart', function (event) {
       divContainer.remove();
     });
 
