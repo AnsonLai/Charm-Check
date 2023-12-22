@@ -329,13 +329,13 @@
         <div id="padding-container" class="d-none d-md-block" style="padding-top: 5rem; padding-bottom: 5rem;"></div>
         <div style="padding-top: 1rem; padding-bottom: 1rem;"></div>
 
-        <div id="photoCollector" class="col-md-6 offset-md-3 bg-white rounded shadow">
+        <div id="photoCollector" class="col-md-12 bg-white rounded shadow">
           <div class="row bg-white w-100 g-0 pt-5 pb-1 rounded-top text-dark text-center"
             style="background: linear-gradient(rgba(21, 2, 2, 0.6), rgba(66, 6, 6, 0.6)), url('openaivtestbg.png'); background-size: cover; background-position: center; ">
             <div class="col d-flex flex-column align-items-center">
               <div class="mb-3 pt-3 text-center text-white" style="border-radius: .5rem; width: 50%; min-width: 200px;">
-                <h2><strong>Swipe, Click, Match!</strong></h2>
-                <h6>Share your online dating profile, get <strong>FREE</strong> personalized feedback!</h6>
+                <h2><strong>Which photos should I use for my profile?</strong></h2>
+                <h6>Drop up to 50 photos, we'll find your <strong>BEST</strong> photos for online dating!</h6>
                 <br><br><br>
                 <h6 class="text-white mb-0"><small>Powered by OpenAI</small></h6>
               </div>
@@ -365,90 +365,45 @@
             <!-- Container for the processed images -->
             <div id="image-container" class="d-flex justify-content-center align-items-center flex-wrap pt-3">
             </div>
+
+            <div id="formCollection" class="px-5 py-2 text-white d-none">
+              <div class="d-flex justify-content-center">
+                <button id="sendButton" class="btn btn-danger mt-5 p-3 px-5" onclick="sendToAPI()"
+                  aria-describedby="sendHelp"><strong>Find my best picks!</strong></button>
+              </div>
+              <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will <em>immediately</em>
+                delete your photos after our analysis.</div>
+    
+              <div id="loader" class="container text-center my-4 d-none">
+                <div class="spinner-grow text-danger" role="status" style="height: 0.5rem; width: 0.5rem;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+                    animation: .75s linear 0.25s infinite spinner-grow;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+                    animation: .75s linear 0.5s infinite spinner-grow;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="form-text">Analysis may take up to 30 seconds.</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div id="formCollection" class="col-md-6 px-5 py-2 d-none text-white">
-          <form>
-            <div class="mb-3">
-              <label for="aboutMeDescription" class="form-label h6">About Me</label>
-              <textarea class="form-control" id="aboutMeDescription" rows="5" aria-describedby="aboutMeHelp"
-                maxlength="600"></textarea>
-              <small id="aboutMeHelp" class="form-text text-muted">Provide your current profile bio. Note that many
-                platforms limit character length.</small>
-            </div>
-            <div class="mb-3">
-              <label for="ageDescription" class="form-label h6">Age</label>
-              <input type="text" class="form-control" id="ageDescription" aria-describedby="ageHelp" maxlength="30">
-              <small id="ageHelp" class="form-text text-muted">Enter your age. You may specify a range.</small>
-            </div>
-            <div class="mb-3">
-              <label for="interestsDescription" class="form-label h6">Interests</label>
-              <input type="text" class="form-control" id="interestsDescription" aria-describedby="interestsHelp"
-                maxlength="150">
-              <small id="interestsHelp" class="form-text text-muted">Enter your interests and hobbies.</small>
-            </div>
-            <div class="mb-3">
-              <label for="relationshipTypeDescription" class="form-label h6">Relationship Type</label>
-              <input type="text" class="form-control" id="relationshipTypeDescription"
-                aria-describedby="relationshipHelp" maxlength="80">
-              <small id="relationshipHelp" class="form-text text-muted">Specify the type of relationship you are looking
-                for.</small>
-            </div>
-            <div class="mb-3">
-              <label for="jobTitleDescription" class="form-label h6">Job Title or School</label>
-              <input type="text" class="form-control" id="jobTitleDescription" aria-describedby="jobTitleHelp"
-                maxlength="80">
-              <small id="jobTitleHelp" class="form-text text-muted">Enter your job title or the school you
-                attend.</small>
-            </div>
-            <div class="mb-3">
-              <label for="importantDetailsDescription" class="form-label h6">Misc Important Details</label>
-              <input type="text" class="form-control" id="importantDetailsDescription" aria-describedby="detailsHelp"
-                maxlength="180">
-              <small id="detailsHelp" class="form-text text-muted">Include any details you feel are important (i.e.
-                height, language, religion).</small>
-            </div>
-            <div class="mb-3">
-              <label for="promptsAndAnswersDescription" class="form-label h6">Prompts and Answers</label>
-              <textarea class="form-control" id="promptsAndAnswersDescription" rows="5" aria-describedby="promptsHelp"
-                maxlength="850"></textarea>
-              <small id="promptsHelp" class="form-text text-muted">Write any prompts and your answers here.</small>
-            </div>
-          </form>
-          <div class="d-flex justify-content-center">
-            <button id="sendButton" class="btn btn-danger mt-5 p-3 px-5" onclick="sendToAPI()"
-              aria-describedby="sendHelp"><strong>Fix my profile!</strong></button>
-          </div>
-          <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will <em>immediately</em>
-            delete your photos after our analysis.</div>
 
-          <div id="loader" class="container text-center my-4 d-none">
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-                animation: .75s linear 0.25s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-                animation: .75s linear 0.5s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="form-text">Analysis may take up to 30 seconds.</div>
-          </div>
-        </div>
 
       </div>
 
       <div class="row g-0">
         <div id="analysis-container" class="col my-5 bg-white text-dark rounded shadow d-none">
-          <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Report</p>
+          <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Best Picks</p>
           <p id="apiResponse" class="p-5"></p>
         </div>
       </div>
 
-      <div class="row g-0">
+      <div class="row g-0 d-none">
         <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
           <div id="chatDisplay" class="pt-3 pb-3 px-5">
             <div class="row py-2">
@@ -551,35 +506,6 @@
     </div>
   </main>
 
-  <!-- Tinder Import Card -->
-  <div class="card" id="tinderFloatingPopup"
-    style="position: fixed; top: 20px; right: 20px; width: 320px; z-index: 1000;">
-    <button class="close-btn" id="closePopupButton"
-      style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;">&times;</button>
-    <div class="card-body">
-      <h5 class="card-title text-center">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span> photos!
-      </h5>
-      <div class="input-group mb-2">
-        <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
-          placeholder="https://tinder.com/@username" maxlength="180">
-        <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
-      </div>
-      <div id="tinder-loader" class="container text-center mb-2 d-none" style="">
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-        animation: .75s linear 0.25s infinite spinner-grow;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-        animation: .75s linear 0.5s infinite spinner-grow;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
     <div class="footer-copyright text-center py-3">
       <div class="text-center">
@@ -608,7 +534,7 @@
 
 <script>
   // Global variables
-  const MAX_PHOTOS = 9;
+  const MAX_PHOTOS = 50;
   var messages = [
     {
       "role": "user",
@@ -616,14 +542,6 @@
       ]
     }
   ];
-  var conversation = [{
-    "role": "assistant",
-    "content": [{
-      "type": "text",
-      "contentType": "initialResponse",
-      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your report."
-    }]
-  }];
 </script>
 
 <script>
@@ -690,7 +608,6 @@
     document.getElementById('photoCollector').classList.remove("offset-md-3");
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('tinderFloatingPopup').classList.add('d-none');
   }
 
   function convertToBase64(file, callback) {
@@ -790,75 +707,10 @@
         }, `photo${index + 1}`);
       }
     });
-
-    var aboutMeDescription = document.getElementById('aboutMeDescription').value;
-    var ageDescription = document.getElementById('ageDescription').value;
-    var interestsDescription = document.getElementById('interestsDescription').value;
-    var relationshipTypeDescription = document.getElementById('relationshipTypeDescription').value;
-    var jobTitleDescription = document.getElementById('jobTitleDescription').value;
-    var importantDetailsDescription = document.getElementById('importantDetailsDescription').value;
-    var promptsAndAnswersDescription = document.getElementById('promptsAndAnswersDescription').value;
-
-    // Default values if fields are empty
-    aboutMeDescription = aboutMeDescription || "[No details provided.]";
-    interestsDescription = interestsDescription || "[Not specified.]";
-    relationshipTypeDescription = relationshipTypeDescription || "[Not specified.]";
-    jobTitleDescription = jobTitleDescription || "[Not specified.]";
-    importantDetailsDescription = importantDetailsDescription || "[None provided.]";
-    promptsAndAnswersDescription = promptsAndAnswersDescription || "[No prompts answered.]";
-
-    // Add to message content
-    addToMessageContent({
-      type: "text",
-      contentType: "profileHeader",
-      text: `The user's dating profile currently contains the following fields`
-    }, "profileHeader");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "aboutMe",
-      text: `About me: ${aboutMeDescription}`
-    }, "aboutMe");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "age",
-      text: `Age: ${ageDescription}`
-    }, "age");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "interests",
-      text: `Interests: ${interestsDescription}`
-    }, "interests");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "relationshipType",
-      text: `Looking for: ${relationshipTypeDescription}`
-    }, "relationshipType");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "jobTitle",
-      text: `Profession/Education: ${jobTitleDescription}`
-    }, "jobTitle");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "importantDetails",
-      text: `Some important details highlighted are: ${importantDetailsDescription}`
-    }, "importantDetails");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "promptsAndAnswers",
-      text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
-    }, "promptsAndAnswers");
   }
 
   function sendToAPI() {
-    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
+    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_batch_photos/";
     const headers = {
       "Content-Type": "application/json",
     };
@@ -867,7 +719,7 @@
     const payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
-      max_tokens: 1100
+      max_tokens: 3600
     };
 
     document.getElementById('loader').classList.remove("d-none");
@@ -907,42 +759,6 @@
 
     var text = data["response"]["choices"][0]['message']['content'];
 
-    // Add to conversation if the report doesn't exist yet, otherwise, swap in place so only one report is in the conversation
-    let report_found = false;
-    for (let i = 0; i < conversation.length; i++) {
-      const contentArray = conversation[i]['content'];
-      for (let j = 0; j < contentArray.length; j++) {
-        const contentItem = contentArray[j];
-        if (contentItem['contentType'] === 'report') {
-          // Found an existing report, update its text
-          contentItem['text'] = text;
-          report_found = true;
-          // Add to conversation that a new report was requested
-          conversation.push({
-            "role": "user",
-            "content": [{
-              "type": "text",
-              "contentType": "userInput",
-              "text": "Thanks for changing your report with my new information!"
-            }]
-          });
-          break; // Exit the loop as we've found and updated the report
-        }
-      }
-      if (report_found) break; // Exit the outer loop as well
-    }
-    if (!report_found) {
-      // No existing report found, add a new one
-      conversation.unshift({
-        "role": "assistant",
-        "content": [{
-          "type": "text",
-          "contentType": "report",
-          "text": text
-        }]
-      });
-    }
-
     var html = converter.makeHtml(text);
     if (unhelpfulResponses.includes(text)) {
       throw new Error('GPT cannot assist.');
@@ -957,166 +773,6 @@
     document.getElementById('sendButton').disabled = false;
     document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
   }
-</script>
-
-<script>
-  // Chatbot scripts
-  function sendToConversationAPI() {
-    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_conversation/";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    var payload = {
-      model: "gpt-4-vision-preview",
-      messages: messages,
-      conversation: conversation,
-      max_tokens: 1100
-    };
-
-    // add ClientSecret if relevant
-    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecret');
-    if (paymentIntentClientSecret) {
-      payload['stripe_client_secret'] = paymentIntentClientSecret;
-    }
-
-    // Disable chat
-    document.getElementById('chat-loader').style.visibility = 'visible';
-    document.getElementById('buttonSend').disabled = true;
-
-    // Send the POST request
-    fetch(apiUrl, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payload)
-    })
-      .then(response => response.json())
-      .then(data => {
-        handleConversationAPIResponse(data)
-        // Allow chat again areas
-        document.getElementById('chat-loader').style.visibility = 'hidden';
-        document.getElementById('buttonSend').disabled = false;
-      }) // Pass the data to the new function
-      .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error with your chat.  Please hit submit to try again.');
-        document.getElementById('chat-loader').style.visibility = 'hidden';
-        document.getElementById('buttonSend').disabled = false;
-      });
-  }
-
-  function handleConversationAPIResponse(data) {
-    var converter = new showdown.Converter();
-    converter.setOption('disableForced4SpacesIndentedSublists', true);
-    converter.setOption('smartIndentationFix', true);
-
-    var text = data["response"]["choices"][0]['message']['content'];
-
-    conversation.push({
-      "role": "assistant",
-      "content": [{
-        "type": "text",
-        "contentType": "responseOutput",
-        "text": text
-      }]
-    });
-    var html = converter.makeHtml(text);
-
-    addToConversation('assistant', html)
-  }
-
-  // addToConveration
-  function addToConversation(role, message) {
-    var converter = new showdown.Converter();
-    converter.setOption('disableForced4SpacesIndentedSublists', true);
-    converter.setOption('smartIndentationFix', true);
-    var html = converter.makeHtml(message);
-    if (role == "user") {
-      var newDiv = $(`
-        <div class="user-convo row py-2">
-          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-            <div class="d-flex align-items-center ms-3">
-            </div>
-          </div>
-          <div class="col-11 ps-0">
-            <div class="d-flex justify-content-end p-3 rounded shadow-sm me-3" style="background-color: #ffcccc;">
-              <div class="text-start">
-                ${html}
-              </div>
-            </div>
-          </div>
-        </div>
-      `)
-    } else if (role == "assistant") {
-      var newDiv = $(`
-        <div class="assistant-convo row py-2">
-          <div class="col-11">
-            <div class="h-100 p-3 rounded shadow-sm ms-3"
-              style="background-color: #f9f9f9;">
-              ${html}
-            </div>
-          </div>
-          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-            <div class="d-flex align-items-center me-3">
-            </div>
-          </div>
-        </div>
-      `)
-    };
-
-    $("#chatDisplay").append(newDiv)
-  };
-
-  // UI Helpers
-  $('#buttonSend').click(function () {
-    $('#nameHero').hide();
-    // TODO: Prune messages if too long
-    conversation.push({
-      "role": "user",
-      "content": [{
-        "type": "text",
-        "contentType": "userInput",
-        "text": $('#floatingTextarea').val()
-      }]
-    });
-    sendToConversationAPI();
-    addToConversation('user', $('#floatingTextarea').val())
-    $("#loader").show();
-    $('#floatingTextarea').val('');
-    $('#floatingTextarea').attr('rows', '1');
-    window.scrollTo(0, document.body.scrollHeight);
-  });
-
-  // Handle alt+enter
-  const textarea = document.getElementById("floatingTextarea");
-  const buttonSend = document.getElementById("buttonSend");
-
-  textarea.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-      e.preventDefault(); // Prevent the default behavior (line break)
-      buttonSend.click(); // Trigger the button click
-    }
-  });
-
-  // Auto expand textarea: https://gist.github.com/i-havr/6b8e6f39da421360c6c054c9d2765d61, https://codepen.io/vsync/details/bGgQzL
-  function getScrollHeight(elm) {
-    var savedValue = elm.value
-    elm.value = ''
-    elm._baseScrollHeight = elm.scrollHeight
-    elm.value = savedValue
-  }
-
-  function onExpandableTextareaInput({ target: elm }) {
-    if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
-
-    var minRows = elm.getAttribute('data-min-rows') | 0, rows;
-    !elm._baseScrollHeight && getScrollHeight(elm)
-
-    elm.rows = minRows
-    rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 24)
-    elm.rows = minRows + rows
-  }
-  document.addEventListener('input', onExpandableTextareaInput);
 </script>
 
 <script>
@@ -1308,85 +964,5 @@
   });
 </script>
 
-<script>
-  // Handle Tinder Imports
-  function fetchTinderProfile(username) {
-    const apiUrl = `https://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
-
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('tinderFloatingPopup').classList.add('d-none');
-        if (data.images && data.images.length > 0) {
-          data.images.forEach(currentBase64Image => {
-            // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
-            displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
-            var imageCount = document.querySelectorAll('#image-container > div').length;
-            if (imageCount >= MAX_PHOTOS) {
-              alert(`You cannot add more than ${MAX_PHOTOS} images.`);
-              return; // Stop processing the new image
-            }
-            addToMessageContent({
-              type: "image_url",
-              image_url: {
-                url: `data:image/jpeg;base64,${currentBase64Image}`
-              }
-            }, `photo${imageCount}`);
-          });
-        } else {
-          alert('No images found for this profile.');
-        }
-
-        // Update form elements
-        if (data.age) {
-          document.getElementById('ageDescription').value = data.age;
-        }
-        let jobOrSchool = data.job_title ? data.job_title : '';
-        jobOrSchool += data.company_name ? ` at ${data.company_name}` : '';
-        jobOrSchool += (!data.job_title && data.school) ? data.school : '';
-        document.getElementById('jobTitleDescription').value = jobOrSchool;
-      })
-      .catch(error => {
-        console.error('Error fetching profile:', error);
-        alert('Failed to fetch profile.');
-        document.getElementById('tinderFloatingPopup').classList.add('d-none');
-      });
-  }
-
-  // UI Helpers
-  // Get the elements
-  var tinderURLInput = document.getElementById('tinderURL');
-  var fetchProfileButton = document.getElementById('fetchProfileButton');
-
-  // Event listener for the button click
-  fetchProfileButton.addEventListener('click', function () {
-    handleFetchProfile();
-  });
-
-  // Event listener for the input field to detect the Enter key press
-  tinderURLInput.addEventListener('keypress', function (event) {
-    if (event.keyCode === 13 || event.which === 13) { // 13 is the keycode for Enter
-      event.preventDefault(); // Prevent the default action of the Enter key in a form
-      handleFetchProfile();
-    }
-  });
-
-  // Function to handle fetching the profile
-  function handleFetchProfile() {
-    var tinderURL = tinderURLInput.value;
-    fetchTinderProfile(tinderURL); // Replace with the desired function call
-
-    // Hide the input and button
-    tinderURLInput.classList.add('d-none');
-    fetchProfileButton.classList.add('d-none');
-
-    // Show the loader
-    document.getElementById('tinder-loader').classList.remove('d-none');
-  }
-
-  document.getElementById('closePopupButton').addEventListener('click', function () {
-    document.getElementById('tinderFloatingPopup').style.display = 'none';
-  });
-</script>
 
 </html>
