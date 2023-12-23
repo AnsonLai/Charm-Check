@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <title> Charm Check | Crafting Irresistible Dating Profiles</title>
+  <link rel="shortcut icon" href="favicon.png">
+  <link rel="canonical" href="https://www.thecharmcheck.com">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Anson Lai">
+  <meta name="application-name" content="Charm Check">
+  <meta name="description"
+    content="Charm Check offers personalized dating profile critiques to help you make the best first impression. Get advice on profile photos, bio text, and more for a knockout first impression.">
+  <meta name="keywords"
+    content="dating, profile critique, relationship advice, profile optimization, online dating, dating app, Charm Check, evaluate">
+  <meta name="twitter:title" content="Charm Check: Elevate Your Dating Profile">
+  <meta name="twitter:description"
+    content="Get expert advice on your dating profile with Charm Check. Our AI-driven insights help refine your profile for maximum appeal. Try now for a standout profile!">
+  <meta name="twitter:creator" content="@PharaohsVizier">
+  <meta name="twitter:image" content="webpreview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="Charm Check: Personalized Dating Profile Advice">
+  <meta property="og:description"
+    content="With Charm Check, enhance your dating profile with AI-powered critiques. Discover the secrets to a more engaging profile and better matches today!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="webpreview.png">
+  <meta property="og:logo" content="logo.png">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Language" content="en-US">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta property="og:locale" content="en_US">
+  <meta name="language" content="English">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"
+    integrity="sha512-LhccdVNGe2QMEfI3x4DVV3ckMRe36TfydKss6mJpdHjNFiV07dFpS2xzeZedptKZrwxfICJpez09iNioiSZ3hA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+</head>
+
+<style>
+  pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .assistant-convo p:last-child {
+    margin-bottom: 0;
+  }
+
+  .user-convo p:last-child {
+    margin-bottom: 0;
+  }
+</style>
+
+<body class="d-flex flex-column h-100" onload="setup()" style="background-color: rgb(39, 39, 39);">
+  <nav class="navbar navbar-expand-md navbar-light" style="background-color: rgb(39, 39, 39);">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <div style="height: 3rem; width: 3rem;">
+          <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+          <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.00 0.00 296.00 303.00">
+            <g stroke-width="2.00" fill="none" stroke-linecap="butt">
+              <path stroke="#b12b3c" vector-effect="non-scaling-stroke" d="
+            M 18.72 130.16
+            Q 11.84 175.67 32.59 216.10
+            C 46.11 242.47 68.18 262.36 94.44 274.76
+            C 145.70 298.95 209.12 285.45 246.87 243.31
+            C 252.02 237.57 260.05 228.30 263.96 221.72
+            C 271.08 209.72 264.22 191.91 249.50 190.55
+            C 238.43 189.53 233.93 194.97 228.32 203.27
+            Q 224.13 209.47 216.46 217.70
+            C 195.95 239.71 168.58 250.72 138.44 247.08
+            C 118.78 244.71 101.34 236.72 86.86 223.33
+            C 68.92 206.73 59.21 186.76 56.55 162.47" />
+              <path stroke="#b12b3c" vector-effect="non-scaling-stroke" d="
+            M 56.55 162.47
+            C 54.77 141.24 58.95 118.36 70.92 100.43
+            C 95.63 63.41 139.06 45.38 181.48 63.94
+            Q 190.57 67.92 192.37 68.25
+            Q 200.23 69.68 207.49 64.72
+            C 217.91 57.60 216.93 42.81 208.83 34.63
+            Q 204.73 30.50 194.53 26.68
+            C 175.36 19.51 153.38 15.20 133.44 17.90
+            Q 80.59 25.08 47.46 65.92
+            C 32.83 83.96 22.24 107.24 18.72 130.16" />
+              <path stroke="#b12b3c" vector-effect="non-scaling-stroke" d="
+            M 56.55 162.47
+            Q 56.08 162.51 55.82 163.24
+            Q 55.73 163.49 55.62 163.25
+            Q 55.56 163.13 55.50 163.00
+            A 0.14 0.14 0.0 0 0 55.25 163.00
+            Q 55.19 163.13 55.12 163.26
+            Q 55.11 163.28 55.11 163.26
+            Q 55.03 162.98 54.72 162.80
+            Q 54.56 162.70 54.45 162.79
+            Q 54.38 162.85 54.37 162.75
+            Q 54.19 161.42 52.96 160.93
+            Q 52.40 160.71 52.40 161.31
+            Q 52.40 162.03 53.23 162.49
+            Q 53.25 162.50 53.22 162.46
+            Q 53.18 162.38 53.29 162.37
+            Q 53.38 162.36 53.38 162.50
+            Q 53.38 162.64 53.38 162.77
+            A 0.10 0.03 9.6 0 1 53.27 162.78
+            L 49.51 162.09
+            Q 49.44 162.07 49.46 162.05
+            Q 49.53 161.95 49.60 161.83
+            Q 49.68 161.66 49.55 161.53
+            Q 48.14 160.06 47.35 158.19
+            Q 47.17 157.76 46.75 157.54
+            Q 46.03 157.17 45.91 156.45
+            Q 45.86 156.16 45.76 155.87
+            Q 45.52 155.12 45.06 154.44
+            Q 44.80 154.06 44.76 153.59
+            Q 44.67 152.53 43.71 152.26
+            Q 43.28 152.14 43.04 151.77
+            Q 41.84 149.90 40.09 148.59
+            C 38.97 147.74 38.26 146.52 36.86 145.91
+            Q 36.40 145.71 36.08 145.34
+            Q 35.04 144.13 33.39 143.20
+            Q 32.91 142.93 32.75 142.24
+            A 1.03 1.02 -77.9 0 0 32.36 141.63
+            Q 29.24 139.30 25.92 137.30
+            C 25.03 136.77 24.11 136.80 23.16 136.11
+            Q 22.79 135.84 22.57 135.44
+            Q 21.94 134.29 20.85 133.72
+            Q 20.53 133.55 20.40 133.21
+            L 19.70 131.42
+            Q 19.48 130.86 19.89 130.41
+            Q 20.45 129.80 20.29 128.90
+            Q 20.25 128.65 20.00 128.70
+            L 19.75 128.74
+            Q 19.67 128.76 19.68 128.84
+            Q 19.84 130.20 18.72 130.16" />
+              <path stroke="#b12b3c" vector-effect="non-scaling-stroke" d="
+            M 154.91 163.29
+            A 0.64 0.64 0.0 0 1 153.98 163.30
+            Q 140.34 149.29 126.60 135.24
+            Q 118.91 127.38 116.63 126.11
+            C 107.37 120.95 95.59 125.30 90.65 134.61
+            C 84.05 147.05 90.32 155.98 98.92 164.83
+            Q 116.96 183.41 135.30 201.70
+            Q 140.99 207.37 144.35 209.02
+            C 153.72 213.62 164.65 209.74 171.76 202.73
+            C 203.96 170.96 235.79 138.75 268.33 107.33
+            Q 273.82 102.03 275.30 98.53
+            C 279.26 89.11 275.07 78.55 267.70 73.30
+            C 258.82 66.98 248.90 68.53 241.25 75.98
+            Q 221.73 95.01 211.61 105.36
+            C 192.72 124.67 173.51 143.70 154.91 163.29" />
+            </g>
+            <path fill="#b12b3c" d="
+            M 56.55 162.47
+            Q 56.08 162.51 55.82 163.24
+            Q 55.73 163.49 55.62 163.25
+            Q 55.56 163.13 55.50 163.00
+            A 0.14 0.14 0.0 0 0 55.25 163.00
+            Q 55.19 163.13 55.12 163.26
+            Q 55.11 163.28 55.11 163.26
+            Q 55.03 162.98 54.72 162.80
+            Q 54.56 162.70 54.45 162.79
+            Q 54.38 162.85 54.37 162.75
+            Q 54.19 161.42 52.96 160.93
+            Q 52.40 160.71 52.40 161.31
+            Q 52.40 162.03 53.23 162.49
+            Q 53.25 162.50 53.22 162.46
+            Q 53.18 162.38 53.29 162.37
+            Q 53.38 162.36 53.38 162.50
+            Q 53.38 162.64 53.38 162.77
+            A 0.10 0.03 9.6 0 1 53.27 162.78
+            L 49.51 162.09
+            Q 49.44 162.07 49.46 162.05
+            Q 49.53 161.95 49.60 161.83
+            Q 49.68 161.66 49.55 161.53
+            Q 48.14 160.06 47.35 158.19
+            Q 47.17 157.76 46.75 157.54
+            Q 46.03 157.17 45.91 156.45
+            Q 45.86 156.16 45.76 155.87
+            Q 45.52 155.12 45.06 154.44
+            Q 44.80 154.06 44.76 153.59
+            Q 44.67 152.53 43.71 152.26
+            Q 43.28 152.14 43.04 151.77
+            Q 41.84 149.90 40.09 148.59
+            C 38.97 147.74 38.26 146.52 36.86 145.91
+            Q 36.40 145.71 36.08 145.34
+            Q 35.04 144.13 33.39 143.20
+            Q 32.91 142.93 32.75 142.24
+            A 1.03 1.02 -77.9 0 0 32.36 141.63
+            Q 29.24 139.30 25.92 137.30
+            C 25.03 136.77 24.11 136.80 23.16 136.11
+            Q 22.79 135.84 22.57 135.44
+            Q 21.94 134.29 20.85 133.72
+            Q 20.53 133.55 20.40 133.21
+            L 19.70 131.42
+            Q 19.48 130.86 19.89 130.41
+            Q 20.45 129.80 20.29 128.90
+            Q 20.25 128.65 20.00 128.70
+            L 19.75 128.74
+            Q 19.67 128.76 19.68 128.84
+            Q 19.84 130.20 18.72 130.16
+            C 22.24 107.24 32.83 83.96 47.46 65.92
+            Q 80.59 25.08 133.44 17.90
+            C 153.38 15.20 175.36 19.51 194.53 26.68
+            Q 204.73 30.50 208.83 34.63
+            C 216.93 42.81 217.91 57.60 207.49 64.72
+            Q 200.23 69.68 192.37 68.25
+            Q 190.57 67.92 181.48 63.94
+            C 139.06 45.38 95.63 63.41 70.92 100.43
+            C 58.95 118.36 54.77 141.24 56.55 162.47
+            Z" />
+            <path fill="#b12b3c" d="
+            M 154.91 163.29
+            C 173.51 143.70 192.72 124.67 211.61 105.36
+            Q 221.73 95.01 241.25 75.98
+            C 248.90 68.53 258.82 66.98 267.70 73.30
+            C 275.07 78.55 279.26 89.11 275.30 98.53
+            Q 273.82 102.03 268.33 107.33
+            C 235.79 138.75 203.96 170.96 171.76 202.73
+            C 164.65 209.74 153.72 213.62 144.35 209.02
+            Q 140.99 207.37 135.30 201.70
+            Q 116.96 183.41 98.92 164.83
+            C 90.32 155.98 84.05 147.05 90.65 134.61
+            C 95.59 125.30 107.37 120.95 116.63 126.11
+            Q 118.91 127.38 126.60 135.24
+            Q 140.34 149.29 153.98 163.30
+            A 0.64 0.64 0.0 0 0 154.91 163.29
+            Z" />
+            <path fill="#b12b3c" d="
+            M 56.55 162.47
+            C 59.21 186.76 68.92 206.73 86.86 223.33
+            C 101.34 236.72 118.78 244.71 138.44 247.08
+            C 168.58 250.72 195.95 239.71 216.46 217.70
+            Q 224.13 209.47 228.32 203.27
+            C 233.93 194.97 238.43 189.53 249.50 190.55
+            C 264.22 191.91 271.08 209.72 263.96 221.72
+            C 260.05 228.30 252.02 237.57 246.87 243.31
+            C 209.12 285.45 145.70 298.95 94.44 274.76
+            C 68.18 262.36 46.11 242.47 32.59 216.10
+            Q 11.84 175.67 18.72 130.16
+            Q 19.84 130.20 19.68 128.84
+            Q 19.67 128.76 19.75 128.74
+            L 20.00 128.70
+            Q 20.25 128.65 20.29 128.90
+            Q 20.45 129.80 19.89 130.41
+            Q 19.48 130.86 19.70 131.42
+            L 20.40 133.21
+            Q 20.53 133.55 20.85 133.72
+            Q 21.94 134.29 22.57 135.44
+            Q 22.79 135.84 23.16 136.11
+            C 24.11 136.80 25.03 136.77 25.92 137.30
+            Q 29.24 139.30 32.36 141.63
+            A 1.03 1.02 -77.9 0 1 32.75 142.24
+            Q 32.91 142.93 33.39 143.20
+            Q 35.04 144.13 36.08 145.34
+            Q 36.40 145.71 36.86 145.91
+            C 38.26 146.52 38.97 147.74 40.09 148.59
+            Q 41.84 149.90 43.04 151.77
+            Q 43.28 152.14 43.71 152.26
+            Q 44.67 152.53 44.76 153.59
+            Q 44.80 154.06 45.06 154.44
+            Q 45.52 155.12 45.76 155.87
+            Q 45.86 156.16 45.91 156.45
+            Q 46.03 157.17 46.75 157.54
+            Q 47.17 157.76 47.35 158.19
+            Q 48.14 160.06 49.55 161.53
+            Q 49.68 161.66 49.60 161.83
+            Q 49.53 161.95 49.46 162.05
+            Q 49.44 162.07 49.51 162.09
+            L 53.27 162.78
+            A 0.10 0.03 9.6 0 0 53.38 162.77
+            Q 53.38 162.64 53.38 162.50
+            Q 53.38 162.36 53.29 162.37
+            Q 53.18 162.38 53.22 162.46
+            Q 53.25 162.50 53.23 162.49
+            Q 52.40 162.03 52.40 161.31
+            Q 52.40 160.71 52.96 160.93
+            Q 54.19 161.42 54.37 162.75
+            Q 54.38 162.85 54.45 162.79
+            Q 54.56 162.70 54.72 162.80
+            Q 55.03 162.98 55.11 163.26
+            Q 55.11 163.28 55.12 163.26
+            Q 55.19 163.13 55.25 163.00
+            A 0.14 0.14 0.0 0 1 55.50 163.00
+            Q 55.56 163.13 55.62 163.25
+            Q 55.73 163.49 55.82 163.24
+            Q 56.08 162.51 56.55 162.47
+            Z" />
+          </svg>
+        </div>
+        <span style="margin-left: 0.6rem; font-size: 2rem; color: #b12b3c;"><strong
+            style="color: #ffffff;">Charm</strong>Check</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="filter: invert(1);">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse ms-4" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/batch.html">Batch Photos<span
+                class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.55rem; top: 25%;">NEW</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow-1">
+    <div class="container">
+
+      <div class="row g-0">
+        <div id="padding-container" class="d-none d-md-block" style="padding-top: 5rem; padding-bottom: 5rem;"></div>
+        <div style="padding-top: 1rem; padding-bottom: 1rem;"></div>
+
+        <div id="photoCollector" class="col-md-12 bg-white rounded shadow">
+          <div class="row bg-white w-100 g-0 pt-5 pb-1 rounded-top text-dark text-center"
+            style="background: linear-gradient(rgba(21, 2, 2, 0.6), rgba(66, 6, 6, 0.6)), url('openaivtestbg.png'); background-size: cover; background-position: center; ">
+            <div class="col d-flex flex-column align-items-center">
+              <div class="mb-3 pt-3 text-center text-white" style="border-radius: .5rem; width: 50%; min-width: 200px;">
+                <h2><strong>Which photos should I use for my profile?</strong></h2>
+                <h6>Drop up to 50 photos per batch, we'll find your <strong>BEST</strong> photos for online dating!</h6>
+                <br><br><br>
+                <h6 class="text-white mb-0"><small>Powered by OpenAI</small></h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="row bg-white w-100 g-0 py-5 rounded-bottom text-dark position-relative">
+            <div class="d-flex flex-column align-items-center">
+              <div class="col d-flex flex-column align-items-center">
+                <!-- Drop area -->
+                <div id="drop-area" class="drop-area mb-3 p-3 text-center text-dark"
+                  style="border: 2px dashed #df3b3b; border-radius: .5rem; width: 50%; min-width: 200px;">
+                  <p class="mb-0"><strong>Drop Photos Here</strong></p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center w-25 my-3">
+                <hr class="flex-grow-1">
+                <span class="mx-2">or</span>
+                <hr class="flex-grow-1">
+              </div>
+              <!-- File input -->
+              <div class="text-center mt-3">
+                <input type="file" id="fileElem" accept="image/*" multiple style="display: none;">
+                <label class="btn btn-danger p-3 px-5" for="fileElem"><strong>Select Photos</strong></label>
+              </div>
+
+              <!-- Paywall Overlay -->
+              <div id="paywallOverlay"
+                class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
+                <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
+                  onClick="initialize(); checkStatus();"><strong class="lead" style="font-size: 1.5rem;">We'll pick your best photos!</strong><br>Drop your entire photo album here and we'll tell you what's best for your dating profile. As a thank you for early users, access for only <span style="font-weight: 900;">$5.99!</span> (reg. $24.99)</button>
+              </div>
+            </div>
+            <!-- Container for the processed images -->
+            <div id="image-container" class="d-flex justify-content-center align-items-center flex-wrap pt-3">
+            </div>
+
+            <div id="formCollection" class="px-5 py-2 text-white d-none">
+              <div class="d-flex justify-content-center">
+                <button id="sendButton" class="btn btn-danger mt-5 p-3 px-5" onclick="sendToAPI()"
+                  aria-describedby="sendHelp"><strong>Find my best picks!</strong></button>
+              </div>
+              <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will
+                <em>immediately</em>
+                delete your photos after our analysis.
+              </div>
+
+              <div id="loader" class="container text-center my-4 d-none">
+                <div class="spinner-grow text-danger" role="status" style="height: 0.5rem; width: 0.5rem;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+                    animation: .75s linear 0.25s infinite spinner-grow;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+                    animation: .75s linear 0.5s infinite spinner-grow;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="form-text">Analysis may take up to 60 seconds.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="row g-0">
+        <div id="analysis-container" class="col my-5 bg-white text-dark rounded shadow d-none">
+          <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Best Picks</p>
+          <p id="apiResponse" class="p-5"></p>
+        </div>
+      </div>
+
+      <!-- Payment Modal -->
+      <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header border-bottom-0 bg-dark text-white">
+              <div class="col text-center">
+                <h1 class="modal-title fs-5" id="paymentModalLabel">Batch Photo Access (1 hour) - Early Access Discount</h1>
+                <h1 class="fs-3"><del>$24.99 USD</del></h1>
+                <h1 class="fs-3">$5.99 USD</h1>
+              </div>
+              <div class="col-auto">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center">
+              <div id="payment-form" class="shadow"
+                style="width: 30vw; min-width: 500px; max-width: 100%; border-radius: 7px; padding: 40px;">
+                <div id="payment-element" style="margin-bottom: 24px;">
+                  <!--Stripe.js injects the Payment Element here-->
+                </div>
+                <label for="paymentSubmit" class="mb-2"></label>
+                <button id="paymentSubmit" onclick="handleSubmit()"
+                  style="background: #5469d4; color: #ffffff; border-radius: 4px; border: 0; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07); width: 100%;">
+                  <div class="spinner hidden" id="spinner"></div>
+                  <span id="button-text">Pay $5.99</span>
+                </button>
+                <div id="payment-message" class="hidden"
+                  style="color: rgb(105, 115, 134); font-size: 16px; line-height: 20px; padding-top: 12px; text-align: center;">
+                </div>
+                <div class="d-flex justify-content-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="5.1rem"
+                    height="2.1rem" viewBox="0 0 512 214" version="1.1" preserveAspectRatio="xMidYMid">
+                    <g>
+                      <path
+                        d="M35.9822222,83.4844444 C35.9822222,77.9377778 40.5333333,75.8044444 48.0711111,75.8044444 C58.88,75.8044444 72.5333333,79.0755556 83.3422222,84.9066667 L83.3422222,51.4844444 C71.5377778,46.7911111 59.8755556,44.9422222 48.0711111,44.9422222 C19.2,44.9422222 0,60.0177778 0,85.1911111 C0,124.444444 54.0444444,118.186667 54.0444444,135.111111 C54.0444444,141.653333 48.3555556,143.786667 40.3911111,143.786667 C28.5866667,143.786667 13.5111111,138.951111 1.56444444,132.408889 L1.56444444,166.257778 C14.7911111,171.946667 28.16,174.364444 40.3911111,174.364444 C69.9733333,174.364444 90.3111111,159.715556 90.3111111,134.257778 C90.1688889,91.8755556 35.9822222,99.4133333 35.9822222,83.4844444 Z M132.124444,16.4977778 L97.4222222,23.8933333 L97.28,137.813333 C97.28,158.862222 113.066667,174.364444 134.115556,174.364444 C145.777778,174.364444 154.311111,172.231111 159.004444,169.671111 L159.004444,140.8 C154.453333,142.648889 131.982222,149.191111 131.982222,128.142222 L131.982222,77.6533333 L159.004444,77.6533333 L159.004444,47.36 L131.982222,47.36 L132.124444,16.4977778 Z M203.235556,57.8844444 L200.96,47.36 L170.24,47.36 L170.24,171.804444 L205.795556,171.804444 L205.795556,87.4666667 C214.186667,76.5155556 228.408889,78.5066667 232.817778,80.0711111 L232.817778,47.36 C228.266667,45.6533333 211.626667,42.5244444 203.235556,57.8844444 Z M241.493333,47.36 L277.191111,47.36 L277.191111,171.804444 L241.493333,171.804444 L241.493333,47.36 Z M241.493333,36.5511111 L277.191111,28.8711111 L277.191111,0 L241.493333,7.53777778 L241.493333,36.5511111 Z M351.431111,44.9422222 C337.493333,44.9422222 328.533333,51.4844444 323.555556,56.0355556 L321.706667,47.2177778 L290.417778,47.2177778 L290.417778,213.048889 L325.973333,205.511111 L326.115556,165.262222 C331.235556,168.96 338.773333,174.222222 351.288889,174.222222 C376.746667,174.222222 399.928889,153.742222 399.928889,108.657778 C399.786667,67.4133333 376.32,44.9422222 351.431111,44.9422222 Z M342.897778,142.933333 C334.506667,142.933333 329.528889,139.946667 326.115556,136.248889 L325.973333,83.4844444 C329.671111,79.36 334.791111,76.5155556 342.897778,76.5155556 C355.84,76.5155556 364.8,91.0222222 364.8,109.653333 C364.8,128.711111 355.982222,142.933333 342.897778,142.933333 Z M512,110.08 C512,73.6711111 494.364444,44.9422222 460.657778,44.9422222 C426.808889,44.9422222 406.328889,73.6711111 406.328889,109.795556 C406.328889,152.604444 430.506667,174.222222 465.208889,174.222222 C482.133333,174.222222 494.933333,170.382222 504.604444,164.977778 L504.604444,136.533333 C494.933333,141.368889 483.84,144.355556 469.76,144.355556 C455.964444,144.355556 443.733333,139.52 442.168889,122.737778 L511.715556,122.737778 C511.715556,120.888889 512,113.493333 512,110.08 Z M441.742222,96.5688889 C441.742222,80.4977778 451.555556,73.8133333 460.515556,73.8133333 C469.191111,73.8133333 478.435556,80.4977778 478.435556,96.5688889 L441.742222,96.5688889 L441.742222,96.5688889 Z"
+                        fill="#e6e6e6" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer border-top-0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
+    <div class="footer-copyright text-center py-3">
+      <div class="text-center">
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="text-start d-inline-block align-center">
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+              data-name="bmc-button" data-slug="ansonlai" data-color="#FFDD00" data-emoji="" data-font="Lato"
+              data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
+              data-coffee-color="#ffffff"></script>
+          </div>
+          <div class="text-start d-inline-block align-center ms-3">
+          </div>
+        </div>
+      </div>
+      <p class="small mt-2 text-white">Want to support this site? Every dollar goes a long way to keep this
+        site running.</p>
+      <p class="small text-white"><a href="https://thecharmcheck.reference.legal/docs/privacy-policy/" target="_blank"
+          class="text-white">Privacy</a> |
+        <a href="https://thecharmcheck.reference.legal/docs/terms-of-use/" target="_blank" class="text-white">Terms of
+          Use</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+
+<script>
+  // Global variables
+  const MAX_PHOTOS = 50;
+  var messages = [
+    {
+      "role": "user",
+      "content": [
+      ]
+    }
+  ];
+</script>
+
+<script>
+  // Scripts to handle and convert image inputs
+  function displayImage(base64Image) {
+    // Count only 'image_url' type elements in the 'content' array
+    var imageCount = document.querySelectorAll('#image-container > div').length;
+
+    // Check if the number of image_url elements exceeds MAX_PHOTOS
+    if (imageCount >= MAX_PHOTOS) {
+      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      return; // Stop processing the new image
+    }
+
+    // Create a div element as a container
+    var divContainer = document.createElement('div');
+    divContainer.style.position = 'relative';
+    divContainer.style.display = 'inline-block'; // Allows the X button to be positioned correctly
+
+    // Create an image element
+    var imgElement = document.createElement('img');
+    imgElement.src = base64Image;
+    imgElement.style.maxWidth = '150px';
+    imgElement.style.maxHeight = '150px';
+    imgElement.style.marginTop = '5px';
+    imgElement.style.marginRight = '5px';
+    imgElement.style.marginLeft = '5px';
+
+    // Create an "X" button
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '0';
+    closeButton.style.right = '0';
+    closeButton.style.background = 'red';
+    closeButton.style.color = 'white';
+    closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '3px'; // Rounded corners
+    closeButton.style.width = '15px'; // Smaller width
+    closeButton.style.height = '15px'; // Smaller height
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.display = 'flex'; // Use flexbox for centering
+    closeButton.style.justifyContent = 'center'; // Center horizontally
+    closeButton.style.alignItems = 'center'; // Center vertically
+    closeButton.style.fontSize = '0.8rem';
+
+    // Attach event listener to the "X" button
+    closeButton.addEventListener('click', function () {
+      divContainer.remove();
+    });
+    closeButton.addEventListener('touchstart', function () {
+      divContainer.remove();
+    });
+
+    // Append the image and the "X" button to the div
+    divContainer.appendChild(imgElement);
+    divContainer.appendChild(closeButton);
+
+    // Append the div to the image container
+    document.getElementById('image-container').appendChild(divContainer);
+
+    // Additional UI adjustment
+    document.getElementById('image-container').style.marginTop = '5rem';
+    document.getElementById('photoCollector').classList.remove("offset-md-3");
+    document.getElementById('formCollection').classList.remove("d-none");
+    document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function convertToBase64(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      callback(event.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function processImage(file) {
+    convertToBase64(file, function (base64) {
+      let img = new Image();
+      img.onload = function () {
+        let squareSize = Math.max(img.width, img.height);
+        let canvas = document.createElement('canvas');
+        canvas.width = canvas.height = squareSize;
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(img, (squareSize - img.width) / 2, (squareSize - img.height) / 2);
+        let resizeCanvas = document.createElement('canvas');
+        resizeCanvas.width = resizeCanvas.height = 512;
+        let resizeCtx = resizeCanvas.getContext('2d');
+        resizeCtx.drawImage(canvas, 0, 0, 512, 512);
+        let dataURL = resizeCanvas.toDataURL('image/png');
+        window.currentBase64Image = dataURL.split(',')[1]; // Remove the Data URL prefix for pure Base64
+        displayImage(dataURL);
+
+      };
+      img.src = base64;
+    });
+  }
+
+  // UI Helpers
+  function setupSortable() {
+    Sortable.create(document.getElementById('image-container'), {
+      animation: 150,
+    });
+  }
+
+  function setup() {
+    setupSortable();
+
+    let dropArea = document.getElementById('drop-area');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    dropArea.addEventListener('drop', handleDrop, false);
+    document.getElementById('fileElem').addEventListener('change', handleBrowse, false);
+  }
+
+  function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function handleDrop(e) {
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    handleFiles(files);
+  }
+
+  function handleBrowse(e) {
+    handleFiles(e.target.files);
+  }
+
+  function handleFiles(files) {
+    ([...files]).forEach(processImage);
+  }
+</script>
+
+<script>
+  // Scripts to handle API call
+  function addToMessageContent(dict, contentType) {
+    var foundIndex = messages[0]['content'].findIndex(item => item.contentType === contentType);
+    if (foundIndex !== -1) {
+      messages[0]['content'][foundIndex] = dict;
+    } else {
+      messages[0]['content'].push(dict);
+    }
+  }
+
+  function processForm() {
+    // Clear message stack
+    messages[0]['content'] = []
+
+    // Handle images first
+    document.querySelectorAll('#image-container > div').forEach((div, index) => {
+      var base64Image = div.querySelector('img').src;
+      if (index < MAX_PHOTOS) {
+        addToMessageContent({
+          type: "image_url",
+          image_url: {
+            url: base64Image
+          }
+        }, `photo${index + 1}`);
+      }
+    });
+  }
+
+  function sendToAPI() {
+    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_batch_photos/";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    processForm();
+    const payload = {
+      model: "gpt-4-vision-preview",
+      messages: messages,
+      max_tokens: 3600,
+      client_secret: localStorage.getItem('paymentIntentClientSecretBatch'),
+    };
+
+    document.getElementById('loader').classList.remove("d-none");
+    document.getElementById('sendButton').disabled = true;
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => handleAPIResponse(data)) // Pass the data to the new function
+      .catch(error => {
+        console.error('Error:', error);
+        alert('We have tight content guidelines.  Please remove inappropriate photos, then try again.');
+        document.getElementById('loader').classList.add("d-none");
+        document.getElementById('sendButton').disabled = false;
+        document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
+      });
+  }
+
+  function handleAPIResponse(data) {
+    var converter = new showdown.Converter();
+    converter.setOption('disableForced4SpacesIndentedSublists', true);
+    converter.setOption('smartIndentationFix', true);
+
+    let unhelpfulResponses = [
+      `I'm sorry, I can't assist with that request.`,
+      "I'm sorry, I cannot provide the assistance you're asking for.",
+      "I'm sorry, I can't provide assistance with that request.",
+      "I'm sorry, but I can't provide information based on these images.",
+      "Unfortunately, I can't assist with that request.",
+      "I'm sorry, I can't provide information about the person in the photo.",
+      "I'm sorry, but I am unable to provide the service you are asking for.",
+      "I'm sorry, I can't provide the requested analysis or suggestions."
+    ];
+
+    var text = data["response"]["choices"][0]['message']['content'];
+
+    var html = converter.makeHtml(text);
+    if (unhelpfulResponses.includes(text)) {
+      throw new Error('GPT cannot assist.');
+    }
+    document.getElementById('apiResponse').innerHTML = html;
+    document.getElementById('analysis-container').classList.remove("d-none");
+    document.getElementById('chat-container').classList.remove("d-none");
+    document.getElementById('loader').classList.add("d-none");
+    document.getElementById('analysis-container').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('padding-container').classList.add("d-none");
+    document.getElementById('padding-container').classList.remove("d-md-block");
+    document.getElementById('sendButton').disabled = false;
+    document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
+  }
+</script>
+
+<script>
+  // Handle Stripe.js payments
+  const stripe = Stripe("pk_live_51OILtSIELqMaA55AoAxgHHwft4t0Fxl7hbiP3A3hlV5e9H2wId7G88A69bfixupL2Xa2K9739DdcHa5DY3liVcC10078uHrsW5");
+
+  let elements;
+  checkIfPreviouslyPaid();
+
+  // Fetches a payment intent and captures the client secret
+  function initialize() {
+    fetch("https://gptvisionapiopenai.azurewebsites.net/stripe/process_payment/", {
+      method: "POST",
+      body: JSON.stringify({
+        "amount": 599,
+        "currency": "usd"
+      }),
+    }).then(response => response.json())
+      .then(data => {
+        const clientSecret = data['response']['client_secret'];
+
+        const appearance = {
+          theme: 'stripe',
+        };
+        elements = stripe.elements({ appearance, clientSecret });
+
+        const paymentElementOptions = {
+          layout: "tabs",
+        };
+
+        const paymentElement = elements.create("payment", paymentElementOptions);
+        paymentElement.mount("#payment-element");
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  async function handleSubmit(e) {
+    setLoading(true);
+
+    try {
+      const response = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: "http://thecharmcheck.com/",
+          // receipt_email: emailAddress,
+        },
+        redirect: 'if_required',
+      });
+
+      const { error, paymentIntent } = response;
+
+      if (error) {
+        if (error.type === "card_error" || error.type === "validation_error") {
+          showMessage(error.message);
+        } else {
+          showMessage("An unexpected error occurred.");
+        }
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        showMessage("Payment succeeded!");
+
+        handlePaymentSuccess(paymentIntent.client_secret, paymentIntent.created);
+      } else {
+        showMessage("Payment failed!");
+      }
+
+    } catch (error) {
+      console.log("Caught an exception");
+      showMessage("An unexpected error occurred.");
+    }
+
+    setLoading(false);
+  }
+
+  // Fetches the payment intent status after payment submission
+  async function checkStatus() {
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret"
+    );
+
+    if (!clientSecret) {
+      return;
+    }
+
+    const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+    switch (paymentIntent.status) {
+      case "succeeded":
+        showMessage("Payment succeeded!");
+        break;
+      case "processing":
+        showMessage("Your payment is processing.");
+        break;
+      case "requires_payment_method":
+        showMessage("Your payment was not successful, please try again.");
+        break;
+      default:
+        showMessage("Something went wrong.");
+        break;
+    }
+  }
+
+  function handlePaymentSuccess(clientSecret, created) {
+    var paymentModal = document.getElementById('paymentModal');
+    var modalInstance = bootstrap.Modal.getInstance(paymentModal);
+    var paymentForm = document.getElementById('payment-form');
+
+    document.getElementById('paywallOverlay').classList.add('d-none');
+
+    setTimeout(function () {
+      modalInstance.hide();
+      paymentForm.remove();
+    }, 2000);
+
+    localStorage.setItem('paymentIntentClientSecretBatch', clientSecret);
+    localStorage.setItem('paymentIntentCreatedBatch', created);
+  }
+
+  function checkIfPreviouslyPaid() {
+    // Retrieve the items from localStorage
+    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecretBatch');
+    var paymentIntentCreated = localStorage.getItem('paymentIntentCreatedBatch');
+
+    // Check if time is in the last 2 hours
+    if (paymentIntentCreated) {
+      var storedDate = new Date(parseInt(paymentIntentCreated) * 1000); // Convert to milliseconds
+      var currentDate = new Date();
+      // Calculate the difference in hours
+      var differenceInHours = (currentDate - storedDate) / (1000 * 60 * 60);
+
+      // Check if the stored timestamp is within the last 2 hours
+      if (differenceInHours <= 2) {
+        var paymentForm = document.getElementById('payment-form');
+        document.getElementById('paywallOverlay').classList.add('d-none');
+        paymentForm.remove();
+      } else {
+        console.log("The stored timestamp is older than 2 hours.");
+      }
+    } else {
+      console.log("No stored timestamp found.");
+    }
+  }
+
+  // ------- UI helpers -------
+  function showMessage(messageText) {
+    const messageContainer = document.querySelector("#payment-message");
+
+    messageContainer.classList.remove("hidden");
+    messageContainer.textContent = messageText;
+
+    setTimeout(function () {
+      messageContainer.classList.add("hidden");
+      messageContainer.textContent = "";
+    }, 4000);
+  }
+
+  // Show a spinner on payment submission
+  function setLoading(isLoading) {
+    if (isLoading) {
+      // Disable the button and show a spinner
+      document.querySelector("#paymentSubmit").disabled = true;
+      document.querySelector("#spinner").classList.remove("hidden");
+      document.querySelector("#button-text").classList.add("hidden");
+    } else {
+      document.querySelector("#paymentSubmit").disabled = false;
+      document.querySelector("#spinner").classList.add("hidden");
+      document.querySelector("#button-text").classList.remove("hidden");
+    }
+  }
+
+  // Animate overlay
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const overlay = document.getElementById('paywallOverlay');
+    let opacity = 0.5;
+    let increasing = true;
+
+    setInterval(() => {
+      if (increasing) {
+        opacity += 0.05; // Smaller increment
+        if (opacity >= 0.8) increasing = false;
+      } else {
+        opacity -= 0.05; // Smaller decrement
+        if (opacity <= 0.3) increasing = true;
+      }
+      overlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+    }, 400); // Slower interval
+  });
+</script>
+
+
+</html>
