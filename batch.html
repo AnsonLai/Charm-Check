@@ -368,7 +368,7 @@
                 style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
                 <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
                   onClick="initialize(); checkStatus();"><strong class="lead" style="font-size: 1.5rem;">We'll pick your best photos!</strong><br>Drop your entire photo album here and we'll tell you what's best for your dating profile. Access for just
-                  <span style="font-weight: 900;">$24.99!</span></button>
+                  <del>$24.99!</del><span style="font-weight: 900;">$19.99!</span></button>
               </div>
             </div>
             <!-- Container for the processed images -->
@@ -397,7 +397,7 @@
                     animation: .75s linear 0.5s infinite spinner-grow;">
                   <span class="visually-hidden">Loading...</span>
                 </div>
-                <div class="form-text">Analysis may take up to 30 seconds.</div>
+                <div class="form-text">Analysis may take up to 60 seconds.</div>
               </div>
             </div>
 
@@ -415,50 +415,6 @@
         </div>
       </div>
 
-      <div class="row g-0 d-none">
-        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
-          <div id="chatDisplay" class="pt-3 pb-3 px-5">
-            <div class="row py-2">
-              <div class="col-11 ps-0">
-                <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
-                  style="background-color: #f9f9f9;">
-                  👋 Hi! I'm the Charm Check chatbot. Let's chat about your report.
-                </div>
-              </div>
-              <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                <div class="d-flex align-items-center me-3">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-            animation: .75s linear 0.25s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-            animation: .75s linear 0.5s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
-          <div class="container px-5">
-            <div class="input-group mb-3">
-              <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea" rows='1'
-                data-min-rows='1' style="max-height: 10rem;"></textarea>
-              <button class="btn btn-outline-secondary" type="button" id="buttonSend">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
       <!-- Payment Modal -->
       <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -466,7 +422,8 @@
             <div class="modal-header border-bottom-0 bg-dark text-white">
               <div class="col text-center">
                 <h1 class="modal-title fs-5" id="paymentModalLabel">Batch Photo Access (1 hour)</h1>
-                <h1 class="fs-3">$24.99 USD</h1>
+                <h1 class="fs-3"><del>$24.99 USD</del></h1>
+                <h1 class="fs-3">Now $19.99 USD until the New Year!</h1>
               </div>
               <div class="col-auto">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -482,7 +439,7 @@
                 <button id="paymentSubmit" onclick="handleSubmit()"
                   style="background: #5469d4; color: #ffffff; border-radius: 4px; border: 0; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07); width: 100%;">
                   <div class="spinner hidden" id="spinner"></div>
-                  <span id="button-text">Pay $24.99</span>
+                  <span id="button-text">Pay $19.99</span>
                 </button>
                 <div id="payment-message" class="hidden"
                   style="color: rgb(105, 115, 134); font-size: 16px; line-height: 20px; padding-top: 12px; text-align: center;">
@@ -790,7 +747,7 @@
     fetch("https://gptvisionapiopenai.azurewebsites.net/stripe/process_payment/", {
       method: "POST",
       body: JSON.stringify({
-        "amount": 2499,
+        "amount": 1999,
         "currency": "usd"
       }),
     }).then(response => response.json())
