@@ -494,9 +494,9 @@
             class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
             style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
             <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
-              onClick="initialize(); checkStatus();"><strong class="lead" style="font-size: 1.5rem;">Got
-                questions?</strong><br>Access our chatbot for just
-              <span style="font-weight: 900;">$2.99!</span></button>
+              onClick="initialize(); checkStatus();">
+              <strong class="lead" style="font-size: 1.5rem;">Ready for more insights?</strong><br>Unlock unlimited
+              chatting for 24 hours - only <span style="font-weight: 900;">$2.99!</span>
           </div>
 
         </div>
@@ -1082,8 +1082,12 @@
         "text": $('#floatingTextarea').val()
       }]
     });
-    sendToConversationAPI();
     addToConversation('user', $('#floatingTextarea').val())
+    // TODO: ADD PAYWALL HERE
+    if (conversation.length > 6 && !PAYMENT_MADE) {
+      $('#paywallOverlay').removeClass('d-none');
+    }
+    sendToConversationAPI();
     $("#loader").show();
     $('#floatingTextarea').val('');
     $('#floatingTextarea').attr('rows', '1');
@@ -1128,6 +1132,7 @@
 
   let elements;
   checkIfPreviouslyPaid();
+  var PAYMENT_MADE = false;
 
   // Fetches a payment intent and captures the client secret
   function initialize() {
@@ -1229,6 +1234,8 @@
     var modalInstance = bootstrap.Modal.getInstance(paymentModal);
     var paymentForm = document.getElementById('payment-form');
 
+    PAYMENT_MADE = true;
+
     document.getElementById('paywallOverlay').classList.add('d-none');
 
     setTimeout(function () {
@@ -1257,6 +1264,7 @@
         var paymentForm = document.getElementById('payment-form');
         document.getElementById('paywallOverlay').classList.add('d-none');
         paymentForm.remove();
+        PAYMENT_MADE = true;
       } else {
         console.log("The stored timestamp is older than 12 hours.");
       }
