@@ -313,9 +313,9 @@
             <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/batch.html">Batch Photos<span
-              class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
-              style="font-size: 0.55rem; top: 25%;">NEW</span></a>
+            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/batch.html">Batch
+              Photos<span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.55rem; top: 25%;">NEW</span></a>
           </li>
         </ul>
       </div>
@@ -450,7 +450,7 @@
 
       <div class="row g-0">
         <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
-          <div id="chatDisplay" class="pt-3 pb-3 px-5">
+          <div id="chatDisplay" class="pt-3 pb-3 px-5" style="max-height: 40rem; overflow-y: auto;">
             <div class="row py-2">
               <div class="col-11 ps-0">
                 <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
@@ -1064,7 +1064,10 @@
       `)
     };
 
-    $("#chatDisplay").append(newDiv)
+    $("#chatDisplay").append(newDiv);
+    // Scroll to the bottom of the chatDisplay
+    var chatDisplay = $("#chatDisplay");
+    chatDisplay.scrollTop(chatDisplay.prop("scrollHeight"));
   };
 
   // UI Helpers
