@@ -1084,7 +1084,7 @@
     });
     addToConversation('user', $('#floatingTextarea').val())
     // TODO: ADD PAYWALL HERE
-    if (conversation.length > 6 && !PAYMENT_MADE) {
+    if (conversation.length > 4 && !PAYMENT_MADE) {
       $('#paywallOverlay').removeClass('d-none');
     }
     sendToConversationAPI();
