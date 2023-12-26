@@ -1086,6 +1086,7 @@
     // TODO: ADD PAYWALL HERE
     if (conversation.length > 4 && !PAYMENT_MADE) {
       $('#paywallOverlay').removeClass('d-none');
+      document.getElementById('paywallOverlay').focus();
     }
     sendToConversationAPI();
     $("#loader").show();
