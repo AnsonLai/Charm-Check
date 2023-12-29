@@ -25,7 +25,7 @@
   <meta property="og:image" content="webpreview.png">
   <meta property="og:logo" content="logo.png">
   <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="Content-Language" content="en-US">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <meta property="og:locale" content="en_US">
@@ -42,6 +42,8 @@
     crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
   <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.4/FileSaver.min.js"></script>
 </head>
 
 <style>
@@ -441,10 +443,14 @@
 
       </div>
 
-      <div class="row g-0">
-        <div id="analysis-container" class="col my-5 bg-white text-dark rounded shadow d-none">
-          <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Report</p>
-          <p id="apiResponse" class="p-5"></p>
+      <div class="row g-0 position-relative">
+        <div id="analysis-container" class="col my-5 d-none">
+          <button onclick="downloadAsDocx()" class="btn btn-danger position-absolute top-1 end-0 m-3">Download
+            Report</button>
+          <div id="report-container" class="bg-white text-dark rounded shadow">
+            <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Report</p>
+            <p id="apiResponse" class="p-5"></p>
+          </div>
         </div>
       </div>
 
@@ -1402,4 +1408,33 @@
   });
 </script>
 
+<script>
+  // Download Docx Report Feature
+  function downloadAsDocx() {
+    var content = document.getElementById('report-container').innerHTML;
+    var content = content + '<br><br><p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Chat History</p>'
+    var content = content + document.getElementById('chatDisplay').innerHTML;
+    var content = '<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>' + content;
+
+    var converted = htmlDocx.asBlob(content);
+    function formatDate(date) {
+      var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+      if (month.length < 2)
+        month = '0' + month;
+      if (day.length < 2)
+        day = '0' + day;
+
+      return [year, month, day].join('-');
+    }
+
+    var today = formatDate(new Date());
+    var fileName = 'Charm Check Dating Profile Report - ' + today + '.docx';
+
+    saveAs(converted, fileName);
+  }
+</script>
 </html>
