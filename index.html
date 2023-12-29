@@ -1139,8 +1139,8 @@
   const stripe = Stripe("pk_live_51OILtSIELqMaA55AoAxgHHwft4t0Fxl7hbiP3A3hlV5e9H2wId7G88A69bfixupL2Xa2K9739DdcHa5DY3liVcC10078uHrsW5");
 
   let elements;
-  checkIfPreviouslyPaid();
   var PAYMENT_MADE = false;
+  checkIfPreviouslyPaid();
 
   // Fetches a payment intent and captures the client secret
   function initialize() {
