@@ -41,7 +41,8 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.4/FileSaver.min.js"></script>
 </head>
@@ -730,10 +731,10 @@
   }
 
   // UI Helpers
+
   function setupSortable() {
-    Sortable.create(document.getElementById('image-container'), {
-      animation: 150,
-    });
+    $('#image-container').sortable();
+    $('#image-container').disableSelection();
   }
 
   function setup() {
@@ -1437,4 +1438,5 @@
     saveAs(converted, fileName);
   }
 </script>
+
 </html>
