@@ -2,16 +2,16 @@
 <html lang="en" class="h-100">
 
 <head>
-  <title> Charm Check | Crafting Irresistible Dating Profiles</title>
+  <title> Charm Check | Irresistible Dating Profiles and More Matches</title>
   <link rel="shortcut icon" href="favicon.png">
   <link rel="canonical" href="https://www.thecharmcheck.com">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Anson Lai">
   <meta name="application-name" content="Charm Check">
   <meta name="description"
-    content="Charm Check offers personalized dating profile critiques to help you make the best first impression. Get advice on profile photos, bio text, and more for a knockout first impression.">
+    content="Charm Check offers personalized dating profile critiques to help you make the best first impression. Get advice on profile photos, bio text, and more for a knockout first impression and more matches!">
   <meta name="keywords"
-    content="dating, profile critique, relationship advice, profile optimization, online dating, dating app, Charm Check, evaluate, chamcheck, dating profile, tinder, bumble, hinge, coffee meets bagel, profile review">
+    content="dating, profile critique, relationship advice, profile optimization, online dating, dating app, Charm Check, evaluate, chamcheck, dating profile, tinder, bumble, hinge, coffee meets bagel, profile review, matches">
   <meta name="twitter:title" content="Charm Check: Elevate Your Dating Profile">
   <meta name="twitter:description"
     content="Get expert advice on your dating profile with Charm Check. Our AI-driven insights help refine your profile for maximum appeal. Try now for a standout profile!">
@@ -42,7 +42,7 @@
     crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
-  integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.4/FileSaver.min.js"></script>
@@ -63,6 +63,18 @@
 
   .user-convo p:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    #chat-container {
+      width: 85% !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #chat-container-minimized {
+      width: 65% !important;
+    }
   }
 </style>
 
@@ -427,7 +439,7 @@
           <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will <em>immediately</em>
             delete your photos after our analysis.</div>
 
-          <div id="loader" class="container text-center my-4 d-none">
+          <div id="loader" class="container text-center my-4 invisible">
             <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
               <span class="visually-hidden">Loading...</span>
             </div>
@@ -456,57 +468,75 @@
         </div>
       </div>
 
-      <div class="row g-0">
-        <div id="chat-container" class="col mb-5 bg-white text-dark rounded shadow position-relative d-none">
-          <div id="chatDisplay" class="pt-3 pb-3 px-5" style="max-height: 40rem; overflow-y: auto;">
-            <div class="row py-2">
-              <div class="col-11 ps-0">
-                <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
-                  style="background-color: #f9f9f9;">
-                  👋 Hi! I'm the Charm Check chatbot. Let's chat about your report.
+      <div class="card border-0 d-none" id="chat-container"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 50%;">
+        <button class="close-btn text-white pe-3" id="close-chat-container-button"
+          style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;"><strong>&#8211;</strong></button>
+        <div class="card-header bg-danger text-white">
+          <strong>Charm Check Chatbot</strong>
+        </div>
+        <div class="card-body">
+          <div class="position-relative">
+            <div id="chatDisplay" class="pt-1 pb-1 px-3" style="max-height: 40rem; overflow-y: auto;">
+              <div class="row py-2">
+                <div class="col-11 ps-0">
+                  <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
+                    style="background-color: #f9f9f9;">
+                    👋 Hi! I'm the Charm Check chatbot. Let's chat about your results or workshop your bio! Where do you
+                    want to start first?
+                  </div>
                 </div>
-              </div>
-              <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                <div class="d-flex align-items-center me-3">
+                <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
+                  <div class="d-flex align-items-center me-3">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+            <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
+              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
             animation: .75s linear 0.25s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
             animation: .75s linear 0.5s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
-          <div class="container px-5">
-            <div class="input-group mb-3">
-              <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea" rows='1'
-                data-min-rows='1' style="max-height: 10rem;"></textarea>
-              <button class="btn btn-outline-secondary" type="button" id="buttonSend">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z" />
-                </svg>
-              </button>
+            <div class="container px-1">
+              <div class="input-group mb-1">
+                <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea" rows='1'
+                  data-min-rows='1' style="max-height: 10rem;"></textarea>
+                <button class="btn btn-outline-secondary" type="button" id="buttonSend">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z" />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <!-- Paywall Overlay -->
-          <div id="paywallOverlay"
-            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
-            style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
-            <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
-              onClick="initialize(); checkStatus();">
-              <strong class="lead" style="font-size: 1.5rem;">Ready for more insights?</strong><br>Unlock unlimited
-              chatting for 24 hours - only <span style="font-weight: 900;">$2.99!</span>
-          </div>
+            <!-- Paywall Overlay -->
+            <div id="paywallOverlay"
+              class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
+              style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
+              <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
+                onClick="initialize(); checkStatus();">
+                <strong class="lead" style="font-size: 1.5rem;">Still need help?</strong><br>Unlock unlimited
+                chatting for 24 hours - only <span style="font-weight: 900;">$2.99!</span>
+            </div>
 
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 d-none" id="chat-container-minimized"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 25%; cursor: pointer;">
+        <button class="close-btn text-white pe-3" id="close-chat-container-button"
+          style="position: absolute; top: 0; right: 0; border: none; background: transparent; font-size: 1.5rem; padding: 0 5px;"><strong>&#43;</strong></button>
+        <div class="card-header bg-danger text-white">
+          <strong>Charm Check Chatbot</strong>
         </div>
       </div>
 
@@ -629,7 +659,7 @@
     "content": [{
       "type": "text",
       "contentType": "initialResponse",
-      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your report."
+      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your results or workshop your bio!  Where do you want to start first?"
     }]
   }];
 </script>
@@ -878,7 +908,7 @@
       max_tokens: 1100
     };
 
-    document.getElementById('loader').classList.remove("d-none");
+    document.getElementById('loader').classList.remove("invisible");
     document.getElementById('sendButton').disabled = true;
 
     fetch(apiUrl, {
@@ -891,7 +921,7 @@
       .catch(error => {
         console.error('Error:', error);
         alert('We have tight content guidelines.  Please remove inappropriate photos, then try again.');
-        document.getElementById('loader').classList.add("d-none");
+        document.getElementById('loader').classList.add("invisible");
         document.getElementById('sendButton').disabled = false;
         document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
       });
@@ -958,7 +988,7 @@
     document.getElementById('apiResponse').innerHTML = html;
     document.getElementById('analysis-container').classList.remove("d-none");
     document.getElementById('chat-container').classList.remove("d-none");
-    document.getElementById('loader').classList.add("d-none");
+    document.getElementById('loader').classList.add("invisible");
     document.getElementById('analysis-container').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('padding-container').classList.add("d-none");
     document.getElementById('padding-container').classList.remove("d-md-block");
@@ -1098,10 +1128,9 @@
       document.getElementById('buttonSend').blur();
     }
     sendToConversationAPI();
-    $("#loader").show();
+    document.getElementById('chat-loader').style.visibility = 'visible';
     $('#floatingTextarea').val('');
     $('#floatingTextarea').attr('rows', '1');
-    window.scrollTo(0, document.body.scrollHeight);
   });
 
   // Handle alt+enter
@@ -1123,6 +1152,7 @@
     elm.value = savedValue
   }
 
+  // Minimize/Maximize chatbot
   function onExpandableTextareaInput({ target: elm }) {
     if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
 
@@ -1134,6 +1164,16 @@
     elm.rows = minRows + rows
   }
   document.addEventListener('input', onExpandableTextareaInput);
+
+  document.getElementById('close-chat-container-button').addEventListener('click', function () {
+    document.getElementById('chat-container').classList.add('d-none');
+    document.getElementById('chat-container-minimized').classList.remove('d-none');
+  });
+
+  document.getElementById('chat-container-minimized').addEventListener('click', function () {
+    document.getElementById('chat-container-minimized').classList.add('d-none');
+    document.getElementById('chat-container').classList.remove('d-none');
+  });
 </script>
 
 <script>
