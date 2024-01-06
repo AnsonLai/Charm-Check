@@ -373,13 +373,42 @@
                 <hr class="flex-grow-1">
               </div>
               <!-- File input -->
-              <div class="text-center mt-3">
+              <div class="text-center mt-3 mb-3">
                 <input type="file" id="fileElem" accept="image/*" multiple style="display: none;">
                 <label class="btn btn-danger p-3 px-5" for="fileElem"><strong>Select Photos</strong></label>
               </div>
+              <div class="d-flex align-items-center w-25 my-3">
+                <hr class="flex-grow-1">
+                <span class="mx-2">or</span>
+                <hr class="flex-grow-1">
+              </div>
+              <!-- Tinder input -->
+              <div class="text-center mt-3 mb-3">
+                <h5 class="card-title text-center">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span>
+                  photos!
+                </h5>
+                <div class="input-group mb-2">
+                  <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
+                    placeholder="https://tinder.com/@username" maxlength="180">
+                  <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
+                </div>
+                <div id="tinder-loader" class="container text-center mb-2 py-1 d-none" style="">
+                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
+                  animation: .75s linear 0.25s infinite spinner-grow;">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
+                  animation: .75s linear 0.5s infinite spinner-grow;">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <!-- Container for the processed images -->
-            <div id="image-container" class="d-flex justify-content-center align-items-center flex-wrap pt-3">
+            <div id="image-container" class="d-flex justify-content-center align-items-center flex-wrap">
             </div>
           </div>
         </div>
@@ -451,7 +480,7 @@
                 animation: .75s linear 0.5s infinite spinner-grow;">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <div class="form-text">Analysis may take up to 30 seconds.</div>
+            <div class="form-text">Analysis may take up to 45 seconds.</div>
           </div>
         </div>
 
@@ -588,35 +617,6 @@
 
     </div>
   </main>
-
-  <!-- Tinder Import Card -->
-  <div class="card" id="tinderFloatingPopup"
-    style="position: fixed; top: 20px; right: 20px; width: 320px; z-index: 1000;">
-    <button class="close-btn" id="closePopupButton"
-      style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;">&times;</button>
-    <div class="card-body">
-      <h5 class="card-title text-center">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span> photos!
-      </h5>
-      <div class="input-group mb-2">
-        <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
-          placeholder="https://tinder.com/@username" maxlength="180">
-        <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
-      </div>
-      <div id="tinder-loader" class="container text-center mb-2 d-none" style="">
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-        animation: .75s linear 0.25s infinite spinner-grow;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-        animation: .75s linear 0.5s infinite spinner-grow;">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
     <div class="footer-copyright text-center py-3">
@@ -809,11 +809,10 @@
     document.getElementById('image-container').appendChild(divContainer);
 
     // Additional UI adjustment
-    document.getElementById('image-container').style.marginTop = '5rem';
+    document.getElementById('image-container').classList.add("mt-5");
     document.getElementById('photoCollector').classList.remove("offset-md-3");
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('tinderFloatingPopup').classList.add('d-none');
   }
 
   function convertToBase64(file, callback) {
@@ -1465,7 +1464,9 @@
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        document.getElementById('tinderFloatingPopup').classList.add('d-none');
+        tinderURLInput.classList.remove('d-none');
+        fetchProfileButton.classList.remove('d-none');
+        document.getElementById('tinder-loader').classList.add('d-none');
         if (data.images && data.images.length > 0) {
           data.images.forEach(currentBase64Image => {
             // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
@@ -1498,7 +1499,9 @@
       .catch(error => {
         console.error('Error fetching profile:', error);
         alert('Failed to fetch profile.');
-        document.getElementById('tinderFloatingPopup').classList.add('d-none');
+        tinderURLInput.classList.remove('d-none');
+        fetchProfileButton.classList.remove('d-none');
+        document.getElementById('tinder-loader').classList.add('d-none');
       });
   }
 
@@ -1533,9 +1536,6 @@
     document.getElementById('tinder-loader').classList.remove('d-none');
   }
 
-  document.getElementById('closePopupButton').addEventListener('click', function () {
-    document.getElementById('tinderFloatingPopup').style.display = 'none';
-  });
 </script>
 
 <script>
