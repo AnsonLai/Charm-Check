@@ -665,6 +665,44 @@
 </script>
 
 <script>
+  // Save and restore from local storage
+  function saveDataLocally() {
+    // Save form data
+    const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
+    formElements.forEach(element => {
+      localStorage.setItem(element.id, element.value);
+    });
+
+    // Save images
+    const images = document.querySelectorAll('#image-container img');
+    const imageArray = Array.from(images).map(img => img.src);
+    localStorage.setItem('savedImages', JSON.stringify(imageArray));
+  }
+
+  function restoreData() {
+    // Restore form data
+    const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
+    formElements.forEach(element => {
+      const savedValue = localStorage.getItem(element.id);
+      if (savedValue) {
+        element.value = savedValue;
+      }
+    });
+
+    // Restore images
+    const savedImages = JSON.parse(localStorage.getItem('savedImages'));
+    if (savedImages) {
+      savedImages.forEach(base64 => {
+        displayImage(base64)
+      });
+    }
+  }
+
+  // Call restoreData on page load
+  document.addEventListener('DOMContentLoaded', restoreData);
+</script>
+
+<script>
   // Scripts to handle and convert image inputs
   function displayImage(base64Image) {
     // Count only 'image_url' type elements in the 'content' array
@@ -844,6 +882,9 @@
     jobTitleDescription = jobTitleDescription || "[Not specified.]";
     importantDetailsDescription = importantDetailsDescription || "[None provided.]";
     promptsAndAnswersDescription = promptsAndAnswersDescription || "[No prompts answered.]";
+
+    // Save data locally for easy entry next time
+    saveDataLocally();
 
     // Add to message content
     addToMessageContent({
