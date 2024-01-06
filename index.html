@@ -666,20 +666,56 @@
 
 <script>
   // Save and restore from local storage
-  function saveDataLocally() {
+  function openDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('ProfileDatabase', 1);
+
+      request.onupgradeneeded = event => {
+        const db = event.target.result;
+        db.createObjectStore('images', { keyPath: 'id' });
+      };
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = event => reject(event.target.error);
+    });
+  }
+
+  async function saveDataLocally() {
     // Save form data
     const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
     formElements.forEach(element => {
-      localStorage.setItem(element.id, element.value);
+      if (element.value) {
+        localStorage.setItem(element.id, element.value);
+      } else {
+        localStorage.removeItem(element.id); // Remove from localStorage if the field is empty
+      }
     });
 
-    // Save images
+    // Save or clear the additional Tinder URL field
+    const tinderURL = document.getElementById('tinderURL').value;
+    if (tinderURL) {
+      localStorage.setItem('tinderURL', tinderURL);
+    } else {
+      localStorage.removeItem('tinderURL'); // Remove from localStorage if the field is empty
+    }
+
+    // Save images to IndexedDB
+    const db = await openDatabase();
+    const transaction = db.transaction('images', 'readwrite');
+    const store = transaction.objectStore('images');
+
+    // Clear the store first
+    await store.clear();
+
+    // Then add the current images
     const images = document.querySelectorAll('#image-container img');
-    const imageArray = Array.from(images).map(img => img.src);
-    // localStorage.setItem('savedImages', JSON.stringify(imageArray));
+    images.forEach((img, index) => {
+      store.put({ id: index, src: img.src });
+    });
   }
 
-  function restoreData() {
+
+  async function restoreData() {
     // Restore form data
     const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
     formElements.forEach(element => {
@@ -689,13 +725,24 @@
       }
     });
 
-    // Restore images
-    const savedImages = JSON.parse(localStorage.getItem('savedImages'));
-    if (savedImages) {
-      savedImages.forEach(base64 => {
-        displayImage(base64)
-      });
+    // Restore the Tinder URL field
+    const savedTinderURL = localStorage.getItem('tinderURL');
+    if (savedTinderURL) {
+      document.getElementById('tinderURL').value = savedTinderURL;
     }
+
+    // Restore images from IndexedDB
+    const db = await openDatabase();
+    const transaction = db.transaction('images', 'readonly');
+    const store = transaction.objectStore('images');
+
+    store.openCursor().onsuccess = function (event) {
+      const cursor = event.target.result;
+      if (cursor) {
+        displayImage(cursor.value.src); // Assuming you have a function `displayImage` to add images to the DOM
+        cursor.continue();
+      }
+    };
   }
 
   // Call restoreData on page load
