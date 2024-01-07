@@ -2,16 +2,16 @@
 <html lang="en" class="h-100">
 
 <head>
-  <title> Charm Check | Irresistible Dating Profiles and More Matches</title>
+  <title> Charm Check | Crafting Irresistible Dating Profiles</title>
   <link rel="shortcut icon" href="favicon.png">
   <link rel="canonical" href="https://www.thecharmcheck.com">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Anson Lai">
   <meta name="application-name" content="Charm Check">
   <meta name="description"
-    content="Charm Check offers personalized dating profile critiques to help you make the best first impression. Get advice on profile photos, bio text, and more for a knockout first impression and more matches!">
+    content="Charm Check offers personalized dating profile critiques to help you make the best first impression. Get advice on profile photos, bio text, and more for a knockout first impression.">
   <meta name="keywords"
-    content="dating, profile critique, relationship advice, profile optimization, online dating, dating app, Charm Check, evaluate, chamcheck, dating profile, tinder, bumble, hinge, coffee meets bagel, profile review, matches">
+    content="dating, profile critique, relationship advice, profile optimization, online dating, dating app, Charm Check, evaluate, chamcheck, dating profile, tinder, bumble, hinge, coffee meets bagel">
   <meta name="twitter:title" content="Charm Check: Elevate Your Dating Profile">
   <meta name="twitter:description"
     content="Get expert advice on your dating profile with Charm Check. Our AI-driven insights help refine your profile for maximum appeal. Try now for a standout profile!">
@@ -25,7 +25,7 @@
   <meta property="og:image" content="webpreview.png">
   <meta property="og:logo" content="logo.png">
   <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Language" content="en-US">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <meta property="og:locale" content="en_US">
@@ -41,11 +41,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
-    integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.4/FileSaver.min.js"></script>
+  <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 </head>
 
 <style>
@@ -64,22 +60,10 @@
   .user-convo p:last-child {
     margin-bottom: 0;
   }
-
-  @media (max-width: 768px) {
-    #chat-container {
-      width: 85% !important;
-    }
-  }
-
-  @media (max-width: 768px) {
-    #chat-container-minimized {
-      width: 65% !important;
-    }
-  }
 </style>
 
-<body class="d-flex flex-column h-100" onload="setup()" style="background-color: rgb(39, 39, 39);">
-  <nav class="navbar navbar-expand-md navbar-light" style="background-color: rgb(39, 39, 39);">
+<body class="d-flex flex-column h-100" onload="setup()">
+  <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="#">
         <div style="height: 3rem; width: 3rem;">
@@ -315,7 +299,7 @@
           </svg>
         </div>
         <span style="margin-left: 0.6rem; font-size: 2rem; color: #b12b3c;"><strong
-            style="color: #ffffff;">Charm</strong>Check</span>
+            style="color: rgb(39, 39, 39)">Charm</strong>Check</span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -326,10 +310,10 @@
       <div class="collapse navbar-collapse ms-4" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/">Home</a>
+            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 position-relative text-white" style="font-size: 1.25rem;" href="/batch.html">Batch
+            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;" href="/batch.html">Batch
               Photos<span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger"
                 style="font-size: 0.55rem; top: 25%;">NEW</span></a>
           </li>
@@ -339,283 +323,222 @@
   </nav>
 
   <main class="flex-grow-1">
-    <div class="container">
-
-      <div class="row g-0">
-        <div id="padding-container" class="d-none d-md-block" style="padding-top: 5rem; padding-bottom: 5rem;"></div>
-        <div style="padding-top: 1rem; padding-bottom: 1rem;"></div>
-
-        <div id="photoCollector" class="col-md-6 offset-md-3 bg-white rounded shadow">
-          <div class="row bg-white w-100 g-0 pt-5 pb-1 rounded-top text-dark text-center"
-            style="background: linear-gradient(rgba(21, 2, 2, 0.6), rgba(66, 6, 6, 0.6)), url('openaivtestbg.png'); background-size: cover; background-position: center; ">
-            <div class="col d-flex flex-column align-items-center">
-              <div class="mb-3 pt-3 text-center text-white" style="border-radius: .5rem; width: 50%; min-width: 200px;">
-                <h2><strong>Swipe, Click, Match!</strong></h2>
-                <h6>Share your online dating profile, get <strong>FREE</strong> personalized feedback!</h6>
-                <br><br><br>
-                <h6 class="text-white mb-0"><small>Powered by OpenAI</small></h6>
-              </div>
-            </div>
+    <div class="my-5"></div>
+    <div class="hero" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
+      <div class="container">
+        <div class="row">
+          <div class="d-none d-lg-block"
+            style="height: 288px; width: 683px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#af56a5 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
-
-          <div class="row bg-white w-100 g-0 py-5 rounded-bottom text-dark">
-            <div class="d-flex flex-column align-items-center">
-              <div class="col d-flex flex-column align-items-center">
-                <!-- Drop area -->
-                <div id="drop-area" class="drop-area mb-3 p-3 text-center text-dark"
-                  style="border: 2px dashed #df3b3b; border-radius: .5rem; width: 50%; min-width: 200px;">
-                  <p class="mb-0"><strong>Drop Photos Here</strong></p>
-                </div>
-              </div>
-              <div class="d-flex align-items-center w-25 my-3">
-                <hr class="flex-grow-1">
-                <span class="mx-2">or</span>
-                <hr class="flex-grow-1">
-              </div>
-              <!-- File input -->
-              <div class="text-center mt-3 mb-3">
-                <input type="file" id="fileElem" accept="image/*" multiple style="display: none;">
-                <label class="btn btn-danger p-3 px-5" for="fileElem"><strong>Select Photos</strong></label>
-              </div>
-              <div class="d-flex align-items-center w-25 my-3">
-                <hr class="flex-grow-1">
-                <span class="mx-2">or</span>
-                <hr class="flex-grow-1">
-              </div>
-              <!-- Tinder input -->
-              <div class="text-center mt-3 mb-3">
-                <h5 class="card-title text-center">Use your <span style="color: #EE2C6B"><strong>Tinder</strong></span>
-                  photos!
-                </h5>
-                <div class="input-group mb-2">
-                  <input id="tinderURL" type="url" class="form-control" aria-describedby="detailsHelp"
-                    placeholder="https://tinder.com/@username" maxlength="180">
-                  <button id="fetchProfileButton" class="btn btn-outline-secondary">></button>
-                </div>
-                <div id="tinder-loader" class="container text-center mb-2 py-1 d-none" style="">
-                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-                    <span class="visually-hidden">Loading...</span>
+          <div class="d-none d-lg-block"
+            style="height: 242px; width: 450px; top: 83%; left: 77%; opacity: .45; background-image: radial-gradient(#a02525 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+          </div>
+          <!-- Text and Polka Dot Background Column -->
+          <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
+            <h1 class="fw-bold" style="font-size: 4.5rem; color:rgb(172, 12, 12);">How does your dating profile measure
+              up?
+            </h1>
+            <div class="m-3 p-2"></div>
+            <p class="fs-5">Don't leave it to chance. With instant, personalized feedback for your photos and bio,
+              you're steps
+              away from a profile that captivates and connects.</p>
+            <div class="m-3 p-2"></div>
+            <a class="btn btn-danger p-3 px-5" href="profile-review.html" role="button">
+              <span class="fs-4">Review My Profile</span>
+            </a>
+            <p class="text-dark mt-1 mb-3"><a href="batch.html" class="text-dark">Or try our batch photo analysis!</a>
+            </p>
+          </div>
+          <!-- Image Column -->
+          <div class="col-12 col-md-12 col-lg-3 offset-lg-2 order-lg-1 my-3">
+            <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+              <!-- Adjust height as needed -->
+              <div id="hero-images" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded-3 shadow">
+                  <div class="carousel-item active">
+                    <img src="images/anthony-tran-3Xkms-gMvZg-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">"a bigger smile would be more inviting"</h5>
+                    </div>
                   </div>
-                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-                  animation: .75s linear 0.25s infinite spinner-grow;">
-                    <span class="visually-hidden">Loading...</span>
+                  <div class="carousel-item">
+                    <img src="images/stephanie-nakagawa-ADSKIn0ScDg-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">"tone down the serious expression"</h5>
+                    </div>
                   </div>
-                  <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-                  animation: .75s linear 0.5s infinite spinner-grow;">
-                    <span class="visually-hidden">Loading...</span>
+                  <div class="carousel-item">
+                    <img src="images/ben-blennerhassett-ZXfUUM_LR0k-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">"the lighting is too moody"</h5>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Container for the processed images -->
-            <div id="image-container" class="d-flex justify-content-center align-items-center flex-wrap">
-            </div>
-          </div>
-        </div>
-
-        <div id="formCollection" class="col-md-6 px-5 py-2 d-none text-white">
-          <form>
-            <div class="mb-3">
-              <label for="aboutMeDescription" class="form-label h6">About Me</label>
-              <textarea class="form-control" id="aboutMeDescription" rows="5" aria-describedby="aboutMeHelp"
-                maxlength="600"></textarea>
-              <small id="aboutMeHelp" class="form-text text-muted">Provide your current profile bio. Note that many
-                platforms limit character length.</small>
-            </div>
-            <div class="mb-3">
-              <label for="ageDescription" class="form-label h6">Age</label>
-              <input type="text" class="form-control" id="ageDescription" aria-describedby="ageHelp" maxlength="30">
-              <small id="ageHelp" class="form-text text-muted">Enter your age. You may specify a range.</small>
-            </div>
-            <div class="mb-3">
-              <label for="interestsDescription" class="form-label h6">Interests</label>
-              <input type="text" class="form-control" id="interestsDescription" aria-describedby="interestsHelp"
-                maxlength="150">
-              <small id="interestsHelp" class="form-text text-muted">Enter your interests and hobbies.</small>
-            </div>
-            <div class="mb-3">
-              <label for="relationshipTypeDescription" class="form-label h6">Relationship Type</label>
-              <input type="text" class="form-control" id="relationshipTypeDescription"
-                aria-describedby="relationshipHelp" maxlength="80">
-              <small id="relationshipHelp" class="form-text text-muted">Specify the type of relationship you are looking
-                for.</small>
-            </div>
-            <div class="mb-3">
-              <label for="jobTitleDescription" class="form-label h6">Job Title or School</label>
-              <input type="text" class="form-control" id="jobTitleDescription" aria-describedby="jobTitleHelp"
-                maxlength="80">
-              <small id="jobTitleHelp" class="form-text text-muted">Enter your job title or the school you
-                attend.</small>
-            </div>
-            <div class="mb-3">
-              <label for="importantDetailsDescription" class="form-label h6">Misc Important Details</label>
-              <input type="text" class="form-control" id="importantDetailsDescription" aria-describedby="detailsHelp"
-                maxlength="180">
-              <small id="detailsHelp" class="form-text text-muted">Include any details you feel are important (i.e.
-                height, language, religion).</small>
-            </div>
-            <div class="mb-3">
-              <label for="promptsAndAnswersDescription" class="form-label h6">Prompts and Answers</label>
-              <textarea class="form-control" id="promptsAndAnswersDescription" rows="5" aria-describedby="promptsHelp"
-                maxlength="850"></textarea>
-              <small id="promptsHelp" class="form-text text-muted">Write any prompts and your answers here.</small>
-            </div>
-          </form>
-          <div class="d-flex justify-content-center">
-            <button id="sendButton" class="btn btn-danger mt-5 p-3 px-5" onclick="sendToAPI()"
-              aria-describedby="sendHelp"><strong>Fix my profile!</strong></button>
-          </div>
-          <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will <em>immediately</em>
-            delete your photos after our analysis.</div>
-
-          <div id="loader" class="container text-center my-4 invisible">
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-                animation: .75s linear 0.25s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-                animation: .75s linear 0.5s infinite spinner-grow;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="form-text">Analysis may take up to 45 seconds.</div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row g-0 position-relative">
-        <div id="analysis-container" class="col my-5 d-none">
-          <button onclick="downloadAsDocx()" class="btn btn-danger position-absolute top-1 end-0 m-3">Download
-            Report</button>
-          <div id="report-container" class="bg-white text-dark rounded shadow">
-            <p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Report</p>
-            <p id="apiResponse" class="p-5"></p>
           </div>
         </div>
       </div>
-
-      <div class="card border-0 d-none" id="chat-container"
-        style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 50%;">
-        <button class="close-btn text-white pe-3" id="close-chat-container-button"
-          style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;"><strong>&#8211;</strong></button>
-        <div class="card-header bg-danger text-white">
-          <strong>Charm Check Chatbot</strong>
-        </div>
-        <div class="card-body">
-          <div class="position-relative">
-            <div id="chatDisplay" class="pt-1 pb-1 px-3" style="max-height: 40rem; overflow-y: auto;">
-              <div class="row py-2">
-                <div class="col-11 ps-0">
-                  <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
-                    style="background-color: #f9f9f9;">
-                    👋 Hi! I'm the Charm Check chatbot. Let's chat about your results or workshop your bio! Where do you
-                    want to start first?
-                  </div>
-                </div>
-                <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-                  <div class="d-flex align-items-center me-3">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="chat-loader" class="container text-center mb-1" style="visibility:hidden;">
-              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.25s infinite spinner-grow;
-            animation: .75s linear 0.25s infinite spinner-grow;">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem; -webkit-animation: .75s linear 0.5s infinite spinner-grow;
-            animation: .75s linear 0.5s infinite spinner-grow;">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-            <div class="container px-1">
-              <div class="input-group mb-1">
-                <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea" rows='1'
-                  data-min-rows='1' style="max-height: 10rem;"></textarea>
-                <button class="btn btn-outline-secondary" type="button" id="buttonSend">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Paywall Overlay -->
-            <div id="paywallOverlay"
-              class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
-              style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
-              <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
-                onClick="initialize(); checkStatus();">
-                <strong class="lead" style="font-size: 1.5rem;">Still need help?</strong><br>Unlock unlimited
-                chatting for 24 hours - only <span style="font-weight: 900;">$2.99!</span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="card border-0 d-none" id="chat-container-minimized"
-        style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; width: 25%; cursor: pointer;">
-        <button class="close-btn text-white pe-3" id="close-chat-container-button"
-          style="position: absolute; top: 0; right: 0; border: none; background: transparent; font-size: 1.5rem; padding: 0 5px;"><strong>&#43;</strong></button>
-        <div class="card-header bg-danger text-white">
-          <strong>Charm Check Chatbot</strong>
-        </div>
-      </div>
-
-      <!-- Payment Modal -->
-      <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header border-bottom-0 bg-dark text-white">
-              <div class="col text-center">
-                <h1 class="modal-title fs-5" id="paymentModalLabel">Chatbot Access (12 hours)</h1>
-                <h1 class="fs-3">$2.99 USD</h1>
-              </div>
-              <div class="col-auto">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-            </div>
-            <div class="modal-body d-flex justify-content-center align-items-center">
-              <div id="payment-form" class="shadow"
-                style="width: 30vw; min-width: 500px; max-width: 100%; border-radius: 7px; padding: 40px;">
-                <div id="payment-element" style="margin-bottom: 24px;">
-                  <!--Stripe.js injects the Payment Element here-->
-                </div>
-                <label for="paymentSubmit" class="mb-2"></label>
-                <button id="paymentSubmit" onclick="handleSubmit()"
-                  style="background: #5469d4; color: #ffffff; border-radius: 4px; border: 0; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07); width: 100%;">
-                  <div class="spinner hidden" id="spinner"></div>
-                  <span id="button-text">Pay $2.99</span>
-                </button>
-                <div id="payment-message" class="hidden"
-                  style="color: rgb(105, 115, 134); font-size: 16px; line-height: 20px; padding-top: 12px; text-align: center;">
-                </div>
-                <div class="d-flex justify-content-end">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="5.1rem"
-                    height="2.1rem" viewBox="0 0 512 214" version="1.1" preserveAspectRatio="xMidYMid">
-                    <g>
-                      <path
-                        d="M35.9822222,83.4844444 C35.9822222,77.9377778 40.5333333,75.8044444 48.0711111,75.8044444 C58.88,75.8044444 72.5333333,79.0755556 83.3422222,84.9066667 L83.3422222,51.4844444 C71.5377778,46.7911111 59.8755556,44.9422222 48.0711111,44.9422222 C19.2,44.9422222 0,60.0177778 0,85.1911111 C0,124.444444 54.0444444,118.186667 54.0444444,135.111111 C54.0444444,141.653333 48.3555556,143.786667 40.3911111,143.786667 C28.5866667,143.786667 13.5111111,138.951111 1.56444444,132.408889 L1.56444444,166.257778 C14.7911111,171.946667 28.16,174.364444 40.3911111,174.364444 C69.9733333,174.364444 90.3111111,159.715556 90.3111111,134.257778 C90.1688889,91.8755556 35.9822222,99.4133333 35.9822222,83.4844444 Z M132.124444,16.4977778 L97.4222222,23.8933333 L97.28,137.813333 C97.28,158.862222 113.066667,174.364444 134.115556,174.364444 C145.777778,174.364444 154.311111,172.231111 159.004444,169.671111 L159.004444,140.8 C154.453333,142.648889 131.982222,149.191111 131.982222,128.142222 L131.982222,77.6533333 L159.004444,77.6533333 L159.004444,47.36 L131.982222,47.36 L132.124444,16.4977778 Z M203.235556,57.8844444 L200.96,47.36 L170.24,47.36 L170.24,171.804444 L205.795556,171.804444 L205.795556,87.4666667 C214.186667,76.5155556 228.408889,78.5066667 232.817778,80.0711111 L232.817778,47.36 C228.266667,45.6533333 211.626667,42.5244444 203.235556,57.8844444 Z M241.493333,47.36 L277.191111,47.36 L277.191111,171.804444 L241.493333,171.804444 L241.493333,47.36 Z M241.493333,36.5511111 L277.191111,28.8711111 L277.191111,0 L241.493333,7.53777778 L241.493333,36.5511111 Z M351.431111,44.9422222 C337.493333,44.9422222 328.533333,51.4844444 323.555556,56.0355556 L321.706667,47.2177778 L290.417778,47.2177778 L290.417778,213.048889 L325.973333,205.511111 L326.115556,165.262222 C331.235556,168.96 338.773333,174.222222 351.288889,174.222222 C376.746667,174.222222 399.928889,153.742222 399.928889,108.657778 C399.786667,67.4133333 376.32,44.9422222 351.431111,44.9422222 Z M342.897778,142.933333 C334.506667,142.933333 329.528889,139.946667 326.115556,136.248889 L325.973333,83.4844444 C329.671111,79.36 334.791111,76.5155556 342.897778,76.5155556 C355.84,76.5155556 364.8,91.0222222 364.8,109.653333 C364.8,128.711111 355.982222,142.933333 342.897778,142.933333 Z M512,110.08 C512,73.6711111 494.364444,44.9422222 460.657778,44.9422222 C426.808889,44.9422222 406.328889,73.6711111 406.328889,109.795556 C406.328889,152.604444 430.506667,174.222222 465.208889,174.222222 C482.133333,174.222222 494.933333,170.382222 504.604444,164.977778 L504.604444,136.533333 C494.933333,141.368889 483.84,144.355556 469.76,144.355556 C455.964444,144.355556 443.733333,139.52 442.168889,122.737778 L511.715556,122.737778 C511.715556,120.888889 512,113.493333 512,110.08 Z M441.742222,96.5688889 C441.742222,80.4977778 451.555556,73.8133333 460.515556,73.8133333 C469.191111,73.8133333 478.435556,80.4977778 478.435556,96.5688889 L441.742222,96.5688889 L441.742222,96.5688889 Z"
-                        fill="#e6e6e6" />
-                    </g>
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer border-top-0">
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <div class="my-5 py-3"></div>
+    <div class="profile" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
+      <div class="container">
+        <div class="row">
+          <div class="d-none d-lg-block"
+            style="height: 345px; width: 67px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#8ecd7b 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+          </div>
+          <div class="d-none d-lg-block"
+            style="height: 432px; width: 670px; top: 13%; left: 62%; opacity: .45; background-image: radial-gradient(#8a9666 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+          </div>
+          <!-- Text and Polka Dot Background Column -->
+          <div class="col-12 col-md-12 col-lg-7 order-lg-1 my-3">
+            <h1 class="fw-bold" style="font-size: 3rem; color:rgb(21, 106, 135);">
+              Profile Tips
+              <span class="badge bg-success align-top" style="font-size: 1.5rem; vertical-align: super;">FREE</span>
+            </h1>
+            <div class="m-3 p-2"></div>
+            <h1 class="fw-bold" style="font-size: 1.3rem; color:rgb(49, 157, 193);">Show your best self
+            </h1>
+            <p class="fs-5">Let's pick a theme for your profile and focus on telling your story to the world.</p>
+            <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(49, 157, 193);">Photos to tell a story
+            </h1>
+            <p class="fs-5">Looking good is half the battle. Which photo tells your story best?</p>
+            <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(49, 157, 193);">Bios with wit and charm
+            </h1>
+            <p class="fs-5">Don't forget the text! It can make or break your profile!</p>
+          </div>
+          <!-- Image Column -->
+          <div class="col-12 col-md-12 col-lg-5 order-lg-2 my-3">
+            <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+              <!-- Adjust height as needed -->
+              <div id="profile-images" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded-3 shadow">
+                  <div class="carousel-item active">
+                    <img src="images/soundtrap-rAT6FJ6wltE-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">Techno Virtuoso</h5>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">Charismatic Scholar</h5>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/bruce-mars-gj6EdlqRrhc-unsplash.jpg" class="d-block w-100"
+                      alt="Sample image for dating profile">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5 class="mb-0">Wellness Influencer</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-5 py-3"></div>
+    <div class="chatbot" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
+      <div class="container">
+        <div class="row">
+          <div class="d-none d-lg-block"
+            style="height: 294px; width: 428px; top: 2%; left: 3%; opacity: .35; background-image: radial-gradient(#904d3e 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+          </div>
+          <div class="d-none d-lg-block"
+            style="height: 232px; width: 67px; top: 43%; left: 88%; opacity: .45; background-image: radial-gradient(#966689 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+          </div>
+          <!-- Text and Polka Dot Background Column -->
+          <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
+            <h1 class="fw-bold" style="font-size: 3rem; color:rgb(131, 15, 15);">
+              Chatbot Support
+              <span class="badge bg-warning align-top" style="font-size: 1.5rem; vertical-align: super;">DEMO</span>
+            </h1>
+            <div class="m-3 p-2"></div>
+            <h1 class="fw-bold" style="font-size: 1.3rem; color:rgb(218, 53, 53);">Discuss your feedback
+            </h1>
+            <p class="fs-5">Does the review confuse you? Need a bit more guidance?</p>
+            <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(218, 53, 53);">Workshop your profile
+            </h1>
+            <p class="fs-5">Don't wait around for comments, get instant feedback with every tweak!</p>
+            <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(218, 53, 53);">Message with confidence
+            </h1>
+            <p class="fs-5">Use the chatbot to rephrase your openers.</p>
+          </div>
+          <!-- Image Column -->
+          <div class="col-12 col-md-12 col-lg-5 order-lg-1 my-3">
+            <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+              <div class="card shadow" id="chat-container">
+                <button class="close-btn text-white pe-3" id="close-chat-container-button"
+                  style="position: absolute; top: 0; right: 0; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 0 5px;"><strong>&#8211;</strong></button>
+                <div class="card-header bg-danger text-white">
+                  <strong>Charm Check Chatbot</strong>
+                </div>
+                <div class="card-body">
+                  <div class="position-relative">
+                    <div id="chatDisplay" class="pt-1 pb-1 px-3">
+                      <div class="user-convo row py-2">
+                        <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
+                          <div class="d-flex align-items-center ms-3">
+                          </div>
+                        </div>
+                        <div class="col-11 ps-0">
+                          <div class="d-flex justify-content-end p-3 rounded shadow-sm me-3"
+                            style="background-color: #ffcccc;">
+                            <div class="text-start">
+                              <p>Where do I start with my new match?</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row py-2">
+                        <div class="col-11 ps-0">
+                          <div class="h-100 d-flex align-items-center p-3 rounded shadow-sm ms-3"
+                            style="background-color: #f9f9f9;">
+                            <p>Be observant and pick up details from their profile, then ask an engaging open-ended
+                              question. Given your <em>loyal counselor vibe</em>, you can <strong>stand out by asking
+                                about something
+                                more personal</strong> than others might dare!</p>
+                          </div>
+                        </div>
+                        <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
+                          <div class="d-flex align-items-center me-3">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="container px-1">
+                      <div class="input-group mb-1">
+                        <textarea class="form-control autoExpand" placeholder="Send a message" id="floatingTextarea"
+                          rows='1' data-min-rows='1' style="max-height: 10rem;" disabled></textarea>
+                        <button class="btn btn-outline-secondary" type="button" id="buttonSend" disabled>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M2.01 21L23 12L2.01 3L2 10l15 2l-15 2z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-5 py-3"></div>
+
+
   </main>
 
   <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
@@ -646,7 +569,7 @@
 
 <script>
   // Global variables
-  const MAX_PHOTOS = 9;
+  const MAX_PHOTOS = 50;
   var messages = [
     {
       "role": "user",
@@ -654,99 +577,10 @@
       ]
     }
   ];
-  var conversation = [{
-    "role": "assistant",
-    "content": [{
-      "type": "text",
-      "contentType": "initialResponse",
-      "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your results or workshop your bio!  Where do you want to start first?"
-    }]
-  }];
-</script>
 
-<script>
-  // Save and restore from local storage
-  function openDatabase() {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open('ProfileDatabase', 1);
-
-      request.onupgradeneeded = event => {
-        const db = event.target.result;
-        db.createObjectStore('images', { keyPath: 'id' });
-      };
-
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = event => reject(event.target.error);
-    });
-  }
-
-  async function saveDataLocally() {
-    // Save form data
-    const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
-    formElements.forEach(element => {
-      if (element.value) {
-        localStorage.setItem(element.id, element.value);
-      } else {
-        localStorage.removeItem(element.id); // Remove from localStorage if the field is empty
-      }
-    });
-
-    // Save or clear the additional Tinder URL field
-    const tinderURL = document.getElementById('tinderURL').value;
-    if (tinderURL) {
-      localStorage.setItem('tinderURL', tinderURL);
-    } else {
-      localStorage.removeItem('tinderURL'); // Remove from localStorage if the field is empty
-    }
-
-    // Save images to IndexedDB
-    const db = await openDatabase();
-    const transaction = db.transaction('images', 'readwrite');
-    const store = transaction.objectStore('images');
-
-    // Clear the store first
-    await store.clear();
-
-    // Then add the current images
-    const images = document.querySelectorAll('#image-container img');
-    images.forEach((img, index) => {
-      store.put({ id: index, src: img.src });
-    });
-  }
-
-
-  async function restoreData() {
-    // Restore form data
-    const formElements = document.querySelectorAll('#formCollection input, #formCollection textarea');
-    formElements.forEach(element => {
-      const savedValue = localStorage.getItem(element.id);
-      if (savedValue) {
-        element.value = savedValue;
-      }
-    });
-
-    // Restore the Tinder URL field
-    const savedTinderURL = localStorage.getItem('tinderURL');
-    if (savedTinderURL) {
-      document.getElementById('tinderURL').value = savedTinderURL;
-    }
-
-    // Restore images from IndexedDB
-    const db = await openDatabase();
-    const transaction = db.transaction('images', 'readonly');
-    const store = transaction.objectStore('images');
-
-    store.openCursor().onsuccess = function (event) {
-      const cursor = event.target.result;
-      if (cursor) {
-        displayImage(cursor.value.src); // Assuming you have a function `displayImage` to add images to the DOM
-        cursor.continue();
-      }
-    };
-  }
-
-  // Call restoreData on page load
-  document.addEventListener('DOMContentLoaded', restoreData);
+  currentTimestamp = Math.floor(Date.now() / 1000);
+  localStorage.setItem('paymentIntentCreated', currentTimestamp);
+  localStorage.setItem('paymentIntentClientSecret', "charmcheck-free-pass");
 </script>
 
 <script>
@@ -809,7 +643,7 @@
     document.getElementById('image-container').appendChild(divContainer);
 
     // Additional UI adjustment
-    document.getElementById('image-container').classList.add("mt-5");
+    document.getElementById('image-container').style.marginTop = '5rem';
     document.getElementById('photoCollector').classList.remove("offset-md-3");
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
@@ -846,10 +680,10 @@
   }
 
   // UI Helpers
-
   function setupSortable() {
-    $('#image-container').sortable();
-    $('#image-container').disableSelection();
+    Sortable.create(document.getElementById('image-container'), {
+      animation: 150,
+    });
   }
 
   function setup() {
@@ -912,78 +746,10 @@
         }, `photo${index + 1}`);
       }
     });
-
-    var aboutMeDescription = document.getElementById('aboutMeDescription').value;
-    var ageDescription = document.getElementById('ageDescription').value;
-    var interestsDescription = document.getElementById('interestsDescription').value;
-    var relationshipTypeDescription = document.getElementById('relationshipTypeDescription').value;
-    var jobTitleDescription = document.getElementById('jobTitleDescription').value;
-    var importantDetailsDescription = document.getElementById('importantDetailsDescription').value;
-    var promptsAndAnswersDescription = document.getElementById('promptsAndAnswersDescription').value;
-
-    // Default values if fields are empty
-    aboutMeDescription = aboutMeDescription || "[No details provided.]";
-    interestsDescription = interestsDescription || "[Not specified.]";
-    relationshipTypeDescription = relationshipTypeDescription || "[Not specified.]";
-    jobTitleDescription = jobTitleDescription || "[Not specified.]";
-    importantDetailsDescription = importantDetailsDescription || "[None provided.]";
-    promptsAndAnswersDescription = promptsAndAnswersDescription || "[No prompts answered.]";
-
-    // Save data locally for easy entry next time
-    saveDataLocally();
-
-    // Add to message content
-    addToMessageContent({
-      type: "text",
-      contentType: "profileHeader",
-      text: `The user's dating profile currently contains the following fields`
-    }, "profileHeader");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "aboutMe",
-      text: `About me: ${aboutMeDescription}`
-    }, "aboutMe");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "age",
-      text: `Age: ${ageDescription}`
-    }, "age");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "interests",
-      text: `Interests: ${interestsDescription}`
-    }, "interests");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "relationshipType",
-      text: `Looking for: ${relationshipTypeDescription}`
-    }, "relationshipType");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "jobTitle",
-      text: `Profession/Education: ${jobTitleDescription}`
-    }, "jobTitle");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "importantDetails",
-      text: `Some important details highlighted are: ${importantDetailsDescription}`
-    }, "importantDetails");
-
-    addToMessageContent({
-      type: "text",
-      contentType: "promptsAndAnswers",
-      text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
-    }, "promptsAndAnswers");
   }
 
   function sendToAPI() {
-    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
+    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_batch_photos/";
     const headers = {
       "Content-Type": "application/json",
     };
@@ -992,10 +758,11 @@
     const payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
-      max_tokens: 1100
+      max_tokens: 3600,
+      client_secret: localStorage.getItem('paymentIntentClientSecretBatch'),
     };
 
-    document.getElementById('loader').classList.remove("invisible");
+    document.getElementById('loader').classList.remove("d-none");
     document.getElementById('sendButton').disabled = true;
 
     fetch(apiUrl, {
@@ -1008,7 +775,7 @@
       .catch(error => {
         console.error('Error:', error);
         alert('We have tight content guidelines.  Please remove inappropriate photos, then try again.');
-        document.getElementById('loader').classList.add("invisible");
+        document.getElementById('loader').classList.add("d-none");
         document.getElementById('sendButton').disabled = false;
         document.getElementById('sendButton').innerHTML = "<strong>Try Again</strong>";
       });
@@ -1032,42 +799,6 @@
 
     var text = data["response"]["choices"][0]['message']['content'];
 
-    // Add to conversation if the report doesn't exist yet, otherwise, swap in place so only one report is in the conversation
-    let report_found = false;
-    for (let i = 0; i < conversation.length; i++) {
-      const contentArray = conversation[i]['content'];
-      for (let j = 0; j < contentArray.length; j++) {
-        const contentItem = contentArray[j];
-        if (contentItem['contentType'] === 'report') {
-          // Found an existing report, update its text
-          contentItem['text'] = text;
-          report_found = true;
-          // Add to conversation that a new report was requested
-          conversation.push({
-            "role": "user",
-            "content": [{
-              "type": "text",
-              "contentType": "userInput",
-              "text": "Thanks for changing your report with my new information!"
-            }]
-          });
-          break; // Exit the loop as we've found and updated the report
-        }
-      }
-      if (report_found) break; // Exit the outer loop as well
-    }
-    if (!report_found) {
-      // No existing report found, add a new one
-      conversation.unshift({
-        "role": "assistant",
-        "content": [{
-          "type": "text",
-          "contentType": "report",
-          "text": text
-        }]
-      });
-    }
-
     var html = converter.makeHtml(text);
     if (unhelpfulResponses.includes(text)) {
       throw new Error('GPT cannot assist.');
@@ -1075,7 +806,7 @@
     document.getElementById('apiResponse').innerHTML = html;
     document.getElementById('analysis-container').classList.remove("d-none");
     document.getElementById('chat-container').classList.remove("d-none");
-    document.getElementById('loader').classList.add("invisible");
+    document.getElementById('loader').classList.add("d-none");
     document.getElementById('analysis-container').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('padding-container').classList.add("d-none");
     document.getElementById('padding-container').classList.remove("d-md-block");
@@ -1085,190 +816,10 @@
 </script>
 
 <script>
-  // Chatbot scripts
-  function sendToConversationAPI() {
-    const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check_conversation/";
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    var payload = {
-      model: "gpt-4-vision-preview",
-      messages: messages,
-      conversation: conversation,
-      max_tokens: 1100
-    };
-
-    // add ClientSecret if relevant
-    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecret');
-    if (paymentIntentClientSecret) {
-      payload['stripe_client_secret'] = paymentIntentClientSecret;
-    }
-
-    // Disable chat
-    document.getElementById('chat-loader').style.visibility = 'visible';
-    document.getElementById('buttonSend').disabled = true;
-
-    // Send the POST request
-    fetch(apiUrl, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(payload)
-    })
-      .then(response => response.json())
-      .then(data => {
-        handleConversationAPIResponse(data)
-        // Allow chat again areas
-        document.getElementById('chat-loader').style.visibility = 'hidden';
-        document.getElementById('buttonSend').disabled = false;
-      }) // Pass the data to the new function
-      .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error with your chat.  Please hit submit to try again.');
-        document.getElementById('chat-loader').style.visibility = 'hidden';
-        document.getElementById('buttonSend').disabled = false;
-      });
-  }
-
-  function handleConversationAPIResponse(data) {
-    var converter = new showdown.Converter();
-    converter.setOption('disableForced4SpacesIndentedSublists', true);
-    converter.setOption('smartIndentationFix', true);
-
-    var text = data["response"]["choices"][0]['message']['content'];
-
-    conversation.push({
-      "role": "assistant",
-      "content": [{
-        "type": "text",
-        "contentType": "responseOutput",
-        "text": text
-      }]
-    });
-    var html = converter.makeHtml(text);
-
-    addToConversation('assistant', html)
-  }
-
-  // addToConveration
-  function addToConversation(role, message) {
-    var converter = new showdown.Converter();
-    converter.setOption('disableForced4SpacesIndentedSublists', true);
-    converter.setOption('smartIndentationFix', true);
-    var html = converter.makeHtml(message);
-    if (role == "user") {
-      var newDiv = $(`
-        <div class="user-convo row py-2">
-          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-            <div class="d-flex align-items-center ms-3">
-            </div>
-          </div>
-          <div class="col-11 ps-0">
-            <div class="d-flex justify-content-end p-3 rounded shadow-sm me-3" style="background-color: #ffcccc;">
-              <div class="text-start">
-                ${html}
-              </div>
-            </div>
-          </div>
-        </div>
-      `)
-    } else if (role == "assistant") {
-      var newDiv = $(`
-        <div class="assistant-convo row py-2">
-          <div class="col-11">
-            <div class="h-100 p-3 rounded shadow-sm ms-3"
-              style="background-color: #f9f9f9;">
-              ${html}
-            </div>
-          </div>
-          <div class="col-1 d-flex align-items-center justify-content-center" style="font-size: 3rem;">
-            <div class="d-flex align-items-center me-3">
-            </div>
-          </div>
-        </div>
-      `)
-    };
-
-    $("#chatDisplay").append(newDiv);
-    // Scroll to the bottom of the chatDisplay
-    var chatDisplay = $("#chatDisplay");
-    chatDisplay.scrollTop(chatDisplay.prop("scrollHeight"));
-  };
-
-  // UI Helpers
-  $('#buttonSend').click(function () {
-    $('#nameHero').hide();
-    // TODO: Prune messages if too long
-    conversation.push({
-      "role": "user",
-      "content": [{
-        "type": "text",
-        "contentType": "userInput",
-        "text": $('#floatingTextarea').val()
-      }]
-    });
-    addToConversation('user', $('#floatingTextarea').val())
-    // TODO: ADD PAYWALL HERE
-    if (conversation.length > 4 && !PAYMENT_MADE) {
-      $('#paywallOverlay').removeClass('d-none');
-      document.getElementById('floatingTextarea').blur();
-      document.getElementById('buttonSend').blur();
-    }
-    sendToConversationAPI();
-    document.getElementById('chat-loader').style.visibility = 'visible';
-    $('#floatingTextarea').val('');
-    $('#floatingTextarea').attr('rows', '1');
-  });
-
-  // Handle alt+enter
-  const textarea = document.getElementById("floatingTextarea");
-  const buttonSend = document.getElementById("buttonSend");
-
-  textarea.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey) {
-      e.preventDefault(); // Prevent the default behavior (line break)
-      buttonSend.click(); // Trigger the button click
-    }
-  });
-
-  // Auto expand textarea: https://gist.github.com/i-havr/6b8e6f39da421360c6c054c9d2765d61, https://codepen.io/vsync/details/bGgQzL
-  function getScrollHeight(elm) {
-    var savedValue = elm.value
-    elm.value = ''
-    elm._baseScrollHeight = elm.scrollHeight
-    elm.value = savedValue
-  }
-
-  // Minimize/Maximize chatbot
-  function onExpandableTextareaInput({ target: elm }) {
-    if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
-
-    var minRows = elm.getAttribute('data-min-rows') | 0, rows;
-    !elm._baseScrollHeight && getScrollHeight(elm)
-
-    elm.rows = minRows
-    rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 24)
-    elm.rows = minRows + rows
-  }
-  document.addEventListener('input', onExpandableTextareaInput);
-
-  document.getElementById('close-chat-container-button').addEventListener('click', function () {
-    document.getElementById('chat-container').classList.add('d-none');
-    document.getElementById('chat-container-minimized').classList.remove('d-none');
-  });
-
-  document.getElementById('chat-container-minimized').addEventListener('click', function () {
-    document.getElementById('chat-container-minimized').classList.add('d-none');
-    document.getElementById('chat-container').classList.remove('d-none');
-  });
-</script>
-
-<script>
   // Handle Stripe.js payments
   const stripe = Stripe("pk_live_51OILtSIELqMaA55AoAxgHHwft4t0Fxl7hbiP3A3hlV5e9H2wId7G88A69bfixupL2Xa2K9739DdcHa5DY3liVcC10078uHrsW5");
 
   let elements;
-  var PAYMENT_MADE = false;
   checkIfPreviouslyPaid();
 
   // Fetches a payment intent and captures the client secret
@@ -1276,7 +827,7 @@
     fetch("https://gptvisionapiopenai.azurewebsites.net/stripe/process_payment/", {
       method: "POST",
       body: JSON.stringify({
-        "amount": 299,
+        "amount": 1999,
         "currency": "usd"
       }),
     }).then(response => response.json())
@@ -1371,8 +922,6 @@
     var modalInstance = bootstrap.Modal.getInstance(paymentModal);
     var paymentForm = document.getElementById('payment-form');
 
-    PAYMENT_MADE = true;
-
     document.getElementById('paywallOverlay').classList.add('d-none');
 
     setTimeout(function () {
@@ -1380,30 +929,29 @@
       paymentForm.remove();
     }, 2000);
 
-    localStorage.setItem('paymentIntentClientSecret', clientSecret);
-    localStorage.setItem('paymentIntentCreated', created);
+    localStorage.setItem('paymentIntentClientSecretBatch', clientSecret);
+    localStorage.setItem('paymentIntentCreatedBatch', created);
   }
 
   function checkIfPreviouslyPaid() {
     // Retrieve the items from localStorage
-    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecret');
-    var paymentIntentCreated = localStorage.getItem('paymentIntentCreated');
+    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecretBatch');
+    var paymentIntentCreated = localStorage.getItem('paymentIntentCreatedBatch');
 
-    // Check if time is in the last 12 hours
+    // Check if time is in the last 2 hours
     if (paymentIntentCreated) {
       var storedDate = new Date(parseInt(paymentIntentCreated) * 1000); // Convert to milliseconds
       var currentDate = new Date();
       // Calculate the difference in hours
       var differenceInHours = (currentDate - storedDate) / (1000 * 60 * 60);
 
-      // Check if the stored timestamp is within the last 12 hours
-      if (differenceInHours <= 13) {
+      // Check if the stored timestamp is within the last 2 hours
+      if (differenceInHours <= 2) {
         var paymentForm = document.getElementById('payment-form');
         document.getElementById('paywallOverlay').classList.add('d-none');
         paymentForm.remove();
-        PAYMENT_MADE = true;
       } else {
-        console.log("The stored timestamp is older than 12 hours.");
+        console.log("The stored timestamp is older than 2 hours.");
       }
     } else {
       console.log("No stored timestamp found.");
@@ -1456,116 +1004,5 @@
   });
 </script>
 
-<script>
-  // Handle Tinder Imports
-  function fetchTinderProfile(username) {
-    const apiUrl = `https://charmcheck-importer.azurewebsites.net/api/tinder?url=${encodeURIComponent(username)}`;
-
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        tinderURLInput.classList.remove('d-none');
-        fetchProfileButton.classList.remove('d-none');
-        document.getElementById('tinder-loader').classList.add('d-none');
-        if (data.images && data.images.length > 0) {
-          data.images.forEach(currentBase64Image => {
-            // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
-            displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
-            var imageCount = document.querySelectorAll('#image-container > div').length;
-            if (imageCount >= MAX_PHOTOS) {
-              alert(`You cannot add more than ${MAX_PHOTOS} images.`);
-              return; // Stop processing the new image
-            }
-            addToMessageContent({
-              type: "image_url",
-              image_url: {
-                url: `data:image/jpeg;base64,${currentBase64Image}`
-              }
-            }, `photo${imageCount}`);
-          });
-        } else {
-          alert('No images found for this profile.');
-        }
-
-        // Update form elements
-        if (data.age) {
-          document.getElementById('ageDescription').value = data.age;
-        }
-        let jobOrSchool = data.job_title ? data.job_title : '';
-        jobOrSchool += data.company_name ? ` at ${data.company_name}` : '';
-        jobOrSchool += (!data.job_title && data.school) ? data.school : '';
-        document.getElementById('jobTitleDescription').value = jobOrSchool;
-      })
-      .catch(error => {
-        console.error('Error fetching profile:', error);
-        alert('Failed to fetch profile.');
-        tinderURLInput.classList.remove('d-none');
-        fetchProfileButton.classList.remove('d-none');
-        document.getElementById('tinder-loader').classList.add('d-none');
-      });
-  }
-
-  // UI Helpers
-  // Get the elements
-  var tinderURLInput = document.getElementById('tinderURL');
-  var fetchProfileButton = document.getElementById('fetchProfileButton');
-
-  // Event listener for the button click
-  fetchProfileButton.addEventListener('click', function () {
-    handleFetchProfile();
-  });
-
-  // Event listener for the input field to detect the Enter key press
-  tinderURLInput.addEventListener('keypress', function (event) {
-    if (event.keyCode === 13 || event.which === 13) { // 13 is the keycode for Enter
-      event.preventDefault(); // Prevent the default action of the Enter key in a form
-      handleFetchProfile();
-    }
-  });
-
-  // Function to handle fetching the profile
-  function handleFetchProfile() {
-    var tinderURL = tinderURLInput.value;
-    fetchTinderProfile(tinderURL); // Replace with the desired function call
-
-    // Hide the input and button
-    tinderURLInput.classList.add('d-none');
-    fetchProfileButton.classList.add('d-none');
-
-    // Show the loader
-    document.getElementById('tinder-loader').classList.remove('d-none');
-  }
-
-</script>
-
-<script>
-  // Download Docx Report Feature
-  function downloadAsDocx() {
-    var content = document.getElementById('report-container').innerHTML;
-    var content = content + '<br><br><p class="h1 text-center pt-5" style="color:#A7A5A5">Charm Check Chat History</p>'
-    var content = content + document.getElementById('chatDisplay').innerHTML;
-    var content = '<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>' + content;
-
-    var converted = htmlDocx.asBlob(content);
-    function formatDate(date) {
-      var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-      if (month.length < 2)
-        month = '0' + month;
-      if (day.length < 2)
-        day = '0' + day;
-
-      return [year, month, day].join('-');
-    }
-
-    var today = formatDate(new Date());
-    var fileName = 'Charm Check Dating Profile Report - ' + today + '.docx';
-
-    saveAs(converted, fileName);
-  }
-</script>
 
 </html>
