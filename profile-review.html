@@ -320,7 +320,8 @@
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border-color: rgba(255, 255, 255, 0);">
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+        style="border-color: rgba(255, 255, 255, 0);">
         <span class="navbar-toggler-icon" style="color:#5469d4"></span>
       </button>
 
@@ -419,13 +420,16 @@
         </div>
 
         <div id="formCollection" class="col-md-6 px-5 py-2 d-none mt-5 mt-md-0 text-dark">
-          <!-- <div class="mb-3">
-            <label for="aboutMeDescription" class="form-label h6">About Me</label>
-            <textarea class="form-control" id="aboutMeDescription" rows="5" aria-describedby="aboutMeHelp"
-              maxlength="600"></textarea>
-            <small id="aboutMeHelp" class="form-text text-muted">Provide your current profile bio. Note that many
-              platforms limit character length.</small>
-          </div> -->
+          <div class="mb-4">
+            <label for="appDescription" class="form-label h6">Dating App</label>
+            <select class="form-select" id="appDescription" aria-label="Default select example">
+              <option value='Tinder' selected>Tinder</option>
+              <option value='Hinge'>Hinge</option>
+              <option value='Bumble'>Bumble</option>
+              <option value='Other App'>Other</option>
+            </select>
+          </div>
+          <hr>
           <form>
             <div class="mb-3">
               <label for="aboutMeDescription" class="form-label h6">About Me</label>
@@ -464,7 +468,7 @@
               <input type="text" class="form-control" id="importantDetailsDescription" aria-describedby="detailsHelp"
                 maxlength="180">
               <small id="detailsHelp" class="form-text text-muted">Include any details you feel are important (i.e.
-                height, language, religion).</small>
+                height, ethnicity, language, sexual orientation).</small>
             </div>
             <div class="mb-3">
               <label for="promptsAndAnswersDescription" class="form-label h6">Prompts and Answers</label>
@@ -631,7 +635,7 @@
 
 
     <div class="my-5"></div>
-    
+
   </main>
 
   <footer class="footer mt-auto pt-3 pb-1" style="background-color: rgb(39, 39, 39);">
@@ -916,7 +920,7 @@
 
   function processForm() {
     // Clear message stack
-    messages[0]['content'] = []
+    messages[0]['content'] = [];
 
     // Handle images first
     document.querySelectorAll('#image-container > div').forEach((div, index) => {
@@ -931,6 +935,25 @@
       }
     });
 
+    var appDescription = document.getElementById('appDescription').value;
+    var appDescriptionText = "";
+    switch (appDescription) {
+      case "Tinder":
+        appDescriptionText = "Tinder - Primarily known for casual dating and hookups. Profiles on Tinder tend to focus more on photos than detailed bios or prompts. Users often curate their photo selection to make an immediate visual impression, with less emphasis on detailed personal information or interests.";
+        break;
+      case "Hinge":
+        appDescriptionText = "Hinge - Geared towards users seeking longer-term relationships and more meaningful connections. Profiles on Hinge are designed to be more detailed and require responses to prompts, which encourages users to share aspects of their personality and interests. It's more about showcasing one's character and less about quick visual appeal.";
+        break;
+      case "Bumble":
+        appDescriptionText = "Bumble - Unique in that it allows women to initiate the conversation, often leading to more serious connections. The app is used for a mix of casual and more serious dating. Profiles on Bumble strike a balance between photos and personal details, with enough space for users to showcase their interests and personality traits.";
+        break;
+      case "Other App":
+        appDescriptionText = "Other App - I have chosen an unlisted app.  Please use your best judgement to help me craft a great profile based on what I shared!";
+        break;
+      default:
+        appDescriptionText = "Dating App: Not specified.";
+    }
+
     var aboutMeDescription = document.getElementById('aboutMeDescription').value;
     var ageDescription = document.getElementById('ageDescription').value;
     var interestsDescription = document.getElementById('interestsDescription').value;
@@ -939,66 +962,81 @@
     var importantDetailsDescription = document.getElementById('importantDetailsDescription').value;
     var promptsAndAnswersDescription = document.getElementById('promptsAndAnswersDescription').value;
 
-    // Default values if fields are empty
-    aboutMeDescription = aboutMeDescription || "[No details provided.]";
-    interestsDescription = interestsDescription || "[Not specified.]";
-    relationshipTypeDescription = relationshipTypeDescription || "[Not specified.]";
-    jobTitleDescription = jobTitleDescription || "[Not specified.]";
-    importantDetailsDescription = importantDetailsDescription || "[None provided.]";
-    promptsAndAnswersDescription = promptsAndAnswersDescription || "[No prompts answered.]";
-
     // Save data locally for easy entry next time
     saveDataLocally();
 
     // Add to message content
+    if (appDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "appDescription",
+        text: `My Current Dating App: ${appDescriptionText}`
+      }, "appDescription");
+    }
+
     addToMessageContent({
       type: "text",
       contentType: "profileHeader",
-      text: `The user's dating profile currently contains the following fields`
+      text: `My dating profile currently contains the following fields`
     }, "profileHeader");
 
-    addToMessageContent({
-      type: "text",
-      contentType: "aboutMe",
-      text: `About me: ${aboutMeDescription}`
-    }, "aboutMe");
+    if (aboutMeDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "aboutMe",
+        text: `About me: ${aboutMeDescription}`
+      }, "aboutMe");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "age",
-      text: `Age: ${ageDescription}`
-    }, "age");
+    if (ageDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "age",
+        text: `Age: ${ageDescription}`
+      }, "age");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "interests",
-      text: `Interests: ${interestsDescription}`
-    }, "interests");
+    if (interestsDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "interests",
+        text: `Interests: ${interestsDescription}`
+      }, "interests");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "relationshipType",
-      text: `Looking for: ${relationshipTypeDescription}`
-    }, "relationshipType");
+    if (relationshipTypeDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "relationshipType",
+        text: `Looking for: ${relationshipTypeDescription}`
+      }, "relationshipType");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "jobTitle",
-      text: `Profession/Education: ${jobTitleDescription}`
-    }, "jobTitle");
+    if (jobTitleDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "jobTitle",
+        text: `Profession/Education: ${jobTitleDescription}`
+      }, "jobTitle");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "importantDetails",
-      text: `Some important details highlighted are: ${importantDetailsDescription}`
-    }, "importantDetails");
+    if (importantDetailsDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "importantDetails",
+        text: `Some important details highlighted are: ${importantDetailsDescription}`
+      }, "importantDetails");
+    }
 
-    addToMessageContent({
-      type: "text",
-      contentType: "promptsAndAnswers",
-      text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
-    }, "promptsAndAnswers");
+    if (promptsAndAnswersDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "promptsAndAnswers",
+        text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
+      }, "promptsAndAnswers");
+    }
   }
+
 
   function sendToAPI() {
     const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
