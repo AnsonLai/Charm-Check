@@ -420,7 +420,7 @@
         </div>
 
         <div id="formCollection" class="col-md-6 px-5 py-2 d-none mt-5 mt-md-0 text-dark">
-          <div class="mb-4">
+          <div class="mb-5">
             <label for="appDescription" class="form-label h6">Dating App</label>
             <select class="form-select" id="appDescription" aria-label="Default select example">
               <option value='Tinder' selected>Tinder</option>
@@ -431,7 +431,7 @@
           </div>
           <hr>
           <form>
-            <div class="mb-3">
+            <div class=" mt-4 mb-3">
               <label for="aboutMeDescription" class="form-label h6">About Me</label>
               <textarea class="form-control" id="aboutMeDescription" rows="5" aria-describedby="aboutMeHelp"
                 maxlength="600"></textarea>
@@ -471,10 +471,38 @@
                 height, ethnicity, language, sexual orientation).</small>
             </div>
             <div class="mb-3">
-              <label for="promptsAndAnswersDescription" class="form-label h6">Prompts and Answers</label>
-              <textarea class="form-control" id="promptsAndAnswersDescription" rows="5" aria-describedby="promptsHelp"
-                maxlength="850"></textarea>
-              <small id="promptsHelp" class="form-text text-muted">Write any prompts and your answers here.</small>
+              <label for="promptsDescription1" class="form-label h6">First Prompt</label>
+              <input type="text" class="form-control mb-1" id="promptsDescription1" aria-describedby="promptsHelp1"
+                maxlength="150"></textarea>
+              <textarea class="form-control" id="promptsAnswerDescription1" rows="3"
+                aria-describedby="promptsAnswerHelp1" maxlength="350"></textarea>
+              <small id="promptsAnswerHelp1" class="form-text text-muted">Write your prompt and your answer to the
+                prompt here.</small>
+            </div>
+            <div class="mb-3">
+              <label for="promptsDescription2" class="form-label h6">Second Prompt</label>
+              <input type="text" class="form-control mb-1" id="promptsDescription2" aria-describedby="promptsHelp2"
+                maxlength="150"></input>
+              <textarea class="form-control" id="promptsAnswerDescription2" rows="3"
+                aria-describedby="promptsAnswerHelp2" maxlength="350"></textarea>
+              <small id="promptsAnswerHelp2" class="form-text text-muted">Write your second prompt and your answer to
+                the prompt here.</small>
+            </div>
+            <div class="mb-3">
+              <label for="promptsDescription3" class="form-label h6">Third Prompt</label>
+              <input type="text" class="form-control mb-1" id="promptsDescription3" aria-describedby="promptsHelp3"
+                maxlength="150"></input>
+              <textarea class="form-control" id="promptsAnswerDescription3" rows="3"
+                aria-describedby="promptsAnswerHelp3" maxlength="350"></textarea>
+              <small id="promptsAnswerHelp3" class="form-text text-muted">Write your third prompt and your answer to the
+                prompt here.</small>
+            </div>
+            <div class="mb-3">
+              <label for="additionalInformationDescription" class="form-label h6">Additional Information</label>
+              <textarea class="form-control" id="additionalInformationDescription" rows="5"
+                aria-describedby="additionalInformationHelp" maxlength="850"></textarea>
+              <small id="additionalInformationHelp" class="form-text text-muted">Write any additional prompts and
+                answers here.</small>
             </div>
           </form>
           <div class="d-flex justify-content-center">
@@ -663,6 +691,33 @@
   </footer>
 
 </body>
+
+<script>
+  function updateFormVisibility() {
+    var formElement = document.querySelector('form');
+    var childDivs = formElement.querySelectorAll(':scope > div');
+    childDivs.forEach(function (div) {
+      if (div.style.display === 'none') {
+        div.style.removeProperty('display');
+      }
+    });
+    var selectedApp = document.getElementById('appDescription').value;
+    // Determine which form elements to show or hide
+    switch (selectedApp) {
+      case 'Tinder':
+        break;
+      case 'Hinge':
+        document.getElementById('aboutMeDescription').parentNode.style.display = 'none';
+        break;
+      case 'Bumble':
+        break;
+      case 'Other App':
+        break;
+    }
+  }
+
+  document.getElementById('appDescription').addEventListener('change', updateFormVisibility);
+</script>
 
 <script>
   // Global variables
@@ -954,13 +1009,28 @@
         appDescriptionText = "Dating App: Not specified.";
     }
 
-    var aboutMeDescription = document.getElementById('aboutMeDescription').value;
-    var ageDescription = document.getElementById('ageDescription').value;
-    var interestsDescription = document.getElementById('interestsDescription').value;
-    var relationshipTypeDescription = document.getElementById('relationshipTypeDescription').value;
-    var jobTitleDescription = document.getElementById('jobTitleDescription').value;
-    var importantDetailsDescription = document.getElementById('importantDetailsDescription').value;
-    var promptsAndAnswersDescription = document.getElementById('promptsAndAnswersDescription').value;
+    function getValueIfVisible(elementId) {
+      var element = document.getElementById(elementId);
+      if (window.getComputedStyle(element.parentNode).display !== 'none') {
+        return element.value;
+      }
+      return null; // or return an empty string '' as per your requirement
+    }
+
+    var aboutMeDescription = getValueIfVisible('aboutMeDescription');
+    var ageDescription = getValueIfVisible('ageDescription');
+    var interestsDescription = getValueIfVisible('interestsDescription');
+    var relationshipTypeDescription = getValueIfVisible('relationshipTypeDescription');
+    var jobTitleDescription = getValueIfVisible('jobTitleDescription');
+    var importantDetailsDescription = getValueIfVisible('importantDetailsDescription');
+    var promptsDescription1 = getValueIfVisible('promptsDescription1');
+    var promptsAnswerDescription1 = getValueIfVisible('promptsAnswerDescription1');
+    var promptsDescription2 = getValueIfVisible('promptsDescription2');
+    var promptsAnswerDescription2 = getValueIfVisible('promptsAnswerDescription2');
+    var promptsDescription3 = getValueIfVisible('promptsDescription3');
+    var promptsAnswerDescription3 = getValueIfVisible('promptsAnswerDescription3');
+    var additionalInformationDescription = getValueIfVisible('additionalInformationDescription');
+
 
     // Save data locally for easy entry next time
     saveDataLocally();
@@ -1024,16 +1094,40 @@
       addToMessageContent({
         type: "text",
         contentType: "importantDetails",
-        text: `Some important details highlighted are: ${importantDetailsDescription}`
+        text: `Some important details I want to highlight are: ${importantDetailsDescription}`
       }, "importantDetails");
     }
 
-    if (promptsAndAnswersDescription) {
+    if (promptsDescription1 || promptsAnswerDescription1) {
       addToMessageContent({
         type: "text",
-        contentType: "promptsAndAnswers",
-        text: `Some apps allow you to put in prompts and answer them. Here are some prompts and answers: ${promptsAndAnswersDescription}`
-      }, "promptsAndAnswers");
+        contentType: "promptAnswer1",
+        text: `The app lets me choose and answer a few prompts.  This is the first one: ${promptsDescription1} - Answer: ${promptsAnswerDescription1}`
+      }, "promptAnswer");
+    }
+
+    if (promptsDescription2 || promptsAnswerDescription2) {
+      addToMessageContent({
+        type: "text",
+        contentType: "promptAnswer2",
+        text: `This is the second prompt: ${promptsDescription2} - Answer: ${promptsAnswerDescription2}`
+      }, "promptAnswer2");
+    }
+
+    if (promptsDescription3 || promptsAnswerDescription3) {
+      addToMessageContent({
+        type: "text",
+        contentType: "promptAnswer3",
+        text: `And here is the third prompt: ${promptsDescription3} - Answer: ${promptsAnswerDescription3}`
+      }, "promptAnswer3");
+    }
+
+    if (additionalInformationDescription) {
+      addToMessageContent({
+        type: "text",
+        contentType: "additionalInformation",
+        text: `Additional Information: ${additionalInformationDescription}`
+      }, "additionalInformation");
     }
   }
 
