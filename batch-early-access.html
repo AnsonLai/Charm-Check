@@ -61,6 +61,42 @@
   .user-convo p:last-child {
     margin-bottom: 0;
   }
+
+  /* Styling for Stripe form */
+  @media (max-width: 576px) {
+    #payment-form {
+      width: auto;
+      min-width: 0;
+      padding: 20px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    #payment-form {
+      width: 50vw;
+      /* You can set this to your preferred width */
+      padding: 30px;
+      /* Adjust padding if needed */
+    }
+  }
+
+  @media (min-width: 992px) {
+    #payment-form {
+      width: 40vw;
+      /* You can set this to your preferred width */
+      padding: 40px;
+      /* Adjust padding if needed */
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #payment-form {
+      width: 30vw;
+      /* This is your original width, adjust if needed */
+      padding: 40px;
+      /* This is your original padding, adjust if needed */
+    }
+  }
 </style>
 
 <body class="d-flex flex-column h-100" onload="setup()" style="background-color: rgb(39, 39, 39);">
@@ -436,8 +472,7 @@
               </div>
             </div>
             <div class="modal-body d-flex justify-content-center align-items-center">
-              <div id="payment-form" class="shadow"
-                style="width: 30vw; min-width: 500px; max-width: 100%; border-radius: 7px; padding: 40px;">
+              <div id="payment-form" class="shadow rounded-3 p-3" style="max-width: 100%; overflow-x: auto;">
                 <div id="payment-element" style="margin-bottom: 24px;">
                   <!--Stripe.js injects the Payment Element here-->
                 </div>
