@@ -1608,10 +1608,12 @@
     if (isLoading) {
       // Disable the button and show a spinner
       document.querySelector("#paymentSubmit").disabled = true;
+      document.querySelector("#paymentSubmit").style.background = '#d3d3d3';
       document.querySelector("#spinner").classList.remove("hidden");
       document.querySelector("#button-text").classList.add("hidden");
     } else {
       document.querySelector("#paymentSubmit").disabled = false;
+      document.querySelector("#paymentSubmit").style.background = '#5469d4';
       document.querySelector("#spinner").classList.add("hidden");
       document.querySelector("#button-text").classList.remove("hidden");
     }
