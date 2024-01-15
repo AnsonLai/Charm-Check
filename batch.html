@@ -368,10 +368,10 @@
         <div id="padding-container" class="d-none d-md-block" style="padding-top: 5rem; padding-bottom: 5rem;"></div>
         <div style="padding-top: 1rem; padding-bottom: 1rem;"></div>
 
-        <div id="photoCollector" class="col-md-12 bg-white rounded shadow">
-          <div class="row gx-0">
-            <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
-              <div class="row bg-white w-100 g-0 py-5 mx-5 text-white text-center"
+        <div id="photoCollector" class="col-md-12 bg-white">
+          <div class="row">
+            <div class="col-md-4 px-0 mb-5 d-flex flex-column align-items-center rounded shadow">
+              <div class="row bg-white w-100 g-0 py-5 mx-5 text-white text-center rounded-top"
                 style="background: linear-gradient(rgba(21, 2, 2, 0.8), rgba(66, 6, 6, 0.75)), url('openaivtestbg.png'); background-size: cover; background-position: center; ">
                 <h2 class="my-0"><strong>Find Your Perfect Profile Picture in Seconds!</strong></h2>
               </div>
@@ -382,7 +382,7 @@
             </div>
 
 
-            <div class="col-md-8 d-flex flex-column align-items-center justify-content-center position-relative">
+            <div class="col-md-8 mb-5 d-flex flex-column align-items-center justify-content-center position-relative">
               <div class="row bg-white w-100 g-0 py-5 rounded-bottom text-dark">
                 <div class="d-flex flex-column align-items-center">
                   <div class="col d-flex flex-column align-items-center">
@@ -614,6 +614,8 @@
     document.getElementById('photoCollector').classList.remove("offset-md-3");
     document.getElementById('formCollection').classList.remove("d-none");
     document.getElementById('formCollection').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('padding-container').classList.add("d-none");
+    document.getElementById('padding-container').classList.remove("d-md-block");
   }
 
   function convertToBase64(file, callback) {
