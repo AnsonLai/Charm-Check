@@ -102,7 +102,7 @@
 <body class="d-flex flex-column h-100" onload="setup()">
   <nav class="navbar navbar-expand-md navbar-light">
     <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="/index.html">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
         <div style="height: 3rem; width: 3rem;">
           <?xml version="1.0" encoding="UTF-8" standalone="no"?>
           <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -382,8 +382,8 @@
             </div>
 
 
-            <div class="col-md-8 mb-5 d-flex flex-column align-items-center justify-content-center position-relative">
-              <div class="row bg-white w-100 g-0 py-5 rounded-bottom text-dark">
+            <div class="col-md-8 mb-5 d-flex flex-column align-items-center justify-content-center">
+              <div class="row bg-white w-100 g-0 py-5 rounded-bottom text-dark position-relative">
                 <div class="d-flex flex-column align-items-center">
                   <div class="col d-flex flex-column align-items-center">
                     <!-- Drop area -->
@@ -407,12 +407,8 @@
                   <div id="paywallOverlay"
                     class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
                     style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
-                    <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
-                      onClick="initialize(); checkStatus();"><strong class="lead" style="font-size: 1.5rem;">We'll pick
-                        your
-                        best photos!</strong><br>Drop your entire photo album here and we'll tell you what's best for
-                      your
-                      dating profile. Access for just
+                    <button class="btn btn-danger px-5 py-2 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
+                      onClick="initialize(); checkStatus();"><strong class="lead" style="font-size: 1.5rem;">Get access for just
                       <del>$24.99!</del><span style="font-weight: 900;">$19.99!</span></button>
                   </div>
                 </div>
@@ -469,9 +465,8 @@
           <div class="modal-content">
             <div class="modal-header border-bottom-0 bg-dark text-white">
               <div class="col text-center">
-                <h1 class="modal-title fs-5" id="paymentModalLabel">Batch Photo Access (1 hour)</h1>
-                <h1 class="fs-3"><del>$24.99 USD</del></h1>
-                <h1 class="fs-3">Now $19.99 USD for a limited time!</h1>
+                <h1 class="modal-title fs-5 mb-2" id="paymentModalLabel">Batch Photo Access (1 hour)</h1>
+                <h1 class="fs-3"><del>$24.99 USD</del> $19.99 USD</h1>
               </div>
               <div class="col-auto">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
