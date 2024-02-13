@@ -1198,7 +1198,7 @@
     const payload = {
       model: "gpt-4-vision-preview",
       messages: messages,
-      max_tokens: 1100
+      max_tokens: 1300
     };
 
     document.getElementById('loader').classList.remove("invisible");
@@ -1300,7 +1300,7 @@
       model: "gpt-4-vision-preview",
       messages: messages,
       conversation: conversation,
-      max_tokens: 1100
+      max_tokens: 1300
     };
 
     // add ClientSecret if relevant
@@ -1429,7 +1429,7 @@
   const buttonSend = document.getElementById("buttonSend");
 
   textarea.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+    if (e.key === "Enter" && !event.isComposing && !e.shiftKey && !e.ctrlKey && !e.altKey) {
       e.preventDefault(); // Prevent the default behavior (line break)
       buttonSend.click(); // Trigger the button click
     }
