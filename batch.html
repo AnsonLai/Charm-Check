@@ -86,6 +86,16 @@
     margin-bottom: 0;
   }
 
+  .custom-title-h1-primary {
+    font-size: 4.5rem;
+    font-size: clamp(2rem, calc(1.475rem + 3.5vw), 4.5rem);
+  }
+
+  .custom-title-h1-secondary {
+    font-size: 3rem;
+    font-size: clamp(1.5rem, calc(1.175rem + 3vw), 3rem);
+  }
+
   /* Styling for Stripe form */
   @media (max-width: 576px) {
     #payment-form {
@@ -389,56 +399,120 @@
     <div id="padding-container" class="d-none d-md-block" style="padding-top: 3rem; padding-bottom: 3rem;"></div>
     <div style="padding-top: 1rem; padding-bottom: 1rem;"></div>
 
-    <div id="hero" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
-      <div class="container">
-        <div class="row">
-          <div class="d-none d-lg-block"
-            style="height: 288px; width: 683px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#49a1b0 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
-          </div>
-          <div class="d-none d-lg-block"
-            style="height: 242px; width: 450px; top: 83%; left: 77%; opacity: .45; background-image: radial-gradient(#2b25a0 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
-          </div>
-          <!-- Text and Polka Dot Background Column -->
-          <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
-            <h1 class="fw-bold" style="font-size: 3.5rem; color:rgb(33, 102, 175);">Which photos should you pick?
-            </h1>
-            <div class="m-3 p-2"></div>
-            <p class="fs-5">Find your perfect dating profile picture in seconds! Upload your photo album (up to 50 at a
-              time) and Charm Check will
-              select the most attractive picks for your dating profile.</p>
-            <div class="m-3 p-2"></div>
-            <button class="btn btn-primary p-3 px-5" data-bs-toggle="modal" data-bs-target="#paymentModal"
-              onClick="initialize(); checkStatus();"><span class="fs-4">Get access
-                for just <strong>$9.99</strong> for a limited time!</span></button>
-            <p class="text-dark mt-1 mb-3"><a href="profile-review.html" class="text-dark">Get a free profile review
-                instead!</a>
-            </p>
-          </div>
-          <!-- Image Column -->
-          <div class="col-12 col-md-12 col-lg-3 offset-lg-2 order-lg-1 my-3">
-            <div class="d-flex flex-column justify-content-center" style="height: 100%;">
-              <!-- Adjust height as needed -->
-              <div id="hero-images" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner rounded-3 shadow">
-                  <div class="carousel-item active">
-                    <img src="images/frederick-ferdianto-Dunxame8wxg-unsplash.jpg" class="d-block w-100"
-                      alt="Sample image for dating profile">
-                    <div class="carousel-caption d-none d-md-block">
-                      <h5 class="mb-0">"this one is a keeper!"</h5>
+    <div id="hero-container">
+      <div id="hero" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
+        <div class="container">
+          <div class="row">
+            <div class="d-none d-lg-block"
+              style="height: 288px; width: 683px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#49a1b0 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+            </div>
+            <div class=""
+              style="height: 242px; width: 450px; top: 83%; left: 77%; opacity: .45; background-image: radial-gradient(#2b25a0 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+            </div>
+            <!-- Text and Polka Dot Background Column -->
+            <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
+              <h1 class="fw-bold custom-title-h1-secondary text-center text-lg-start" style="color:rgb(33, 102, 175);">
+                Which photos should you pick?
+              </h1>
+              <div class="m-3 p-2"></div>
+              <p class="fs-5 text-center text-lg-start">Find your perfect dating profile picture in seconds! Upload your
+                photo album and Charm Check will
+                select the most attractive picks for your dating profile.</p>
+              <div class="m-3 p-2"></div>
+              <button class="btn btn-primary p-3 px-5" data-bs-toggle="modal" data-bs-target="#paymentModal"
+                onClick="initialize(); checkStatus();"><span class="fs-4">Get access
+                  for just <strong>$9.99</strong> for a limited time!</span></button>
+              <p class="text-dark mt-1 mb-3"><a href="profile-review.html" class="text-dark">Get a free profile review
+                  instead!</a>
+              </p>
+            </div>
+            <!-- Image Column -->
+            <div class="col-12 col-md-12 col-lg-3 offset-lg-2 order-lg-1 my-3">
+              <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+                <!-- Adjust height as needed -->
+                <div id="hero-images" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner rounded-3 shadow">
+                    <div class="carousel-item active">
+                      <img src="images/frederick-ferdianto-Dunxame8wxg-unsplash.jpg" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0">"this one is a keeper!"</h5>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/prince-akachi-4Yv84VgQkRM-unsplash.jpg" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0">"bland background, but it's a potential lead"</h5>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/guilherme-stecanella-_dH-oQF9w-Y-unsplash.jpg" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0">"solid candidate as a secondary photo"</h5>
+                      </div>
                     </div>
                   </div>
-                  <div class="carousel-item">
-                    <img src="images/prince-akachi-4Yv84VgQkRM-unsplash.jpg" class="d-block w-100"
-                      alt="Sample image for dating profile">
-                    <div class="carousel-caption d-none d-md-block">
-                      <h5 class="mb-0">"bland background, but it's a potential lead"</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="my-5 py-3"></div>
+      <div class="profile" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
+        <div class="container">
+          <div class="row">
+            <div class=""
+              style="height: 345px; width: 67px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#8ecd7b 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+            </div>
+            <div class="d-none d-lg-block"
+              style="height: 432px; width: 670px; top: 13%; left: 62%; opacity: .45; background-image: radial-gradient(#8a9666 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
+            </div>
+            <!-- Text and Polka Dot Background Column -->
+            <div class="col-12 col-md-12 col-lg-7 order-lg-1 my-3">
+              <h1 class="fw-bold custom-title-h1-secondary" style="color:rgb(21, 106, 135);">
+                How It Works
+              </h1>
+              <div class="m-3 p-2"></div>
+              <h1 class="fw-bold" style="font-size: 1.3rem; color:rgb(49, 157, 193);">1. Gather your photos
+              </h1>
+              <p class="fs-5">Start with your camera roll or any digital photo album with your photos.</p>
+              <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(49, 157, 193);">2. Upload them
+              </h1>
+              <p class="fs-5">Don't sweat the details or fret over whether you look good or not.  Just upload them in batches of 50.</p>
+              <h1 class="fw-bold mt-4" style="font-size: 1.3rem; color:rgb(49, 157, 193);">3. Let us do the rest
+              </h1>
+              <p class="fs-5">Charm Check will pick the best from the batch and give you tips on how to use them in your profile.</p>
+            </div>
+            <!-- Image Column -->
+            <div class="col-12 col-md-12 col-lg-5 order-lg-2 my-3">
+              <div class="d-flex flex-column justify-content-center" style="height: 100%;">
+                <!-- Adjust height as needed -->
+                <div id="profile-images" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner rounded-3 shadow">
+                    <div class="carousel-item active">
+                      <img src="images/fileexplorer1.png" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0 text-dark"></h5>
+                      </div>
                     </div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="images/guilherme-stecanella-_dH-oQF9w-Y-unsplash.jpg" class="d-block w-100"
-                      alt="Sample image for dating profile">
-                    <div class="carousel-caption d-none d-md-block">
-                      <h5 class="mb-0">"solid candidate as a secondary photo"</h5>
+                    <div class="carousel-item">
+                      <img src="images/fileexplorer2.png" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0 text-dark"></h5>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="images/fileexplorer3.png" class="d-block w-100"
+                        alt="Sample image for dating profile">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5 class="mb-0 text-dark"></h5>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -448,6 +522,9 @@
         </div>
       </div>
     </div>
+
+
+
     <div class="container">
 
       <div class="row g-0">
@@ -958,7 +1035,7 @@
     var paymentForm = document.getElementById('payment-form');
 
     document.getElementById('paywallOverlay').classList.add('d-none');
-    document.getElementById('hero').classList.add('d-none');
+    document.getElementById('hero-container').classList.add('d-none');
     document.getElementById('photoCollector').classList.remove('d-none');
 
     setTimeout(function () {
@@ -986,7 +1063,7 @@
       if (differenceInHours <= 2) {
         var paymentForm = document.getElementById('payment-form');
         document.getElementById('paywallOverlay').classList.add('d-none');
-        document.getElementById('hero').classList.add('d-none');
+        document.getElementById('hero-container').classList.add('d-none');
         document.getElementById('photoCollector').classList.remove('d-none');
         paymentForm.remove();
       } else {
