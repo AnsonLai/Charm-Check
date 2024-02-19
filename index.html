@@ -85,6 +85,16 @@
   .user-convo p:last-child {
     margin-bottom: 0;
   }
+
+  .custom-title-h1-primary {
+    font-size: 4.5rem;
+    font-size: clamp(2rem, calc(1.475rem + 3.5vw), 4.5rem);
+  }
+
+  .custom-title-h1-secondary {
+    font-size: 3rem;
+    font-size: clamp(1.5rem, calc(1.175rem + 3vw), 3rem);
+  }
 </style>
 
 <body class="d-flex flex-column h-100" onload="setup()">
@@ -357,24 +367,30 @@
           <div class="d-none d-lg-block"
             style="height: 288px; width: 683px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#af56a5 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
-          <div class="d-none d-lg-block"
+          <div class=""
             style="height: 242px; width: 450px; top: 83%; left: 77%; opacity: .45; background-image: radial-gradient(#a02525 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
           <!-- Text and Polka Dot Background Column -->
           <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
-            <h1 class="fw-bold" style="font-size: 4.5rem; color:rgb(172, 12, 12);">How does your dating profile measure
+            <h1 class="fw-bold custom-title-h1-primary text-center text-lg-start" style="color:rgb(172, 12, 12);">How
+              does your dating profile measure
               up?
             </h1>
             <div class="m-3 p-2"></div>
-            <p class="fs-5">Don't leave it to chance. With instant, personalized feedback for your photos and bio,
+            <p class="fs-5 text-center text-lg-start">Don't leave it to chance. With instant, personalized feedback for
+              your photos and bio,
               you're steps
               away from a profile that captivates and connects.</p>
             <div class="m-3 p-2"></div>
-            <a class="btn btn-danger p-3 px-5" href="profile-review.html" role="button">
-              <span class="fs-4">Review My Profile</span>
-            </a>
-            <p class="text-dark mt-1 mb-3"><a href="batch.html" class="text-dark">Or try our batch photo analysis!</a>
-            </p>
+            <div class="text-center text-lg-start">
+              <a class="btn btn-danger p-3 px-5" href="profile-review.html" role="button">
+                <span class="fs-4">Review My Profile</span>
+              </a>
+            </div>
+            <div class="text-center text-lg-start">
+              <p class="text-dark mt-1 mb-3"><a href="batch.html" class="text-dark">Or try our batch photo analysis!</a>
+              </p>
+            </div>
           </div>
           <!-- Image Column -->
           <div class="col-12 col-md-12 col-lg-3 offset-lg-2 order-lg-1 my-3">
@@ -415,7 +431,7 @@
     <div class="profile" style="background-color: rgba(0, 255, 255, 0.0); position: relative; overflow: hidden;">
       <div class="container">
         <div class="row">
-          <div class="d-none d-lg-block"
+          <div class=""
             style="height: 345px; width: 67px; top: 14%; left: 5%; opacity: .35; background-image: radial-gradient(#8ecd7b 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
           <div class="d-none d-lg-block"
@@ -423,9 +439,9 @@
           </div>
           <!-- Text and Polka Dot Background Column -->
           <div class="col-12 col-md-12 col-lg-7 order-lg-1 my-3">
-            <h1 class="fw-bold" style="font-size: 3rem; color:rgb(21, 106, 135);">
+            <h1 class="fw-bold custom-title-h1-secondary" style="color:rgb(21, 106, 135);">
               Profile Tips
-              <span class="badge bg-success align-top" style="font-size: 1.5rem; vertical-align: super;">FREE</span>
+              <span class="badge bg-success align-top" style="font-size: 1.3rem; vertical-align: super;">FREE</span>
             </h1>
             <div class="m-3 p-2"></div>
             <h1 class="fw-bold" style="font-size: 1.3rem; color:rgb(49, 157, 193);">Show your best self
@@ -480,14 +496,14 @@
           <div class="d-none d-lg-block"
             style="height: 294px; width: 428px; top: 2%; left: 3%; opacity: .35; background-image: radial-gradient(#904d3e 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
-          <div class="d-none d-lg-block"
+          <div class=""
             style="height: 232px; width: 67px; top: 43%; left: 88%; opacity: .45; background-image: radial-gradient(#966689 3.5px, transparent 0); background-size: 30px 30px; position: absolute; z-index: -1;">
           </div>
           <!-- Text and Polka Dot Background Column -->
           <div class="col-12 col-md-12 col-lg-6 offset-lg-1 order-lg-2 my-3">
-            <h1 class="fw-bold" style="font-size: 3rem; color:rgb(131, 15, 15);">
+            <h1 class="fw-bold custom-title-h1-secondary" style="color:rgb(131, 15, 15);">
               Chatbot Support
-              <span class="badge bg-warning align-top" style="font-size: 1.5rem; vertical-align: super;">DEMO</span>
+              <span class="badge bg-warning align-top" style="font-size: 1.3rem; vertical-align: super;">DEMO</span>
             </h1>
             <div class="m-3 p-2"></div>
             <h1 class="fw-bold" style="font-size: 1.3rem; color:rgb(218, 53, 53);">Discuss your feedback
