@@ -564,9 +564,19 @@
           </form>
           <div class="d-flex justify-content-center">
             <button id="sendButton" class="btn btn-danger mt-5 p-3 px-5" onclick="sendToAPI()"
-              aria-describedby="sendHelp"><strong>Fix my profile!</strong></button>
+              aria-describedby="sendHelp">
+              <strong>Fix my profile!</strong>
+            </button>
           </div>
-          <div id="sendHelp" class="form-text text-center text-white">Charm Check and OpenAI will <em>immediately</em>
+
+          <p id="countdownWarning" class="form-text text-center text-danger d-none"><strong>We are limiting users to 3
+            free profile reviews
+            every 72 hours. Your free reviews will refresh in <span id="countdownDisplay">72 hours</span>. <a
+              class="link-primary hover-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"
+              onClick="initialize(); checkStatus();">Click
+              here</a> to skip the line!</strong></p>
+
+          <div id="sendHelp" class="form-text text-center text-muted">Charm Check and OpenAI will <em>immediately</em>
             delete your photos after our analysis.</div>
 
           <div id="loader" class="container text-center my-4 invisible">
@@ -646,17 +656,15 @@
                 </button>
               </div>
             </div>
-
             <!-- Paywall Overlay -->
-            <div id="paywallOverlay"
-              class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
-              style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
-              <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
-                onClick="initialize(); checkStatus();">
-                <strong class="lead" style="font-size: 1.5rem;">Still need help?</strong><br>Unlock unlimited
-                chatting for 24 hours - only <span style="font-weight: 900;">$2.99!</span>
-            </div>
-
+            <!-- <div id="paywallOverlay"
+            class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none"
+            style="background-color: rgba(0, 0, 0, 0.5); transition: background-color 1s ease;">
+            <button class="btn btn-danger w-100 mx-3" data-bs-toggle="modal" data-bs-target="#paymentModal"
+              onClick="initialize(); checkStatus();">
+              <strong class="lead" style="font-size: 1.5rem;">Still need help?</strong><br>Unlock unlimited
+              profile reviews for 7 days - only <span style="font-weight: 900;">$3.99!</span>
+          </div> -->
           </div>
         </div>
       </div>
@@ -666,7 +674,7 @@
         <button class="close-btn text-white pe-3" id="close-chat-container-button"
           style="position: absolute; top: 0; right: 0; border: none; background: transparent; font-size: 1.5rem; padding: 0 5px;"><strong>&#43;</strong></button>
         <div class="card-header bg-danger text-white">
-          <strong>Charm Check Chatbot</strong>
+          <strong>Charm Check 7-Day Access</strong>
         </div>
       </div>
 
@@ -676,8 +684,8 @@
           <div class="modal-content">
             <div class="modal-header border-bottom-0 bg-dark text-white">
               <div class="col text-center">
-                <h1 class="modal-title fs-5" id="paymentModalLabel">Chatbot Access (12 hours)</h1>
-                <h1 class="fs-3">$2.99 USD</h1>
+                <h1 class="modal-title fs-5" id="paymentModalLabel">Unlimited Profile Reviews (7 Days)</h1>
+                <h1 class="fs-3">$3.99 USD</h1>
               </div>
               <div class="col-auto">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -692,7 +700,7 @@
                 <button id="paymentSubmit" onclick="handleSubmit()"
                   style="background: #5469d4; color: #ffffff; border-radius: 4px; border: 0; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; display: block; box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07); width: 100%;">
                   <div class="spinner hidden" id="spinner"></div>
-                  <span id="button-text">Pay $2.99</span>
+                  <span id="button-text">Pay $3.99</span>
                 </button>
                 <div id="payment-message" class="hidden"
                   style="color: rgb(105, 115, 134); font-size: 16px; line-height: 20px; padding-top: 12px; text-align: center;">
@@ -1019,6 +1027,81 @@
 </script>
 
 <script>
+  // API Call Counter
+  const API_CALL_LOG = 'profileReviewAPICallLog';
+  const cutoffTimestamp = new Date().getTime() - (72 * 60 * 60 * 1000); // 72 hours in milliseconds
+
+  function logAPICallTimestamp() {
+    const currentTimestamp = new Date().getTime(); // Get current timestamp in milliseconds
+    let callLog = JSON.parse(localStorage.getItem(API_CALL_LOG)) || []; // Parse the existing log, or initialize a new array
+    callLog.push(currentTimestamp); // Add the current timestamp to the log
+    localStorage.setItem(API_CALL_LOG, JSON.stringify(callLog)); // Save the updated log back to localStorage
+  }
+
+  function getRecentAPICallCount() {
+    const callLog = JSON.parse(localStorage.getItem(API_CALL_LOG)) || [];
+    // Filter out calls older than 72 hours
+    const recentCalls = callLog.filter(timestamp => timestamp > cutoffTimestamp);
+    // Update localStorage with the filtered log
+    localStorage.setItem(API_CALL_LOG, JSON.stringify(recentCalls));
+    // Get the oldest call timestamp within the last 72 hours
+    const oldestTimestamp = recentCalls.length > 0 ? recentCalls[0] : null;
+    return {
+      count: recentCalls.length,
+      oldestTimestamp
+    };
+  }
+
+  function startCountdown(duration, displayElement) {
+    let timer = duration, hours, minutes, seconds;
+    const interval = setInterval(function () {
+      hours = parseInt(timer / 3600, 10);
+      minutes = parseInt((timer % 3600) / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      // Updated to spell out the units with their names
+      displayElement.textContent = `${hours} hour${hours !== 1 ? 's' : ''}, ${minutes} minute${minutes !== 1 ? 's' : ''}, and ${seconds} second${seconds !== 1 ? 's' : ''}`;
+
+      if (--timer < 0) {
+        clearInterval(interval);
+        document.getElementById("sendButton").disabled = false; // Re-enable the send button
+        displayElement.textContent = ''; // Clear countdown text
+      }
+    }, 1000);
+  }
+
+  function checkAPICallCountAndPayment() {
+    const MAX_API_CALLS = 3;
+    const recentAPICallsInfo = getRecentAPICallCount();
+
+    if (recentAPICallsInfo.count >= MAX_API_CALLS && !PAYMENT_MADE) {
+      if (recentAPICallsInfo.oldestTimestamp) {
+        const now = new Date().getTime();
+        const timePassed = now - recentAPICallsInfo.oldestTimestamp;
+        const remainingTime = (72 * 60 * 60 * 1000) - timePassed; // Time left in milliseconds
+        const remainingSeconds = Math.floor(remainingTime / 1000);
+
+        document.getElementById("sendButton").disabled = true; // Disable the send button
+        $('#countdownWarning').removeClass('d-none');
+
+        const countdownDisplayElement = document.getElementById("countdownDisplay");
+        startCountdown(remainingSeconds, countdownDisplayElement);
+      } else {
+        document.getElementById("sendButton").disabled = true;
+        document.getElementById("countdownDisplay").textContent = '72 hours'
+        $('#countdownWarning').removeClass('d-none');
+
+      }
+      return false; // Prevent further API calls
+    }
+    document.getElementById("sendButton").disabled = false; // Disable the send button
+    $('#countdownWarning').addClass('d-none');
+    // If the limit has not been reached, proceed with the API call
+    return true;
+  }
+</script>
+
+<script>
   // Scripts to handle API call
   function addToMessageContent(dict, contentType) {
     var foundIndex = messages[0]['content'].findIndex(item => item.contentType === contentType);
@@ -1189,6 +1272,10 @@
 
 
   function sendToAPI() {
+    if (!checkAPICallCountAndPayment()) {
+      return;
+    };
+
     const apiUrl = "https://gptvisionapiopenai.azurewebsites.net/charm_check/";
     const headers = {
       "Content-Type": "application/json",
@@ -1224,6 +1311,8 @@
     var converter = new showdown.Converter();
     converter.setOption('disableForced4SpacesIndentedSublists', true);
     converter.setOption('smartIndentationFix', true);
+
+    logAPICallTimestamp();
 
     let unhelpfulResponses = [
       `I'm sorry, I can't assist with that request.`,
@@ -1412,12 +1501,12 @@
       }]
     });
     addToConversation('user', $('#floatingTextarea').val())
-    // TODO: ADD PAYWALL HERE
-    if (conversation.length > 4 && !PAYMENT_MADE) {
-      $('#paywallOverlay').removeClass('d-none');
-      document.getElementById('floatingTextarea').blur();
-      document.getElementById('buttonSend').blur();
-    }
+    // TODO: ADD CHATBOT PAYWALL HERE
+    // if (conversation.length > 4 && !PAYMENT_MADE) {
+    //   $('#paywallOverlay').removeClass('d-none');
+    //   document.getElementById('floatingTextarea').blur();
+    //   document.getElementById('buttonSend').blur();
+    // }
     sendToConversationAPI();
     document.getElementById('chat-loader').style.visibility = 'visible';
     $('#floatingTextarea').val('');
@@ -1480,7 +1569,7 @@
     fetch("https://gptvisionapiopenai.azurewebsites.net/stripe/process_payment/", {
       method: "POST",
       body: JSON.stringify({
-        "amount": 299,
+        "amount": 399,
         "currency": "usd"
       }),
     }).then(response => response.json())
@@ -1577,7 +1666,8 @@
 
     PAYMENT_MADE = true;
 
-    document.getElementById('paywallOverlay').classList.add('d-none');
+    // document.getElementById('paywallOverlay').classList.add('d-none');
+    checkAPICallCountAndPayment();
 
     setTimeout(function () {
       modalInstance.hide();
@@ -1593,24 +1683,26 @@
     var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecret');
     var paymentIntentCreated = localStorage.getItem('paymentIntentCreated');
 
-    // Check if time is in the last 12 hours
+    // Check if time is in the last 7 days
     if (paymentIntentCreated) {
-      var storedDate = new Date(parseInt(paymentIntentCreated) * 1000); // Convert to milliseconds
+      var storedDate = new Date(parseInt(paymentIntentCreated) * 1000);
       var currentDate = new Date();
-      // Calculate the difference in hours
-      var differenceInHours = (currentDate - storedDate) / (1000 * 60 * 60);
-
-      // Check if the stored timestamp is within the last 12 hours
-      if (differenceInHours <= 13) {
+      // Calculate the difference in milliseconds
+      var differenceInMs = currentDate - storedDate;
+      var differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+      // Check if stored timestamp is within last 7 days
+      if (differenceInDays <= 7) {
         var paymentForm = document.getElementById('payment-form');
-        document.getElementById('paywallOverlay').classList.add('d-none');
+        // document.getElementById('paywallOverlay').classList.add('d-none');
         paymentForm.remove();
         PAYMENT_MADE = true;
       } else {
-        console.log("The stored timestamp is older than 12 hours.");
+        console.log("The stored timestamp is older than 7 days.");
+        checkAPICallCountAndPayment();
       }
     } else {
       console.log("No stored timestamp found.");
+      checkAPICallCountAndPayment();
     }
   }
 
@@ -1644,22 +1736,22 @@
   }
 
   // Animate overlay
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const overlay = document.getElementById('paywallOverlay');
-    let opacity = 0.5;
-    let increasing = true;
+  // document.addEventListener('DOMContentLoaded', (event) => {
+  //   const overlay = document.getElementById('paywallOverlay');
+  //   let opacity = 0.5;
+  //   let increasing = true;
 
-    setInterval(() => {
-      if (increasing) {
-        opacity += 0.05; // Smaller increment
-        if (opacity >= 0.8) increasing = false;
-      } else {
-        opacity -= 0.05; // Smaller decrement
-        if (opacity <= 0.3) increasing = true;
-      }
-      overlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
-    }, 400); // Slower interval
-  });
+  //   setInterval(() => {
+  //     if (increasing) {
+  //       opacity += 0.05; // Smaller increment
+  //       if (opacity >= 0.8) increasing = false;
+  //     } else {
+  //       opacity -= 0.05; // Smaller decrement
+  //       if (opacity <= 0.3) increasing = true;
+  //     }
+  //     overlay.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+  //   }, 400); // Slower interval
+  // });
 </script>
 
 <script>
