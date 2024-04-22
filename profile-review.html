@@ -797,7 +797,7 @@
     "role": "assistant",
     "content": [{
       "type": "text",
-      "contentType": "initialResponse",
+      // "contentType": "initialResponse",
       "text": "👋 Hi! I'm the Charm Check chatbot. Let's chat about your results or workshop your bio!  Where do you want to start first?"
     }]
   }];
@@ -1178,21 +1178,21 @@
     if (appDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "appDescription",
+        // contentType: "appDescription",
         text: `My Current Dating App: ${appDescriptionText}`
       }, "appDescription");
     }
 
     addToMessageContent({
       type: "text",
-      contentType: "profileHeader",
+      // contentType: "profileHeader",
       text: `My dating profile currently contains the following fields`
     }, "profileHeader");
 
     if (aboutMeDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "aboutMe",
+        // contentType: "aboutMe",
         text: `About me: ${aboutMeDescription}`
       }, "aboutMe");
     }
@@ -1200,7 +1200,7 @@
     if (ageDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "age",
+        // contentType: "age",
         text: `Age: ${ageDescription}`
       }, "age");
     }
@@ -1208,7 +1208,7 @@
     if (interestsDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "interests",
+        // contentType: "interests",
         text: `Interests: ${interestsDescription}`
       }, "interests");
     }
@@ -1216,7 +1216,7 @@
     if (relationshipTypeDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "relationshipType",
+        // contentType: "relationshipType",
         text: `Looking for: ${relationshipTypeDescription}`
       }, "relationshipType");
     }
@@ -1224,7 +1224,7 @@
     if (jobTitleDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "jobTitle",
+        // contentType: "jobTitle",
         text: `Profession/Education: ${jobTitleDescription}`
       }, "jobTitle");
     }
@@ -1232,7 +1232,7 @@
     if (importantDetailsDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "importantDetails",
+        // contentType: "importantDetails",
         text: `Some important details I want to highlight are: ${importantDetailsDescription}`
       }, "importantDetails");
     }
@@ -1240,7 +1240,7 @@
     if (promptsDescription1 || promptsAnswerDescription1) {
       addToMessageContent({
         type: "text",
-        contentType: "promptAnswer1",
+        // contentType: "promptAnswer1",
         text: `The app lets me choose and answer a few prompts.  This is the first one: ${promptsDescription1} - Answer: ${promptsAnswerDescription1}`
       }, "promptAnswer");
     }
@@ -1248,7 +1248,7 @@
     if (promptsDescription2 || promptsAnswerDescription2) {
       addToMessageContent({
         type: "text",
-        contentType: "promptAnswer2",
+        // contentType: "promptAnswer2",
         text: `This is the second prompt: ${promptsDescription2} - Answer: ${promptsAnswerDescription2}`
       }, "promptAnswer2");
     }
@@ -1256,7 +1256,7 @@
     if (promptsDescription3 || promptsAnswerDescription3) {
       addToMessageContent({
         type: "text",
-        contentType: "promptAnswer3",
+        // contentType: "promptAnswer3",
         text: `And here is the third prompt: ${promptsDescription3} - Answer: ${promptsAnswerDescription3}`
       }, "promptAnswer3");
     }
@@ -1264,7 +1264,7 @@
     if (additionalInformationDescription) {
       addToMessageContent({
         type: "text",
-        contentType: "additionalInformation",
+        // contentType: "additionalInformation",
         text: `Additional Information: ${additionalInformationDescription}`
       }, "additionalInformation");
     }
@@ -1342,7 +1342,7 @@
             "role": "user",
             "content": [{
               "type": "text",
-              "contentType": "userInput",
+              // "contentType": "userInput",
               "text": "Thanks for changing your report with my new information!"
             }]
           });
@@ -1434,7 +1434,7 @@
       "role": "assistant",
       "content": [{
         "type": "text",
-        "contentType": "responseOutput",
+        // "contentType": "responseOutput",
         "text": text
       }]
     });
@@ -1496,7 +1496,7 @@
       "role": "user",
       "content": [{
         "type": "text",
-        "contentType": "userInput",
+        // "contentType": "userInput",
         "text": $('#floatingTextarea').val()
       }]
     });
