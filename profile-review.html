@@ -1288,6 +1288,12 @@
       max_tokens: 1300
     };
 
+    // add ClientSecret if relevant
+    var paymentIntentClientSecret = localStorage.getItem('paymentIntentClientSecret');
+    if (paymentIntentClientSecret) {
+      payload['stripe_client_secret'] = paymentIntentClientSecret;
+    }
+
     document.getElementById('loader').classList.remove("invisible");
     document.getElementById('sendButton').disabled = true;
 
