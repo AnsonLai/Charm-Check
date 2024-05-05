@@ -608,7 +608,7 @@
         </div>
       </div>
 
-      <div class="card border-0 d-none" id="chat-container"
+      <div class="card border-0" id="chat-container"
         style="position: fixed; bottom: 0px; right: 0px; z-index: 1000; width: 40%; max-height: 80%; display: flex; flex-direction: column;">
         <div class="card-header bg-danger text-white d-flex align-items-center justify-content-between">
           <strong>Charm Check Chatbot</strong>
@@ -1428,6 +1428,11 @@
         alert('There was an error with your chat.  Please hit submit to try again.');
         document.getElementById('chat-loader').style.visibility = 'hidden';
         document.getElementById('buttonSend').disabled = false;
+        // Remove the last message from the conversation array
+        conversation.pop();
+        // Cross out the text of the last message in the chat display
+        var lastMessage = $("#chatDisplay").children().last();
+        lastMessage.find('div.text-start, div.h-100').css('text-decoration', 'line-through');
       });
   }
 
