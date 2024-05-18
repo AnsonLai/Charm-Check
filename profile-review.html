@@ -1503,27 +1503,29 @@
 
   // UI Helpers
   $('#buttonSend').click(function () {
-    $('#nameHero').hide();
-    // TODO: Prune messages if too long
-    conversation.push({
-      "role": "user",
-      "content": [{
-        "type": "text",
-        // "contentType": "userInput",
-        "text": $('#floatingTextarea').val()
-      }]
-    });
-    addToConversation('user', $('#floatingTextarea').val())
-    // TODO: ADD CHATBOT PAYWALL HERE
-    // if (conversation.length > 4 && !PAYMENT_MADE) {
-    //   $('#paywallOverlay').removeClass('d-none');
-    //   document.getElementById('floatingTextarea').blur();
-    //   document.getElementById('buttonSend').blur();
-    // }
-    sendToConversationAPI();
-    document.getElementById('chat-loader').style.visibility = 'visible';
-    $('#floatingTextarea').val('');
-    $('#floatingTextarea').attr('rows', '1');
+    if ($('#floatingTextarea').val() != "") {
+      $('#nameHero').hide();
+      // TODO: Prune messages if too long
+      conversation.push({
+        "role": "user",
+        "content": [{
+          "type": "text",
+          // "contentType": "userInput",
+          "text": $('#floatingTextarea').val()
+        }]
+      });
+      addToConversation('user', $('#floatingTextarea').val())
+      // TODO: ADD CHATBOT PAYWALL HERE
+      // if (conversation.length > 4 && !PAYMENT_MADE) {
+      //   $('#paywallOverlay').removeClass('d-none');
+      //   document.getElementById('floatingTextarea').blur();
+      //   document.getElementById('buttonSend').blur();
+      // }
+      sendToConversationAPI();
+      document.getElementById('chat-loader').style.visibility = 'visible';
+      $('#floatingTextarea').val('');
+      $('#floatingTextarea').attr('rows', '1');
+    }
   });
 
   // Handle alt+enter
