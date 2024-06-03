@@ -356,7 +356,9 @@
         <div id="thankyou-container" class="col my-5 bg-white text-dark rounded shadow">
           <p class="h1 text-center pt-5" style="color:#A7A5A5">To early testers:</p>
           <p id="thankyou" class="p-5">As a thank you for your support, you now have 24 hours of unlimited access to our
-            CharmCheck profile review and chatbot. We appreciate everything you've done for us and wish you the best of luck. Please
+            CharmCheck profile reviews and 10 minutes of our batch photo analyses. We appreciate everything you've done
+            for us and wish you the best of luck.
+            Please
             contact me at PharaohsVizier@gmail.com if you have any feedback for the site. Thank you!</p>
         </div>
       </div>
@@ -401,9 +403,27 @@
     }
   ];
 
-  currentTimestamp = Math.floor(Date.now() / 1000);
-  localStorage.setItem('paymentIntentCreated', currentTimestamp);
+  // Profile review feature
+  const profileHoursToSubtract = 144;
+  const profileSecondsInAnHour = 3600;
+  const profileTimeOffset = profileHoursToSubtract * profileSecondsInAnHour;
+
+  const profileCurrentTimestamp = Math.floor(Date.now() / 1000);
+  const profileAdjustedTimestamp = profileCurrentTimestamp - profileTimeOffset;
+
+  localStorage.setItem('paymentIntentCreated', profileAdjustedTimestamp);
   localStorage.setItem('paymentIntentClientSecret', "charmcheck-free-pass");
+
+  // Batch photo feature
+  const batchMinutesToSubtract = 110;
+  const batchSecondsInAMinute = 60;
+  const batchTimeOffset = batchMinutesToSubtract * batchSecondsInAMinute;
+
+  const batchCurrentTimestamp = Math.floor(Date.now() / 1000);
+  const batchAdjustedTimestamp = batchCurrentTimestamp - batchTimeOffset;
+
+  localStorage.setItem('paymentIntentCreatedBatch', batchAdjustedTimestamp);
+  localStorage.setItem('paymentIntentClientSecretBatch', "charmcheck-free-pass");
 </script>
 
 <script>
