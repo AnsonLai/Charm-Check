@@ -908,7 +908,7 @@
       "I'm sorry, I can't provide the requested analysis or suggestions."
     ];
 
-    var text = data["response"]["choices"][0]['message']['content'];
+    var text = data["response"];
 
     var html = converter.makeHtml(text);
     if (unhelpfulResponses.includes(text)) {
