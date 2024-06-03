@@ -782,9 +782,9 @@
         let ctx = canvas.getContext('2d');
         ctx.drawImage(img, (squareSize - img.width) / 2, (squareSize - img.height) / 2);
         let resizeCanvas = document.createElement('canvas');
-        resizeCanvas.width = resizeCanvas.height = 512;
+        resizeCanvas.width = resizeCanvas.height = 768;
         let resizeCtx = resizeCanvas.getContext('2d');
-        resizeCtx.drawImage(canvas, 0, 0, 512, 512);
+        resizeCtx.drawImage(canvas, 0, 0, 768, 768);
         let dataURL = resizeCanvas.toDataURL('image/png');
         window.currentBase64Image = dataURL.split(',')[1]; // Remove the Data URL prefix for pure Base64
         displayImage(dataURL);
