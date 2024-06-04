@@ -1915,7 +1915,7 @@
     var fileName = 'Charm Check Dating Profile Report - ' + today + '.txt';
 
     link.href = URL.createObjectURL(blob);
-    link.download = filename;
+    link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1929,7 +1929,8 @@
 
   function downloadReport() {
     if (isDesktop()) {
-      downloadAsDocx();
+      downloadAsTxt();
+      // downloadAsDocx();
     } else {
       downloadAsTxt();
     }
