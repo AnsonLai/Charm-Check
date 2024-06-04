@@ -381,8 +381,7 @@
                 style="font-size: 0.55rem; top: 25%;">NEW</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;"
-              href="about.html">About</a>
+            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;" href="about.html">About</a>
           </li>
         </ul>
       </div>
@@ -613,6 +612,7 @@
 <script>
   // Global variables
   const MAX_PHOTOS = 50;
+  let maxPhotosAlertShown = false;
   var messages = [
     {
       "role": "user",
@@ -630,7 +630,10 @@
 
     // Check if the number of image_url elements exceeds MAX_PHOTOS
     if (imageCount >= MAX_PHOTOS) {
-      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      if (!maxPhotosAlertShown) { // Check if alert has not been shown
+        alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+        maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
+      }
       return; // Stop processing the new image
     }
 

@@ -687,6 +687,7 @@
 <script>
   // Global variables
   const MAX_PHOTOS = 50;
+  let maxPhotosAlertShown = false;
   var messages = [
     {
       "role": "user",
@@ -704,10 +705,12 @@
 
     // Check if the number of image_url elements exceeds MAX_PHOTOS
     if (imageCount >= MAX_PHOTOS) {
-      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      if (!maxPhotosAlertShown) { // Check if alert has not been shown
+        alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+        maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
+      }
       return; // Stop processing the new image
     }
-
     // Create a div element as a container
     var divContainer = document.createElement('div');
     divContainer.style.position = 'relative';

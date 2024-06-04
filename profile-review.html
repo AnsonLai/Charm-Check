@@ -397,8 +397,7 @@
                 style="font-size: 0.55rem; top: 25%;">NEW</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;"
-              href="about.html">About</a>
+            <a class="nav-link me-3 position-relative text-dark" style="font-size: 1.25rem;" href="about.html">About</a>
           </li>
         </ul>
       </div>
@@ -580,7 +579,8 @@
                 onClick="initialize(); checkStatus();">Click
                 here</a> to skip the line!</strong></p>
 
-          <div id="sendHelp" class="form-text text-center text-muted">Charm Check and our AI partners will delete your photos shortly after our analysis.</div>
+          <div id="sendHelp" class="form-text text-center text-muted">Charm Check and our AI partners will delete your
+            photos shortly after our analysis.</div>
 
           <div id="loader" class="container text-center my-4 invisible">
             <div class="spinner-grow" role="status" style="height: 0.5rem; width: 0.5rem;">
@@ -791,6 +791,7 @@
 <script>
   // Global variables
   const MAX_PHOTOS = 9;
+  let maxPhotosAlertShown = false;
   var messages = [
     {
       "role": "user",
@@ -901,7 +902,10 @@
 
     // Check if the number of image_url elements exceeds MAX_PHOTOS
     if (imageCount >= MAX_PHOTOS) {
-      alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+      if (!maxPhotosAlertShown) { // Check if alert has not been shown
+        alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+        maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
+      }
       return; // Stop processing the new image
     }
 
@@ -1789,7 +1793,10 @@
             displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
             var imageCount = document.querySelectorAll('#image-container > div').length;
             if (imageCount >= MAX_PHOTOS) {
-              alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+              if (!maxPhotosAlertShown) { // Check if alert has not been shown
+                alert(`You cannot add more than ${MAX_PHOTOS} images.`);
+                maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
+              }
               return; // Stop processing the new image
             }
             addToMessageContent({
