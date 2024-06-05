@@ -1894,7 +1894,7 @@
   }
 
   function downloadAsTxt() {
-    const blob = new Blob([fullReport], { type: 'text/plain' });
+    const blob = new Blob(["# Charm Check Report\n\n*This report is in Markdown format.  To view it in original formating, copy this report and paste it into https://markdowntohtml.com/.*\n\n\n## Charm Check Profile Review\n\n", fullReport, "\n\n\n## Charm Check Chat History\n\n", JSON.stringify(conversation)], { type: 'text/plain' });
     const link = document.createElement('a');
 
     function formatDate(date) {
