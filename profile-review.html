@@ -486,6 +486,7 @@
               <option value='Tinder' selected>Tinder</option>
               <option value='Hinge'>Hinge</option>
               <option value='Bumble'>Bumble</option>
+              <option value='CoffeeMeetsBagel'>Coffee Meets Bagel</option>
               <option value='Other App'>Other</option>
             </select>
           </div>
@@ -779,6 +780,9 @@
         document.getElementById('aboutMeDescription').parentNode.style.display = 'none';
         break;
       case 'Bumble':
+        break;
+      case 'CoffeeMeetsBagel':
+        document.getElementById('aboutMeDescription').parentNode.style.display = 'none';
         break;
       case 'Other App':
         break;
@@ -1150,6 +1154,9 @@
         break;
       case "Bumble":
         appDescriptionText = "Bumble - Unique in that it allows women to initiate the conversation, often leading to more serious connections. The app is used for a mix of casual and more serious dating. Profiles on Bumble strike a balance between photos and personal details, with enough space for users to showcase their interests and personality traits.";
+        break;
+      case "CoffeeMeetsBagel":
+        appDescriptionText = "Coffee Meets Bagel - Designed for users who are looking for serious relationships. The app curates a limited number of potential matches each day, encouraging users to focus on quality over quantity. Profiles emphasize personal details and prompts that highlight users' interests and values, fostering more meaningful connections.";
         break;
       case "Other App":
         appDescriptionText = "Other App - I have chosen an unlisted app.  Please use your best judgement to help me craft a great profile based on what I shared!";
