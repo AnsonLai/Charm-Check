@@ -704,7 +704,7 @@
     var imageCount = document.querySelectorAll('#image-container > div').length;
 
     // Check if the number of image_url elements exceeds MAX_PHOTOS
-    if (imageCount >= MAX_PHOTOS) {
+    if (imageCount > MAX_PHOTOS) {
       if (!maxPhotosAlertShown) { // Check if alert has not been shown
         alert(`You cannot add more than ${MAX_PHOTOS} images.`);
         maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
