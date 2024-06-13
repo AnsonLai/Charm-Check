@@ -906,7 +906,7 @@
     var imageCount = document.querySelectorAll('#image-container > div').length;
 
     // Check if the number of image_url elements exceeds MAX_PHOTOS
-    if (imageCount >= MAX_PHOTOS) {
+    if (imageCount > MAX_PHOTOS) {
       if (!maxPhotosAlertShown) { // Check if alert has not been shown
         alert(`You cannot add more than ${MAX_PHOTOS} images.`);
         maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
@@ -1366,7 +1366,14 @@
             "content": [{
               "type": "text",
               // "contentType": "userInput",
-              "text": "Thanks for changing your report with my new information!"
+              "text": "Thanks for changing the report.  I have put it right into our conversation history."
+            }]
+          });
+          conversation.push({
+            "role": "assistant",
+            "content": [{
+              "type": "text",
+              "text": "Understood!  Let's start working off that report now."
             }]
           });
           break; // Exit the loop as we've found and updated the report
@@ -1802,7 +1809,7 @@
             // TODO: Heavy refactor, this is overlap with processImage(file) which needs refactoring too
             displayImage(`data:image/jpeg;base64,${currentBase64Image}`);
             var imageCount = document.querySelectorAll('#image-container > div').length;
-            if (imageCount >= MAX_PHOTOS) {
+            if (imageCount > MAX_PHOTOS) {
               if (!maxPhotosAlertShown) { // Check if alert has not been shown
                 alert(`You cannot add more than ${MAX_PHOTOS} images.`);
                 maxPhotosAlertShown = true; // Set the flag to true to prevent further alerts
