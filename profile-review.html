@@ -573,9 +573,9 @@
             </button>
           </div>
 
-          <p id="countdownWarning" class="form-text text-center text-danger d-none"><strong>We are limiting users to 3
+          <p id="countdownWarning" class="form-text text-center text-danger d-none"><strong>We are limiting users to 2
               free profile reviews
-              every 72 hours. Your free reviews will refresh in <span id="countdownDisplay">72 hours</span>. <a
+              every 48 hours. Your free reviews will refresh in <span id="countdownDisplay">48 hours</span>. <a
                 class="link-primary hover-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"
                 onClick="initialize(); checkStatus();">Click
                 here</a> to skip the line!</strong></p>
@@ -1043,7 +1043,7 @@
 <script>
   // API Call Counter
   const API_CALL_LOG = 'profileReviewAPICallLog';
-  const cutoffTimestamp = new Date().getTime() - (72 * 60 * 60 * 1000); // 72 hours in milliseconds
+  const cutoffTimestamp = new Date().getTime() - (48 * 60 * 60 * 1000); // 48 hours in milliseconds
 
   function logAPICallTimestamp() {
     const currentTimestamp = new Date().getTime(); // Get current timestamp in milliseconds
@@ -1054,11 +1054,11 @@
 
   function getRecentAPICallCount() {
     const callLog = JSON.parse(localStorage.getItem(API_CALL_LOG)) || [];
-    // Filter out calls older than 72 hours
+    // Filter out calls older than 48 hours
     const recentCalls = callLog.filter(timestamp => timestamp > cutoffTimestamp);
     // Update localStorage with the filtered log
     localStorage.setItem(API_CALL_LOG, JSON.stringify(recentCalls));
-    // Get the oldest call timestamp within the last 72 hours
+    // Get the oldest call timestamp within the last 48 hours
     const oldestTimestamp = recentCalls.length > 0 ? recentCalls[0] : null;
     return {
       count: recentCalls.length,
@@ -1085,14 +1085,14 @@
   }
 
   function checkAPICallCountAndPayment() {
-    const MAX_API_CALLS = 3;
+    const MAX_API_CALLS = 2;
     const recentAPICallsInfo = getRecentAPICallCount();
 
     if (recentAPICallsInfo.count >= MAX_API_CALLS && !PAYMENT_MADE) {
       if (recentAPICallsInfo.oldestTimestamp) {
         const now = new Date().getTime();
         const timePassed = now - recentAPICallsInfo.oldestTimestamp;
-        const remainingTime = (72 * 60 * 60 * 1000) - timePassed; // Time left in milliseconds
+        const remainingTime = (48 * 60 * 60 * 1000) - timePassed; // Time left in milliseconds
         const remainingSeconds = Math.floor(remainingTime / 1000);
 
         document.getElementById("sendButton").disabled = true; // Disable the send button
@@ -1102,7 +1102,7 @@
         startCountdown(remainingSeconds, countdownDisplayElement);
       } else {
         document.getElementById("sendButton").disabled = true;
-        document.getElementById("countdownDisplay").textContent = '72 hours'
+        document.getElementById("countdownDisplay").textContent = '48 hours'
         $('#countdownWarning').removeClass('d-none');
 
       }
